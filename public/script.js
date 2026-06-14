@@ -4,6 +4,7 @@ const IMG_BASE = 'https://image.tmdb.org/t/p/w500';
 let genres = [];
 let activeGenre = '';
 let currentType = 'movie';
+TMDB_KEY = 0ae1d4da04c9c45120bf6eb56d037ad8
 
 fetch('/api/config')
   .then(r => r.json())
