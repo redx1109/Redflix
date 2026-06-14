@@ -5,8 +5,6 @@ let genres = [];
 let activeGenre = '';
 let currentType = 'movie';
 TMDB_KEY = 0ae1d4da04c9c45120bf6eb56d037ad8
-
-TMDB_KEY = 'your_actual_key_here';
 init();
 
 async function init(){
