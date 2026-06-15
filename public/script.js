@@ -27,6 +27,7 @@ fetch('/api/config')
   });
 
 async function init(){
+  if(!TMDB_KEY) return;
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
 }
 
