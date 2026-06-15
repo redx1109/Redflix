@@ -173,6 +173,8 @@ nav {
   font-family: var(--font-mono); color: rgba(229,9,20,0.7); font-size: 11px;
 }
 
+.add-btn { width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer; }
+.add-btn:hover { background:rgba(255,255,255,0.3); }
 @media (max-width: 768px) {
   nav {
     flex-wrap: wrap;
