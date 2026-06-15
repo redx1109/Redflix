@@ -1,9 +1,12 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: var(--font-sans); background: #0a0a0f; color: #fff; }
+body { font-family: var(--font-sans); background: #0a0a0f; color: #fff; min-height: 100vh;}
 :root { --accent: #e50914; --accent2: #f5c518; }
 
 #app { min-height: 100vh; background: #0a0a0f; }
 
+.search-active {
+  padding-top: 80px;
+}
 nav {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 28px; background: rgba(10,10,15,0.95);
