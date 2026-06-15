@@ -5,10 +5,16 @@ let genres = [];
 let activeGenre = '';
 let currentType = 'movie';
 let currentUrl = '';
+
 async function init(){
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
 }
-init()
+fetch('/api/config')
+  .then(r => r.json())
+  .then(data => {
+    TMDB_KEY = data.tmdbKey;
+    init();
+  });
 function switchToHome(){
   currentType = 'movie';
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
