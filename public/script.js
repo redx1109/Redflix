@@ -5,14 +5,6 @@ let genres = [];
 let activeGenre = '';
 let currentType = 'movie';
 let currentUrl = '';
-
-fetch('../api/config')
-  .then(r => r.json())
-  .then(data => {
-    TMDB_KEY = data.tmdbKey;
-    init();
-  });
-
 async function init(){
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
 }
