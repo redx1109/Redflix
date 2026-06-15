@@ -5,24 +5,29 @@ let genres = [];
 let activeGenre = '';
 let currentType = 'movie';
 let currentUrl = '';
+let currentPage = 1;
 
-async function init(){
-  await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
-}
+window.addEventListener('scroll', () => {
+  if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 300){
+    currentPage++;
+    fetch(currentUrl + `&page=${currentPage}`)
+      .then(r => r.json())
+      .then(data => {
+        const el = document.getElementById('moviesGrid');
+        data.results.forEach((m, i) => el.appendChild(movieCard(m, false, i)));
+      });
+  }
+});
+
 fetch('/api/config')
   .then(r => r.json())
   .then(data => {
     TMDB_KEY = data.tmdbKey;
     init();
   });
-function switchToHome(){
-  currentType = 'movie';
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('gridTitle').textContent = 'Popular Movies';
-  loadGenres();
-  fetchTrending();
-  fetchPopular();
+
+async function init(){
+  await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
 }
 
 function switchType(type){
@@ -54,6 +59,16 @@ async function fetchTrending(){
   const data = await res.json();
   renderTrending(data.results);
   updateHero(data.results[0]);
+}
+
+function switchToHome(){
+  currentType = 'movie';
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('gridTitle').textContent = 'Popular Movies';
+  loadGenres();
+  fetchTrending();
+  fetchPopular();
 }
 
 async function loadMore(){
@@ -93,6 +108,7 @@ async function fetchPopular(genreId=''){
       : `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=popularity.desc`;
   }
   currentUrl = url;
+  currentPage = 1;
   const res = await fetch(url);
   const data = await res.json();
   renderGrid(data.results);
@@ -127,6 +143,15 @@ function renderGrid(movies){
   movies.forEach((m, i) => el.appendChild(movieCard(m, false, i)));
 }
 
+function toggleList(e, id, title, poster){
+  e.stopPropagation();
+  let list = JSON.parse(localStorage.getItem('myList') || '[]');
+  const exists = list.find(m => m.id === id);
+  if(exists) list = list.filter(m => m.id !== id);
+  else list.push({id, title, poster});
+  localStorage.setItem('myList', JSON.stringify(list));
+}
+
 function movieCard(m, small=false, index=0){
   const c = document.createElement('div');
   c.className = small ? 'trending-card' : 'movie-card';
@@ -138,7 +163,10 @@ function movieCard(m, small=false, index=0){
     <div class="movie-poster">
       ${poster}
       <div class="movie-overlay">
-        <div class="play-btn"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
+  <div style="display:flex;gap:6px;align-items:center;">
+  <div class="play-btn"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
+  <div class="add-btn" onclick="toggleList(event, ${m.id}, '${(m.title||m.name).replace(/'/g,"\\'")}', '${m.poster_path}')"><i class="ti ti-plus" style="font-size:14px"></i></div>
+  </div>
       </div>
     </div>
     <div class="movie-info">
@@ -196,6 +224,9 @@ function loadEmbed(){
       ezvidapi: `https://ezvidapi.com/embed/movie/${id}`,
       vidapi: `https://vidapi.xyz/embed/movie/${id}`,
       vidlink: `https://vidlink.pro/movie/${id}?autoplay=true`,
+      vidsrcsbs: `https://vidsrc.sbs/embed/movie?tmdb=${id}`,
+      twoembed: `https://www.2embed.cc/embed/${id}`,
+      twoembedskin: `https://www.2embed.skin/embed/${id}`,
     };  
   } else {
     urls = {
@@ -207,6 +238,9 @@ function loadEmbed(){
       ezvidapi: `https://ezvidapi.com/embed/tv/${id}/${s}/${e}`,
       vidapi: `https://vidapi.xyz/embed/tv/${id}/${s}/${e}`,
       vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true`,
+      vidsrcsbs: `https://vidsrc.sbs/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
+      twoembed: `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}`,
+      twoembedskin: `https://www.2embed.skin/embedtv/${id}&s=${s}&e=${e}`,
     };
   }
   document.getElementById('playerIframe').src = urls[src];
@@ -334,4 +368,14 @@ async function openDetail(id, type='movie'){
 
 function closeDetail(){
   document.getElementById('detailModal').classList.remove('open');
+}
+
+function showMyList(){
+  const list = JSON.parse(localStorage.getItem('myList') || '[]');
+  document.querySelector('.hero').style.display = 'none';
+  document.querySelector('.genre-tabs').style.display = 'none';
+  document.getElementById('trendingRow').closest('.section').style.display = 'none';
+  document.getElementById('gridTitle').textContent = '❤️ My List';
+  document.getElementById('popularSection').style.display = 'block';
+  renderGrid(list.map(m => ({...m, poster_path: m.poster, title: m.title})));
 }
