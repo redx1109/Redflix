@@ -32,7 +32,7 @@
       <h1>Watch <span>Free</span> Movies &amp; TV Shows</h1>
       <p>Thousands of titles, no subscription needed. Just hit play and enjoy.</p>
       <div class="hero-btns">
-        <button class="btn-primary" onclick="openPlayer('Featured Movie')">
+        <button class="btn-primary">
           <i class="ti ti-player-play" aria-hidden="true"></i> Watch now
         </button>
         <button class="btn-secondary">Browse all</button>
@@ -50,7 +50,7 @@
     <div class="trending-row" id="trendingRow"></div>
   </div>
 
-  <div class="section">
+  <div class="section"  id="popularSection">
     <div class="section-header">
       <span class="section-title" id="gridTitle">Popular movies</span>
       <span class="see-all">See all</span>
@@ -106,9 +106,14 @@
     <option value="autoembed">AutoEmbed ✅</option>
     <option value="apiplayer">ApiPlayer ✅</option>
     <option value="primesrc">PrimeSrc (subs)</option>
+    <option value="ezvidapi">EzVidAPI</option>
+    <option value="vidapi">VidAPI</option>
+    <option value="vidlink">VidLink</option>
   </select>
   <input id="tmdbInput" type="number" style="display:none">
   <div id="episodeControls" style="display:none;width:100%;padding:10px 18px;border-top:0.5px solid rgba(255,255,255,0.08);">
+    <input id="seasonInput" type="hidden" value="1">
+    <input id="episodeInput" type="hidden" value="1">
     <div id="seasonTabs" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"></div>
     <div id="episodeList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;max-height:200px;overflow-y:auto;"></div>
   </div>
