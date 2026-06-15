@@ -1,11 +1,16 @@
-let TMDB_KEY = '';
+let TMDB_KEY = '0ae1d4da04c9c45120bf6eb56d037ad8';
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 const IMG_BASE = 'https://image.tmdb.org/t/p/w500';
 let genres = [];
 let activeGenre = '';
 let currentType = 'movie';
-TMDB_KEY = '0ae1d4da04c9c45120bf6eb56d037ad8'
-init();
+
+fetch('/api/config')
+  .then(r => r.json())
+  .then(data => {
+    TMDB_KEY = data.tmdbKey;
+    init();
+  });
 
 async function init(){
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
@@ -121,25 +126,26 @@ function movieCard(m, small=false){
     <div class="movie-info">
       <div class="movie-title">${m.title || m.name}</div>
       <div class="movie-meta">
-        <span class="movie-year">${m.release_date?.slice(0,4)||'N/A'}</span>
+        <span class="movie-year">${(m.release_date || m.first_air_date)?.slice(0,4)||'N/A'}</span>
         <span class="movie-rating"><i class="ti ti-star-filled" style="font-size:10px"></i>${m.vote_average?.toFixed(1)||'?'}</span>
+        ${m._resultType ? `<span class="movie-genre-badge">${m._resultType}</span>` : ''}
       </div>
     </div>
   `;
   const title = m.title || m.name;
-  c.onclick = () => openDetail(m.id,currentType);
+  c.onclick = () => openDetail(m.id, m._resultType ? (m._resultType === 'movie' ? 'movie' : 'tv') : currentType);
   return c;
 }
 
-function openPlayer(title, tmdbId=''){
+function openPlayer(title, id=''){
   document.getElementById('playerTitle').textContent = title;
-  document.getElementById('tmdbInput').value = tmdbId;
+  document.getElementById('tmdbInput').value = id;
   document.getElementById('playerIframe').src = '';
   document.getElementById('playerModal').classList.add('open');
   const epControls = document.getElementById('episodeControls');
   const isShow = currentType !== 'movie';
   epControls.style.display = isShow ? 'flex' : 'none';
-  if(isShow && tmdbId) loadEpisodes(tmdbId);
+  if(isShow && id) loadEpisodes(id);
   document.getElementById('nextEpBtn').style.display = isShow ? 'block' : 'none';
   const sInput = document.getElementById('seasonInput');
   const eInput = document.getElementById('episodeInput');
@@ -147,7 +153,7 @@ function openPlayer(title, tmdbId=''){
   if(eInput) eInput.value = 1;
   epControls.style.gap = '8px';
   epControls.style.alignItems = 'center';
-  if(tmdbId) loadEmbed();
+  if(id) loadEmbed();
 }
 
 function closePlayer(){
@@ -169,6 +175,9 @@ function loadEmbed(){
       apiplayer: `https://apiplayer.ru/embed/movie/${id}`,
       vidlux: `https://vidlux.xyz/embed/movie/${id}`,
       primesrc: `https://primesrc.me/embed/movie?tmdb=${id}`,
+      ezvidapi: `https://ezvidapi.com/embed/movie/${id}`,
+      vidapi: `https://vidapi.xyz/embed/movie/${id}`,
+      vidlink: `https://vidlink.pro/movie/${id}?autoplay=true`,
     };  
   } else {
     urls = {
@@ -177,30 +186,68 @@ function loadEmbed(){
       apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}`,
       vidlux: `https://vidlux.xyz/embed/tv/${id}/${s}/${e}`,
       primesrc: `https://primesrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
+      ezvidapi: `https://ezvidapi.com/embed/tv/${id}/${s}/${e}`,
+      vidapi: `https://vidapi.xyz/embed/tv/${id}/${s}/${e}`,
+      vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true`,
     };
   }
   document.getElementById('playerIframe').src = urls[src];
 }
 
 let searchTimeout;
+
 function handleSearch(q){
   clearTimeout(searchTimeout);
-  if(!q) return fetchPopular();
+  const trendingSection = document.getElementById('trendingRow').closest('.section');
+  const hero = document.querySelector('.hero');
+  const genreTabs = document.querySelector('.genre-tabs');
+  if(!q){
+    hero.style.display = 'block';
+    genreTabs.style.display = 'flex';
+    trendingSection.style.display = 'block';
+    document.getElementById('moviesGrid').style.minHeight = '';
+    document.getElementById('app').classList.remove('search-active');
+    document.getElementById('popularSection').style.display = 'block';
+    return fetchPopular();
+  }
+  hero.style.display = 'none';
+  genreTabs.style.display = 'none';
+  trendingSection.style.display = 'none';
+  document.getElementById('popularSection').style.display = 'block';  
+  document.getElementById('moviesGrid').style.minHeight = '100vh';
+  document.getElementById('app').classList.add('search-active');
+  const matchedGenre = genres.find(g => g.name.toLowerCase().includes(q.toLowerCase()));
+  if(matchedGenre){
+    fetchPopular(matchedGenre.id);
+    document.getElementById('gridTitle').textContent = `${matchedGenre.name} movies`;
+    return;
+  }
   searchTimeout = setTimeout(async () => {
-    const type = currentType === 'movie' ? 'movie' : 'tv';
-    const res = await fetch(`${TMDB_BASE}/search/${type}?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}`);
-    const data = await res.json();
-    renderGrid(data.results);
+    const [movieRes, tvRes] = await Promise.all([
+        fetch(`${TMDB_BASE}/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}`),
+        fetch(`${TMDB_BASE}/search/tv?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}`)
+    ]);
+    const movieData = await movieRes.json();
+    const tvData = await tvRes.json();
+
+    const movies = movieData.results.map(m => ({...m, _resultType: 'movie'}));
+    const tvShows = tvData.results.map(m => ({
+        ...m,
+        _resultType: m.genre_ids?.includes(16) ? 'anime' : 'series'
+    }));
+
+    const combined = [...movies, ...tvShows].sort((a,b) => b.popularity - a.popularity);
+    renderGrid(combined);
     document.getElementById('gridTitle').textContent = `Results for "${q}"`;
   }, 400);
 }
 
-async function loadEpisodes(tmdbId, season=1){
-  const res = await fetch(`${TMDB_BASE}/tv/${tmdbId}/season/${season}?api_key=${TMDB_KEY}`);
+async function loadEpisodes(id, s=1){
+  const res = await fetch(`${TMDB_BASE}/tv/${id}/season/${season}?api_key=${TMDB_KEY}`);
   const data = await res.json();
 
   // render season tabs
-  const seasonsRes = await fetch(`${TMDB_BASE}/tv/${tmdbId}?api_key=${TMDB_KEY}`);
+  const seasonsRes = await fetch(`${TMDB_BASE}/tv/${id}?api_key=${TMDB_KEY}`);
   const showData = await seasonsRes.json();
   const seasonTabs = document.getElementById('seasonTabs');
   seasonTabs.innerHTML = '';
@@ -208,7 +255,7 @@ async function loadEpisodes(tmdbId, season=1){
     const btn = document.createElement('button');
     btn.textContent = `S${s.season_number}`;
     btn.style.cssText = `padding:4px 10px;border-radius:6px;border:0.5px solid rgba(255,255,255,0.15);background:${s.season_number==season?'#e50914':'rgba(255,255,255,0.05)'};color:#fff;font-size:12px;cursor:pointer`;
-    btn.onclick = () => loadEpisodes(tmdbId, s.season_number);
+    btn.onclick = () => loadEpisodes(id, s.season_number);
     seasonTabs.appendChild(btn);
   });
 
@@ -220,7 +267,9 @@ async function loadEpisodes(tmdbId, season=1){
     btn.style.cssText = `background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;color:#fff;font-size:12px;cursor:pointer;text-align:left;`;
     btn.innerHTML = `<div style="color:#e50914;font-size:11px;margin-bottom:2px">EP ${ep.episode_number}</div><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ep.name}</div>`;
     btn.onclick = () => {
-    loadEmbed(season, ep.episode_number);
+    document.getElementById('seasonInput').value = season;
+    document.getElementById('episodeInput').value = ep.episode_number;
+    loadEmbed();
     };
     epList.appendChild(btn);
   });
@@ -232,13 +281,12 @@ function nextEpisode(){
   loadEmbed();
 }
 
-async function openDetail(tmdbId, type='movie'){
+async function openDetail(id, type='movie'){
   const endpoint = type === 'movie'
-    ? `${TMDB_BASE}/movie/${tmdbId}?api_key=${TMDB_KEY}&append_to_response=credits`
-    : `${TMDB_BASE}/tv/${tmdbId}?api_key=${TMDB_KEY}&append_to_response=credits`;
+    ? `${TMDB_BASE}/movie/${id}?api_key=${TMDB_KEY}&append_to_response=credits`
+    : `${TMDB_BASE}/tv/${id}?api_key=${TMDB_KEY}&append_to_response=credits`;
   const res = await fetch(endpoint);
   const m = await res.json();
-
   const title = m.title || m.name;
   const year = (m.release_date || m.first_air_date || '').slice(0,4);
   const runtime = m.runtime ? `${m.runtime} min` : m.episode_run_time?.[0] ? `${m.episode_run_time[0]} min/ep` : '';
@@ -260,7 +308,7 @@ async function openDetail(tmdbId, type='movie'){
   document.getElementById('detailCast').innerHTML = cast.map(c=>`<span class="cast-chip">${c.name}</span>`).join('');
   document.getElementById('detailPlayBtn').onclick = () => {
     closeDetail();
-    openPlayer(title, tmdbId);
+    openPlayer(title, id);
   };
 
   document.getElementById('detailModal').classList.add('open');
