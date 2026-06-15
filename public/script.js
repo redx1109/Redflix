@@ -6,7 +6,7 @@ let activeGenre = '';
 let currentType = 'movie';
 let currentUrl = '';
 
-fetch('/api/config')
+fetch('../api/config')
   .then(r => r.json())
   .then(data => {
     TMDB_KEY = data.tmdbKey;
