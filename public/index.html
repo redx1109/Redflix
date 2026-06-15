@@ -19,7 +19,7 @@
       <a onclick="switchType('movie')">Movies</a>
       <a onclick="switchType('tv')">TV Shows</a>
       <a onclick="switchType('anime')">Anime</a>
-      <a>My List</a>
+      <a onclick="showMyList()">My List</a>
     </div>
     <div class="search-bar">
       <i class="ti ti-search" style="font-size:15px;color:rgba(255,255,255,0.3)" aria-hidden="true"></i>
@@ -115,7 +115,10 @@
     <option value="apiplayer">ApiPlayer ✅</option>
     <option value="primesrc">PrimeSrc (subs)</option>
     <option value="ezvidapi">EzVidAPI</option>
-    <option value="vidlink">VidLink</option>
+    <option value="vidlink">VidLink</option>  
+    <option value="vidsrcsbs">VidSrc.sbs ✅</option>
+    <option value="twoembed">2Embed ✅</option>
+    <option value="twoembedskin">2Embed Skin</option> 
   </select>
   <input id="tmdbInput" type="number" style="display:none">
   <button id="nextEpBtn" onclick="nextEpisode()" style="display:none;background:rgba(255,255,255,0.08);color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer">Next EP ▶</button>
