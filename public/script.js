@@ -9,6 +9,16 @@ async function init(){
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
 }
 
+function switchToHome(){
+  currentType = 'movie';
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('gridTitle').textContent = 'Popular Movies';
+  loadGenres();
+  fetchTrending();
+  fetchPopular();
+}
+
 function switchType(type){
   currentType = type;
   activeGenre = '';
