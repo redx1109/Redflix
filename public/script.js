@@ -19,12 +19,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
-fetch('/api/config')
-  .then(r => r.json())
-  .then(data => {
-    TMDB_KEY = data.tmdbKey;
-    init();
-  });
+init()
 
 async function init(){
   if(!TMDB_KEY) return;
