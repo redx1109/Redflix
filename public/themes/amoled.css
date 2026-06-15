@@ -1,0 +1,14 @@
+/* 🌑 AMOLED Dark */
+:root { --accent: #e50914; --accent2: #f5c518; --bg: #000000; --bg2: #0a0a0a; --surface: #111111; }
+body, #app { background: #000000; }
+nav { background: rgba(0,0,0,0.98); }
+.hero { background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000000 100%), linear-gradient(135deg, #0d0000 0%, #000000 50%, #0d0000 100%); }
+.hero::before { background: radial-gradient(ellipse at 30% 50%, rgba(229,9,20,0.10) 0%, transparent 60%); }
+.player-box { background: #0a0a0a; }
+.detail-box { background: #0a0a0a; }
+
+body { font-family: 'DM Sans', sans-serif; }
+.movie-card:hover { transform: scale(1.04); transition: transform 0.2s; }
+.movie-poster { box-shadow: 0 0 0 rgba(255,255,255,0); transition: box-shadow 0.2s; }
+.movie-card:hover .movie-poster { box-shadow: 0 0 18px rgba(255,255,255,0.08); }
+.play-btn { box-shadow: 0 0 12px rgba(255,255,255,0.2); }

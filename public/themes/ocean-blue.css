@@ -1,0 +1,17 @@
+/* 🌊 Ocean Blue */
+:root { --accent: #00bfff; --accent2: #00e5ff; --bg: #020d1a; --bg2: #041526; }
+body, #app { background: #020d1a; }
+nav { background: rgba(2,13,26,0.97); border-bottom: 0.5px solid rgba(0,191,255,0.12); }
+.hero { background: linear-gradient(to bottom, rgba(2,13,26,0) 0%, #020d1a 100%), linear-gradient(135deg, #051a3a 0%, #020d1a 50%, #041a2e 100%); }
+.hero::before { background: radial-gradient(ellipse at 30% 50%, rgba(0,191,255,0.14) 0%, transparent 60%); }
+.hero-badge { background: rgba(0,191,255,0.15); border-color: rgba(0,191,255,0.3); color: #00bfff; }
+.hero h1 span { color: var(--accent); }
+.genre-tab.active, .genre-tab:hover { background: var(--accent); border-color: var(--accent); }
+.see-all { color: var(--accent); }
+.btn-primary { background: var(--accent); }
+.play-btn { background: var(--accent); }
+.movie-genre-badge { background: rgba(0,191,255,0.15); color: rgba(0,191,255,0.9); }
+.detail-genre-tag { background: rgba(0,191,255,0.15); color: rgba(0,191,255,0.9); border-color: rgba(0,191,255,0.3); }
+.embed-note code { color: rgba(0,191,255,0.8); }
+.player-box { background: #041526; }
+.detail-box { background: #041526; }

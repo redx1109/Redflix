@@ -1,0 +1,17 @@
+/* 💜 Purple Haze */
+:root { --accent: #a855f7; --accent2: #e879f9; --bg: #08010f; --bg2: #0f0520; }
+body, #app { background: #08010f; }
+nav { background: rgba(8,1,15,0.97); border-bottom: 0.5px solid rgba(168,85,247,0.12); }
+.hero { background: linear-gradient(to bottom, rgba(8,1,15,0) 0%, #08010f 100%), linear-gradient(135deg, #1a0a2e 0%, #08010f 50%, #1a002e 100%); }
+.hero::before { background: radial-gradient(ellipse at 30% 50%, rgba(168,85,247,0.16) 0%, transparent 60%); }
+.hero-badge { background: rgba(168,85,247,0.15); border-color: rgba(168,85,247,0.3); color: #c084fc; }
+.hero h1 span { color: var(--accent); }
+.genre-tab.active, .genre-tab:hover { background: var(--accent); border-color: var(--accent); }
+.see-all { color: var(--accent); }
+.btn-primary { background: var(--accent); }
+.play-btn { background: var(--accent); }
+.movie-genre-badge { background: rgba(168,85,247,0.15); color: rgba(168,85,247,0.9); }
+.detail-genre-tag { background: rgba(168,85,247,0.15); color: rgba(168,85,247,0.9); border-color: rgba(168,85,247,0.3); }
+.embed-note code { color: rgba(168,85,247,0.8); }
+.player-box { background: #0f0520; }
+.detail-box { background: #0f0520; }
