@@ -1,9 +1,10 @@
-let TMDB_KEY = '0ae1d4da04c9c45120bf6eb56d037ad8';
+let TMDB_KEY = 'TMDB_KEY = 0ae1d4da04c9c45120bf6eb56d037ad8';
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 const IMG_BASE = 'https://image.tmdb.org/t/p/w500';
 let genres = [];
 let activeGenre = '';
 let currentType = 'movie';
+let currentUrl = '';
 
 fetch('/api/config')
   .then(r => r.json())
@@ -47,6 +48,13 @@ async function fetchTrending(){
   updateHero(data.results[0]);
 }
 
+async function loadMore(){
+  const res = await fetch(currentUrl + '&page=2');
+  const data = await res.json();
+  const el = document.getElementById('moviesGrid');
+  data.results.forEach((m, i) => el.appendChild(movieCard(m, false, i)));
+}
+
 function updateHero(m){
   if(!m) return;
   const backdrop = m.backdrop_path ? `https://image.tmdb.org/t/p/original${m.backdrop_path}` : '';
@@ -76,6 +84,7 @@ async function fetchPopular(genreId=''){
       ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&with_keywords=210024&sort_by=popularity.desc`
       : `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=popularity.desc`;
   }
+  currentUrl = url;
   const res = await fetch(url);
   const data = await res.json();
   renderGrid(data.results);
@@ -101,18 +110,19 @@ function renderGenres(){
 function renderTrending(movies){
   const el = document.getElementById('trendingRow');
   el.innerHTML = '';
-  movies.slice(0,8).forEach(m => el.appendChild(movieCard(m, true)));
+  movies.slice(0,8).forEach((m, i) => el.appendChild(movieCard(m, true, i)));
 }
 
 function renderGrid(movies){
   const el = document.getElementById('moviesGrid');
   el.innerHTML = '';
-  movies.forEach(m => el.appendChild(movieCard(m)));
+  movies.forEach((m, i) => el.appendChild(movieCard(m, false, i)));
 }
 
-function movieCard(m, small=false){
+function movieCard(m, small=false, index=0){
   const c = document.createElement('div');
   c.className = small ? 'trending-card' : 'movie-card';
+  c.style.animationDelay = `${index * 0.05}s`;
   const poster = m.poster_path
     ? `<img class="poster-img" src="${IMG_BASE}${m.poster_path}" alt="${m.title}" loading="lazy">`
     : `<div class="poster-fallback"><i class="ti ti-movie"></i><span>${m.title}</span></div>`;
@@ -242,7 +252,7 @@ function handleSearch(q){
   }, 400);
 }
 
-async function loadEpisodes(id, s=1){
+async function loadEpisodes(id, season=1){
   const res = await fetch(`${TMDB_BASE}/tv/${id}/season/${season}?api_key=${TMDB_KEY}`);
   const data = await res.json();
 
