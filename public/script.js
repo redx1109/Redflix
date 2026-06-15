@@ -1,4 +1,4 @@
-let TMDB_KEY = 'TMDB_KEY = 0ae1d4da04c9c45120bf6eb56d037ad8';
+let TMDB_KEY = '0ae1d4da04c9c45120bf6eb56d037ad8';
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 const IMG_BASE = 'https://image.tmdb.org/t/p/w500';
 let genres = [];
