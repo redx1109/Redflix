@@ -8,7 +8,7 @@ let currentUrl = '';
 async function init(){
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
 }
-
+init()
 function switchToHome(){
   currentType = 'movie';
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
