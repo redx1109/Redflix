@@ -186,6 +186,7 @@ nav {
     justify-content: center;
   }
   .movie-overlay { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 30%); }
+  .search-bar {width: 100%;}
   }
   .nav-links { display: flex; }
 
