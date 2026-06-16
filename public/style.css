@@ -19,7 +19,7 @@ body { font-family: var(--font-sans); background: #0a0a0f; color: #fff; min-heig
 .movie-card:hover .movie-poster { box-shadow: 0 12px 30px #e50914; }
 
 .search-active {
-  padding-top: 80px;
+  padding-top: 0px;
 }
 nav {
   display: flex; align-items: center; justify-content: space-between;
