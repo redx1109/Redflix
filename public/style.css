@@ -189,7 +189,7 @@ nav {
   }
   .nav-links { display: flex; }
 
-  .search-bar { width: 100%; }
+  .search-bar { width: 20%; }
 
   .hero { padding: 40px 16px 30px; }
   .hero h1 { font-size: 24px; }
