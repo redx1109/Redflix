@@ -288,6 +288,7 @@ nav {
   .detail-content { flex-direction: column; margin-top: -40px; }
   .detail-poster { flex: none; width: 100px; height: 150px; }
   .detail-info { padding-top: 10px; }
+  search-bar { width: 100%;}
 }
 
 #seasonTabs { display:flex; gap:8px; flex-wrap:wrap; }
