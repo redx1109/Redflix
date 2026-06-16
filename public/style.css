@@ -19,15 +19,17 @@ body { font-family: var(--font-sans); background: #0a0a0f; color: #fff; min-heig
 .movie-card:hover .movie-poster { box-shadow: 0 12px 30px #e50914; }
 
 .search-active {
-  padding-top: 0px;
+  padding-top: 0;
 }
+
 nav {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 28px; background: rgba(10,10,15,0.95);
   border-bottom: 0.5px solid rgba(255,255,255,0.08);
   position: sticky; top: 0; z-index: 100;
 }
-.logo { font-size: 22px; font-weight: 500; color: var(--accent); letter-spacing: -0.5px; }
+
+.logo { font-size: 22px; font-weight: 500; color: var(--accent); letter-spacing: -0.5px; align-items: center; }
 .nav-links { display: flex; gap: 20px; align-items: center; }
 .nav-links a {
   font-size: 14px; color: rgba(255,255,255,0.65); text-decoration: none;
@@ -182,7 +184,8 @@ nav {
     padding: 12px 16px;
     justify-content: center;
   }
-
+  .movie-overlay { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 30%); }
+  }
   .nav-links { display: flex; }
 
   .search-bar { width: 100%; }
@@ -190,7 +193,7 @@ nav {
   .hero { padding: 40px 16px 30px; }
   .hero h1 { font-size: 24px; }
 
-  .genre-tabs { padding: 0 16px 16px; }
+  .genre-tabs { display: none; }
 
   .section { padding: 24px 16px; }
 
