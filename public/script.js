@@ -8,6 +8,7 @@ let currentUrl = '';
 let currentPage = 1;
 
 window.addEventListener('scroll', () => {
+  if(!currentUrl) return; 
   if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 300){
     currentPage++;
     fetch(currentUrl + `&page=${currentPage}`)
@@ -20,9 +21,7 @@ window.addEventListener('scroll', () => {
 });
 
 init()
-
 async function init(){
-  if(!TMDB_KEY) return;
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
 }
 
@@ -145,11 +144,16 @@ function toggleList(e, id, title, poster){
   const exists = list.find(m => m.id === id);
   if(exists) list = list.filter(m => m.id !== id);
   else list.push({id, title, poster});
+  const btn = e.currentTarget;
+  btn.innerHTML = exists 
+  ? '<i class="ti ti-plus" style="font-size:14px"></i>'
+  : '<i class="ti ti-x" style="font-size:14px"></i>';
   localStorage.setItem('myList', JSON.stringify(list));
 }
 
 function movieCard(m, small=false, index=0){
   const c = document.createElement('div');
+  const inList = JSON.parse(localStorage.getItem('myList')||'[]').find(x=>x.id===m.id);
   c.className = small ? 'trending-card' : 'movie-card';
   c.style.animationDelay = `${index * 0.05}s`;
   const poster = m.poster_path
@@ -161,7 +165,7 @@ function movieCard(m, small=false, index=0){
       <div class="movie-overlay">
   <div style="display:flex;gap:6px;align-items:center;">
   <div class="play-btn"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
-  <div class="add-btn" onclick="toggleList(event, ${m.id}, '${(m.title||m.name).replace(/'/g,"\\'")}', '${m.poster_path}')"><i class="ti ti-plus" style="font-size:14px"></i></div>
+  <div class="add-btn" onclick="toggleList(event, ${m.id}, '${(m.title||m.name).replace(/'/g,"\\'")}', '${m.poster_path}')"><i class="ti ti-${inList?'x':'plus'}" style="font-size:14px"></i></div>
   </div>
       </div>
     </div>
@@ -367,11 +371,13 @@ function closeDetail(){
 }
 
 function showMyList(){
+  currentUrl = '';  
   const list = JSON.parse(localStorage.getItem('myList') || '[]');
   document.querySelector('.hero').style.display = 'none';
   document.querySelector('.genre-tabs').style.display = 'none';
   document.getElementById('trendingRow').closest('.section').style.display = 'none';
   document.getElementById('gridTitle').textContent = '❤️ My List';
   document.getElementById('popularSection').style.display = 'block';
+  document.getElementById('moviesGrid').innerHTML = '';
   renderGrid(list.map(m => ({...m, poster_path: m.poster, title: m.title})));
 }
