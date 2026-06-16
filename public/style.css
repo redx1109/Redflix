@@ -178,6 +178,7 @@ nav {
 .add-btn { width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer; }
 .add-btn:hover { background:rgba(255,255,255,0.3); }
 @media (max-width: 768px) {
+  .genre-tabs { display: none; }
   nav {
     flex-wrap: wrap;
     gap: 10px;
@@ -192,11 +193,7 @@ nav {
 
   .hero { padding: 40px 16px 30px; }
   .hero h1 { font-size: 24px; }
-
-  .genre-tabs { display: none; }
-
   .section { padding: 24px 16px; }
-
   .movies-grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 10px;
