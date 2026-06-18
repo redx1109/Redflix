@@ -1,8 +1,8 @@
 // Theme Switcher — paste this in your <script> tag or JS file
 const themes = [
+  { id: 'Redflix',   name: '🔴 Redflix',  file: '../style.css' },
   { id: 'gold',        name: '✨ Gold',       file: 'gold.css' },
   { id: 'amoled',      name: '🌑 AMOLED',    file: 'amoled.css' },
-  { id: 'red-black',   name: '🔴 Red Black',  file: 'red-black.css' },
   { id: 'ocean-blue',  name: '🌊 Ocean Blue', file: 'ocean-blue.css' },
   { id: 'purple-haze', name: '💜 Purple',     file: 'purple-haze.css' },
   { id: 'matrix',      name: '🌿 Matrix',     file: 'matrix-green.css' },
