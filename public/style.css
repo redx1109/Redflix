@@ -222,6 +222,7 @@ nav {
   position: fixed; inset: 0; background: rgba(0,0,0,0.92);
   display: none; align-items: center; justify-content: center;
   z-index: 999; padding: 20px;
+  overflow-y: auto;
 }
 .detail-modal.open { display: flex; }
 .detail-box {
