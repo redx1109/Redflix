@@ -200,11 +200,13 @@ function openPlayer(title, id=''){
   epControls.style.gap = '8px';
   epControls.style.alignItems = 'center';
   if(id) loadEmbed();
+  document.body.style.overflow = 'hidden';
 }
 
 function closePlayer(){
   document.getElementById('playerIframe').src = '';
   document.getElementById('playerModal').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 function loadEmbed(){
@@ -368,12 +370,13 @@ async function openDetail(id, type='movie'){
     closeDetail();
     openPlayer(title, id);
   };
-
+  document.body.style.overflow = 'hidden';
   document.getElementById('detailModal').classList.add('open');
 }
 
 function closeDetail(){
   document.getElementById('detailModal').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 function showMyList(){
