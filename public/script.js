@@ -20,7 +20,13 @@ window.addEventListener('scroll', () => {
   }
 });
 
-init()
+fetch('/api/config')
+  .then(r => r.json())
+  .then(data => {
+    TMDB_KEY = data.tmdbKey;
+    init();
+  });
+
 async function init(){
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
 }
@@ -157,14 +163,16 @@ function movieCard(m, small=false, index=0){
   c.className = small ? 'trending-card' : 'movie-card';
   c.style.animationDelay = `${index * 0.05}s`;
   const poster = m.poster_path
-    ? `<img class="poster-img" src="${IMG_BASE}${m.poster_path}" alt="${m.title}" loading="lazy">`
-    : `<div class="poster-fallback"><i class="ti ti-movie"></i><span>${m.title}</span></div>`;
+  ? `<img class="poster-img" src="${IMG_BASE}${m.poster_path}" alt="${m.title}" loading="lazy">`
+  : `<div class="poster-fallback"><i class="ti ti-movie"></i><span>${m.title}</span></div>`;
+  const ratingBadge = `<div class="movie-rating"><i class="ti ti-star-filled" style="font-size:10px"></i>${m.vote_average?.toFixed(1)||'?'}</div>`;
   c.innerHTML = `
     <div class="movie-poster">
       ${poster}
+      ${ratingBadge}
       <div class="movie-overlay" onclick="event.stopPropagation()">
   <div style="display:flex;gap:6px;align-items:center;">
-  <div class="play-btn"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
+  <div class="play-btn" onclick="openDetail(${m.id}, '${m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType)}')"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
   <div class="add-btn" onclick="toggleList(event, ${m.id}, '${(m.title||m.name).replace(/'/g,"\\'")}', '${m.poster_path}')"><i class="ti ti-${inList?'x':'plus'}" style="font-size:14px"></i></div>
   </div>
       </div>
@@ -173,23 +181,25 @@ function movieCard(m, small=false, index=0){
       <div class="movie-title">${m.title || m.name}</div>
       <div class="movie-meta">
         <span class="movie-year">${(m.release_date || m.first_air_date)?.slice(0,4)||'N/A'}</span>
-        <span class="movie-rating"><i class="ti ti-star-filled" style="font-size:10px"></i>${m.vote_average?.toFixed(1)||'?'}</span>
         ${m._resultType ? `<span class="movie-genre-badge">${m._resultType}</span>` : ''}
       </div>
     </div>
   `;
   const title = m.title || m.name;
-  c.onclick = () => openDetail(m.id, m._resultType ? (m._resultType === 'movie' ? 'movie' : 'tv') : currentType);
+  c.querySelector('.movie-poster').onclick = (e) => {
+    if(!e.target.closest('.add-btn')) openDetail(m.id, m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType));
+  };
   return c;
 }
 
-function openPlayer(title, id=''){
+async function openPlayer(title, id='', type=currentType){
+  currentType = type;
   document.getElementById('playerTitle').textContent = title;
   document.getElementById('tmdbInput').value = id;
   document.getElementById('playerIframe').src = '';
   document.getElementById('playerModal').classList.add('open');
   const epControls = document.getElementById('episodeControls');
-  const isShow = currentType !== 'movie';
+  const isShow = type !== 'movie';
   epControls.style.display = isShow ? 'flex' : 'none';
   if(isShow && id) loadEpisodes(id);
   document.getElementById('nextEpBtn').style.display = isShow ? 'block' : 'none';
@@ -199,17 +209,23 @@ function openPlayer(title, id=''){
   if(eInput) eInput.value = 1;
   epControls.style.gap = '8px';
   epControls.style.alignItems = 'center';
+  if(type === 'anime') {
+  const extRes = await fetch(`${TMDB_BASE}/tv/${id}/external_ids?api_key=${TMDB_KEY}`);
+  const extData = await extRes.json();
+  window._malId = extData.tvdb_id; // closest we get from TMDB
+  window._animeId = id;
+  }
   if(id) loadEmbed();
-  document.body.style.overflow = 'hidden';
 }
 
 function closePlayer(){
   document.getElementById('playerIframe').src = '';
   document.getElementById('playerModal').classList.remove('open');
-  document.body.style.overflow = '';
 }
 
 function loadEmbed(){
+  const lang = document.getElementById('langSelect')?.value || '';
+  const langParam = lang ? `?lang=${lang}` : '';
   const id = document.getElementById('tmdbInput').value;
   const src = document.getElementById('srcSelect').value;
   const s = parseInt(document.getElementById('seasonInput')?.value) || 1;
@@ -223,7 +239,7 @@ function loadEmbed(){
       vidlux: `https://vidlux.xyz/embed/movie/${id}`,
       primesrc: `https://primesrc.me/embed/movie?tmdb=${id}`,
       ezvidapi: `https://ezvidapi.com/embed/movie/${id}`,
-      vidapi: `https://vidapi.xyz/embed/movie/${id}`,
+      vidapi: `https://vidapi.xyz/embed/movie/${id}?server=1${langParam}`,
       vidlink: `https://vidlink.pro/movie/${id}?autoplay=true`,
       vidsrcsbs: `https://vidsrc.sbs/embed/movie?tmdb=${id}`,
       twoembed: `https://www.2embed.cc/embed/${id}`,
@@ -240,7 +256,7 @@ function loadEmbed(){
       vidlux: `https://vidlux.xyz/embed/tv/${id}/${s}/${e}`,
       primesrc: `https://primesrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       ezvidapi: `https://ezvidapi.com/embed/tv/${id}/${s}/${e}`,
-      vidapi: `https://vidapi.xyz/embed/tv/${id}/${s}/${e}`,
+      vidapi: `https://vidapi.xyz/embed/tv/${id}?server=1/${s}/${e}${langParam}`,
       vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true`,
       vidsrcsbs: `https://vidsrc.sbs/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       twoembed: `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}`,
@@ -368,10 +384,10 @@ async function openDetail(id, type='movie'){
   document.getElementById('detailCast').innerHTML = cast.map(c=>`<span class="cast-chip">${c.name}</span>`).join('');
   document.getElementById('detailPlayBtn').onclick = () => {
     closeDetail();
-    openPlayer(title, id);
+    openPlayer(title, id, type);
   };
-  document.body.style.overflow = 'hidden';
   document.getElementById('detailModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
 function closeDetail(){
