@@ -1,5 +1,6 @@
 // Theme Switcher — paste this in your <script> tag or JS file
 const themes = [
+  { id: 'gold',        name: '✨ Gold',       file: 'gold.css' },
   { id: 'amoled',      name: '🌑 AMOLED',    file: 'amoled.css' },
   { id: 'red-black',   name: '🔴 Red Black',  file: 'red-black.css' },
   { id: 'ocean-blue',  name: '🌊 Ocean Blue', file: 'ocean-blue.css' },
@@ -77,6 +78,6 @@ function buildThemeSwitcher() {
 // Init on load
 document.addEventListener('DOMContentLoaded', () => {
   buildThemeSwitcher();
-  const saved = localStorage.getItem('reddflix-theme') || 'matrix';
+  const saved = localStorage.getItem('reddflix-theme') || 'gold';
   applyTheme(saved);
 });
