@@ -162,7 +162,7 @@ function movieCard(m, small=false, index=0){
   c.innerHTML = `
     <div class="movie-poster">
       ${poster}
-      <div class="movie-overlay">
+      <div class="movie-overlay" onclick="event.stopPropagation()">
   <div style="display:flex;gap:6px;align-items:center;">
   <div class="play-btn"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
   <div class="add-btn" onclick="toggleList(event, ${m.id}, '${(m.title||m.name).replace(/'/g,"\\'")}', '${m.poster_path}')"><i class="ti ti-${inList?'x':'plus'}" style="font-size:14px"></i></div>
