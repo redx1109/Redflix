@@ -385,3 +385,29 @@ nav {
 #seasonTabs { display:flex; gap:8px; flex-wrap:wrap; }
 
 #episodeList { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:8px; max-height:180px; overflow-y:auto; width:100%; }
+
+@media (min-width: 1280px) and (pointer: coarse) {
+  .detail-box {
+    max-height: 95vh;
+    overflow-y: auto;
+  }
+  .detail-backdrop {
+    height: 200px;
+  }
+  .detail-overlay {
+    height: 200px;
+  }
+  .detail-content {
+    margin-top: -50px;
+  }
+  .detail-info {
+    padding-top: 60px;
+  }
+  .detail-btns {
+    position: sticky;
+    bottom: 0;
+    background: #0d0d1c;
+    padding: 12px 0;
+    z-index: 5;
+  }
+}
