@@ -1,0 +1,105 @@
+async function loadGenres(){
+  const endpoint = currentType === 'movie'
+    ? `${TMDB_BASE}/genre/movie/list?api_key=${TMDB_KEY}`
+    : `${TMDB_BASE}/genre/tv/list?api_key=${TMDB_KEY}`;
+  const res = await fetch(endpoint);
+  const data = await res.json();
+  genres = [{id:'', name:'All'}, ...data.genres];
+  renderGenres();
+}
+
+async function fetchTrending(){
+  const type = currentType === 'anime' ? 'tv' : currentType;
+  const res = await fetch(`${TMDB_BASE}/trending/${type}/week?api_key=${TMDB_KEY}`);
+  const data = await res.json();
+  renderTrending(data.results);
+  updateHero(data.results[0]);
+}
+
+async function fetchPopular(genreId=''){
+  let url;
+  if(currentType === 'movie'){
+    url = genreId
+      ? `${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&with_genres=${genreId}&sort_by=popularity.desc`
+      : `${TMDB_BASE}/movie/popular?api_key=${TMDB_KEY}`;
+  } else if(currentType === 'tv'){
+    url = genreId
+      ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&sort_by=popularity.desc`
+      : `${TMDB_BASE}/tv/popular?api_key=${TMDB_KEY}`;
+  } else {
+    url = genreId
+      ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&with_keywords=210024&sort_by=popularity.desc`
+      : `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=popularity.desc`;
+  }
+  currentUrl = url;
+  currentPage = 1;
+  const res = await fetch(url);
+  const data = await res.json();
+  renderGrid(data.results);
+}
+
+async function openDetail(id, type='movie'){
+  const endpoint = type === 'movie'
+    ? `${TMDB_BASE}/movie/${id}?api_key=${TMDB_KEY}&append_to_response=credits`
+    : `${TMDB_BASE}/tv/${id}?api_key=${TMDB_KEY}&append_to_response=credits`;
+  const res = await fetch(endpoint);
+  const m = await res.json();
+  const title = m.title || m.name;
+  const year = (m.release_date || m.first_air_date || '').slice(0,4);
+  const runtime = m.runtime ? `${m.runtime} min` : m.episode_run_time?.[0] ? `${m.episode_run_time[0]} min/ep` : '';
+  const rating = m.vote_average ? `⭐ ${m.vote_average.toFixed(1)}` : '';
+  const overview = m.overview || 'No description available.';
+  const backdrop = m.backdrop_path ? `https://image.tmdb.org/t/p/w1280${m.backdrop_path}` : '';
+  const poster = m.poster_path ? `${IMG_BASE}${m.poster_path}` : '';
+  const cast = m.credits?.cast?.slice(0,8) || [];
+  const genres = m.genres || [];
+
+  document.getElementById('detailBackdrop').style.backgroundImage = backdrop ? `url(${backdrop})` : '';
+  document.getElementById('detailPoster').innerHTML = poster ? `<img src="${poster}" alt="${title}">` : '';
+  document.getElementById('detailTitle').textContent = title;
+  document.getElementById('detailYear').textContent = year;
+  document.getElementById('detailRuntime').textContent = runtime;
+  document.getElementById('detailRating').textContent = rating;
+  document.getElementById('detailOverview').textContent = overview;
+  document.getElementById('detailGenres').innerHTML = genres.map(g=>`<span class="detail-genre-tag">${g.name}</span>`).join('');
+  document.getElementById('detailCast').innerHTML = cast.map(c=>`<span class="cast-chip">${c.name}</span>`).join('');
+  document.getElementById('detailPlayBtn').onclick = () => {
+    closeDetail();
+    openPlayer(title, id, type);
+  };
+  document.getElementById('detailModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+async function loadEpisodes(id, season=1){
+  const res = await fetch(`${TMDB_BASE}/tv/${id}/season/${season}?api_key=${TMDB_KEY}`);
+  const data = await res.json();
+
+  // render season tabs
+  const seasonsRes = await fetch(`${TMDB_BASE}/tv/${id}?api_key=${TMDB_KEY}`);
+  const showData = await seasonsRes.json();
+  const seasonTabs = document.getElementById('seasonTabs');
+  seasonTabs.innerHTML = '';
+  showData.seasons.filter(s=>s.season_number>0).forEach(s => {
+    const btn = document.createElement('button');
+    btn.textContent = `S${s.season_number}`;
+    btn.style.cssText = `padding:4px 10px;border-radius:6px;border:0.5px solid rgba(255,255,255,0.15);background:${s.season_number==season?'#e50914':'rgba(255,255,255,0.05)'};color:#fff;font-size:12px;cursor:pointer`;
+    btn.onclick = () => loadEpisodes(id, s.season_number);
+    seasonTabs.appendChild(btn);
+  });
+
+  // render episode list
+  const epList = document.getElementById('episodeList');
+  epList.innerHTML = '';
+  data.episodes?.forEach(ep => {
+    const btn = document.createElement('button');
+    btn.style.cssText = `background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;color:#fff;font-size:12px;cursor:pointer;text-align:left;`;
+    btn.innerHTML = `<div style="color:#e50914;font-size:11px;margin-bottom:2px">EP ${ep.episode_number}</div><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ep.name}</div>`;
+    btn.onclick = () => {
+    document.getElementById('seasonInput').value = season;
+    document.getElementById('episodeInput').value = ep.episode_number;
+    loadEmbed();
+    };
+    epList.appendChild(btn);
+  });
+}
