@@ -11,7 +11,7 @@ function movieCard(m, small=false, index=0){
     <div class="movie-poster">
       ${poster}
       ${ratingBadge}
-      <div class="movie-overlay" onclick="event.stopPropagation()">
+      <div class="movie-overlay">
   <div style="display:flex;gap:6px;align-items:center;">
   <div class="play-btn" onclick="event.stopPropagation();openPlayer('${(m.title||m.name).replace(/'/g,"\\'")}', '${m.id}', '${m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType)}')"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
   <div class="add-btn" onclick="toggleList(event, ${m.id}, '${(m.title||m.name).replace(/'/g,"\\'")}', '${m.poster_path}')"><i class="ti ti-${inList?'x':'plus'}" style="font-size:14px"></i></div>
