@@ -21,6 +21,23 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+.movie-rating {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  border: 0.5px solid rgba(245,158,11,0.4);
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-size: 11px;
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  z-index: 2;
+}
+
 .movie-card {
   animation: fadeInUp 0.4s ease forwards;
   opacity: 0;
@@ -37,6 +54,12 @@ body {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 .movie-card:hover .movie-poster { box-shadow: 0 14px 38px rgba(229,9,20,0.55); }
+
+.trending-card .movie-poster {
+  height: 240px;
+  aspect-ratio: unset;
+  width: 150px;
+}
 
 #app { min-height: 100vh; background: #0a0a0f; }
 
@@ -60,6 +83,7 @@ nav {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
+  filter: drop-shadow(0 0 12px rgba(229,9,20,0.5));
 }
 
 .nav-links { display: flex; gap: 20px; align-items: center; }
@@ -89,7 +113,7 @@ nav {
 
 .hero {
   background: linear-gradient(to bottom, rgba(7,7,15,0) 0%, #07070f 100%),
-    linear-gradient(135deg, #0d0520 0%, #07070f 50%, #0a0515 100%);
+    linear-gradient(135deg, #1a0000 0%, #07070f 50%, #0a0000 100%);
   padding: 60px 28px 40px; position: relative; overflow: hidden;
 }
 .hero::before {
@@ -317,13 +341,13 @@ nav {
   box-shadow: 0 25px 80px rgba(0,0,0,0.8), 0 0 0 0.5px rgba(229,9,20,0.1);
 }
 .detail-backdrop {
-  width: 100%; height: 260px;
+  width: 100%; height: 320px;
   background-size: cover; background-position: center top;
   position: relative;
 }
 .detail-overlay {
-  position: absolute; top: 0; left: 0; right: 0; height: 260px;
-  background: linear-gradient(to bottom, rgba(20,20,20,0) 0%, #141414 100%);
+  position: absolute; top: 0; left: 0; right: 0; height: 320px;
+  background: linear-gradient(to bottom, rgba(229,9,20,0.08) 0%, #0d0d1c 100%);
 }
 .detail-close {
   position: absolute; top: 14px; right: 14px; z-index: 10;
