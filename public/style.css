@@ -7,10 +7,12 @@
 --accent-glow: rgba(229, 9, 20, 0.35);
   --surface: #0d0d1c;
   --border: rgba(255,255,255,0.07);
+  --tv-safe: clamp(40px, 8vw, 120px);
 }
 body {
   font-family: var(--font-sans);
   background: #07070f;
+  font-size: clamp(14px, 1.5vw, 22px);
   color: #fff;
   min-height: 100vh;
   font-family: 'Orbitron', sans-serif;
@@ -434,4 +436,25 @@ nav {
     padding: 12px 0;
     z-index: 5;
   }
+}
+
+@media (min-width: 1920px) and (pointer: coarse) {
+  body { font-size: clamp(20px, 2vw, 28px); }
+  
+  nav { padding: 20px var(--tv-safe); }
+  .section { padding: 40px var(--tv-safe); }
+  .genre-tabs { padding: 0 var(--tv-safe) 24px; }
+  .hero { padding: 80px var(--tv-safe) 60px; }
+  
+  .hero h1 { font-size: clamp(48px, 4vw, 72px); }
+  .section-title { font-size: 26px; }
+  .movie-title { font-size: 16px; }
+  
+  .movies-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+  .trending-card { flex: 0 0 220px; }
+  
+  :focus-visible { outline: 4px solid #e50914; outline-offset: 4px; }
+  
+  .btn-primary, .btn-secondary { padding: 14px 30px; font-size: 18px; }
+  .genre-tab { padding: 10px 24px; font-size: 16px; }
 }
