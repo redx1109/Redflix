@@ -58,6 +58,7 @@ function loadEmbed(){
       cinesrc: `https://cinesrc.st/embed/movie/${id}`,
       peachify: `https://peachify.top/embed/movie/${id}`,
       vidplus: `https://player.vidplus.to/embed/movie/${id}?autoplay=true`,
+      zxcstream: `https://zxcstream.xyz/player/movie/${id}?dubLang=hi`,
     };  
   } else {
     urls = {
@@ -75,10 +76,34 @@ function loadEmbed(){
       vidzee: `https://player.vidzee.wtf/embed/tv/${id}/${s}/${e}`,
       cinesrc: `https://cinesrc.st/embed/tv/${id}?s=${s}&e=${e}`,
       peachify: `https://peachify.top/embed/tv/${id}/${s}/${e}`,
+      zxcstream: `https://zxcstream.xyz/player/tv/${id}/${s}/${e}?dubLang=hi`,
+      
     };
   }
   document.getElementById('playerIframe').src = urls[src];
 }
+
+// Ad Blocker
+window.open = () => null;
+window._blankTarget = () => null;
+
+// Block iframe navigation hijacks
+const iframe = document.getElementById('playerIframe');
+iframe?.addEventListener('load', () => {
+  try {
+    iframe.contentWindow.open = () => null;
+  } catch(e) {}
+});
+
+document.addEventListener('click', () => {
+  document.getElementById('playerIframe')?.focus();
+}, true);
+
+// Block beforeunload redirects
+window.addEventListener('beforeunload', e => {
+  e.preventDefault();
+  e.returnValue = '';
+});
 
 function nextEpisode(){
   const epInput = document.getElementById('episodeInput');
