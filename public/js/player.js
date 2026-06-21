@@ -45,35 +45,36 @@ function loadEmbed(){
     urls = {
       autoembed: `https://autoembed.co/movie/tmdb/${id}`,
       apiplayer: `https://apiplayer.ru/embed/movie/${id}`,
-      vidlux: `https://vidlux.xyz/embed/movie/${id}`,
       primesrc: `https://primesrc.me/embed/movie?tmdb=${id}`,
       ezvidapi: `https://ezvidapi.com/embed/movie/${id}`,
       vidapi: `https://vidapi.xyz/embed/movie/${id}?server=1${langParam}`,
-      vidlink: `https://vidlink.pro/movie/${id}?autoplay=true`,
+      vidlink: `https://vidlink.pro/movie/${id}?player=jw&multiLang=true&autoplay=true`,
       vidsrcsbs: `https://vidsrc.sbs/embed/movie?tmdb=${id}`,
       twoembed: `https://www.2embed.cc/embed/${id}`,
       twoembedskin: `https://www.2embed.skin/embed/${id}`,
       videasy: `https://player.videasy.net/movie/${id}`,
       vidfast:   `https://vidfast.pro/movie/${id}`,
       vidzee: `https://player.vidzee.wtf/embed/movie/${id}`,
-      embedapi:     `https://player.embed-api.stream/?id=${id}`,
+      cinesrc: `https://cinesrc.st/embed/movie/${id}`,
+      peachify: `https://peachify.top/embed/movie/${id}`,
+      vidplus: `https://player.vidplus.to/embed/movie/${id}?autoplay=true`,
     };  
   } else {
     urls = {
       autoembed: `https://autoembed.co/tv/tmdb/${id}-${s}-${e}`,
       apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}`,
-      vidlux: `https://vidlux.xyz/embed/tv/${id}/${s}/${e}`,
       primesrc: `https://primesrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       ezvidapi: `https://ezvidapi.com/embed/tv/${id}/${s}/${e}`,
       vidapi: `https://vidapi.xyz/embed/tv/${id}?server=1/${s}/${e}${langParam}`,
-      vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true`,
+      vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?player=jw&multiLang=true&autoplay=true`,
       vidsrcsbs: `https://vidsrc.sbs/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       twoembed: `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}`,
       twoembedskin: `https://www.2embed.skin/embedtv/${id}&s=${s}&e=${e}`,
       videasy: `https://player.videasy.net/tv/${id}/${s}/${e}`,
       vidfast:   `https://vidfast.pro/tv/${id}/${s}/${e}`,
       vidzee: `https://player.vidzee.wtf/embed/tv/${id}/${s}/${e}`,
-      embedapi:     `https://player.embed-api.stream/?id=${id}&s=${s}&e=${e}`,
+      cinesrc: `https://cinesrc.st/embed/tv/${id}?s=${s}&e=${e}`,
+      peachify: `https://peachify.top/embed/tv/${id}/${s}/${e}`,
     };
   }
   document.getElementById('playerIframe').src = urls[src];
