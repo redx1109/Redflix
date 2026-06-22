@@ -33,7 +33,9 @@ function showContinuePopup(){
   if(!data) return;
   const popup = document.getElementById('continuePopup');
   document.getElementById('continuePopupTitle').textContent = data.title;
-  document.getElementById('continuePopupPoster').src = data.poster ? `${IMG_BASE}${data.poster}` : '';
+  document.getElementById('continuePopupPoster').src = data.poster
+  ? (data.poster.startsWith('http') ? data.poster : `${IMG_BASE}${data.poster}`)
+  : '';
   document.getElementById('continuePopupSub').textContent = data.season ? `Season ${data.season} • Episode ${data.episode}` : '';
   popup.style.display = 'flex';
 }
