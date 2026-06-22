@@ -1,3 +1,5 @@
+let currentPage = 1;
+
 async function init(){
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
   setTimeout(showContinuePopup, 1000);
@@ -77,10 +79,17 @@ function handleSearch(q){
 }
 
 async function loadMore(){
-  const res = await fetch(currentUrl + '&page=2');
+  currentPage++;
+  const res = await fetch(currentUrl + `&page=${currentPage}`);
   const data = await res.json();
   const el = document.getElementById('moviesGrid');
-  data.results.forEach((m, i) => el.appendChild(movieCard(m, false, i)));
+  data.results.forEach((m, i) => {
+    if(!document.querySelector(`[data-id="${m.id}"]`)) {
+    const card = movieCard(m, false, i);
+    card.setAttribute('data-id', m.id);
+    el.appendChild(card);
+    }
+  });
 }
 
 window.addEventListener('scroll', () => {
