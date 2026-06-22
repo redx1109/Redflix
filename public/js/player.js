@@ -1,3 +1,5 @@
+const iframe = () => document.getElementById('playerIframe');
+
 async function openPlayer(title, id='', type=currentType){
   currentType = type;
   document.getElementById('playerTitle').textContent = title;
@@ -77,26 +79,22 @@ function loadEmbed(){
       embedmaster: `https://embedmaster.link/movie/${id}/${s}/${e}`
     };
   }
-  const iframe = document.getElementById('playerIframe');
+  
   const noAds = ['zxcstream','autoembed','cinesrc','apiplayer']
   const noSandbox = ['embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
-  iframe.removeAttribute('sandbox');
-  // show little warning
-  document.getElementById('embedNote')?.setText('⚠️ Ads possible on this source');
-  }
-  if(noSandbox.includes(src)) {
-    iframe.removeAttribute('sandbox');
+    iframe().removeAttribute('sandbox');
+    if(embedNote) embedNote.textContent = '⚠️ Ads possible on this source';
   } else {
-    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
+    iframe().setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
+    if(embedNote) embedNote.textContent = '';
   }
-
-  iframe.src = urls[src];
   document.getElementById('playerIframe').src = urls[src];
 }
 
-iframe?.addEventListener('load', () => {
-  iframe.contentWindow.addEventListener('click', e => {
+iframe()?.addEventListener('load', () => {
+  iframe().contentWindow.addEventListener('click', e => {
     e.stopPropagation();
   });
 });
