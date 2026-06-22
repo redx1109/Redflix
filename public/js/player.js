@@ -58,14 +58,16 @@ function loadEmbed(){
       vidzee: `https://player.vidzee.wtf/embed/movie/${id}`,
       cinesrc: `https://cinesrc.st/embed/movie/${id}`,
       peachify: `https://peachify.top/embed/movie/${id}`,
-      vidplus: `https://player.vidplus.to/embed/movie/${id}?autoplay=true`,
-      embedmaster: `https://embedmaster.link/movie/${id}`
+      embedmaster: `https://embedmaster.link/movie/${id}`,
+      filmu: `https://embed.filmu.in/movie/${id}`,
+      vidnest: `https://vidnest.fun/movie/${id}`,
+      mapplee: `https://mapplee.com/watch/movie/${id}`
     };  
   } else {
     urls = {
       zxcstream: `https://zxcstream.xyz/player/tv/${id}/${s}/${e}?dubLang=hi`,
       autoembed: `https://autoembed.co/tv/tmdb/${id}-${s}-${e}`,
-      apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}`,
+      apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}&ds_lang=hi`,
       primesrc: `https://primesrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?player=jw&multiLang=true&autoplay=true`,
       twoembed: `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}`,
@@ -75,13 +77,14 @@ function loadEmbed(){
       vidzee: `https://player.vidzee.wtf/embed/tv/${id}/${s}/${e}`,
       cinesrc: `https://cinesrc.st/embed/tv/${id}?s=${s}&e=${e}`,
       peachify: `https://peachify.top/embed/tv/${id}/${s}/${e}`,
-      vidplus: `https://player.vidplus.to/embed/movie/${id}/${s}/${e}?autoplay=true`,
-      embedmaster: `https://embedmaster.link/movie/${id}/${s}/${e}`
+      embedmaster: `https://embedmaster.link/movie/${id}/${s}/${e}`,
+      filmu: `https://embed.filmu.in/tv/${id}/${s}/${e}`,
+      vidnest: `https://vidnest.fun/movie/${id}/${s}/${e}`,
     };
   }
   
-  const noAds = ['zxcstream','autoembed','cinesrc','apiplayer']
-  const noSandbox = ['embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noAds = ['zxcstream','autoembed','cinesrc','apiplayer','filmu']
+  const noSandbox = ['mapplee','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
