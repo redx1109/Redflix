@@ -1,5 +1,3 @@
-let currentPage = 1;
-
 async function init(){
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
   setTimeout(showContinuePopup, 1000);
