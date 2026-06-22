@@ -64,6 +64,7 @@ async function openDetail(id, type='movie'){
   document.getElementById('detailGenres').innerHTML = genres.map(g=>`<span class="detail-genre-tag">${g.name}</span>`).join('');
   document.getElementById('detailCast').innerHTML = cast.map(c=>`<span class="cast-chip">${c.name}</span>`).join('');
   document.getElementById('detailPlayBtn').onclick = () => {
+    window._currentPoster = poster;
     closeDetail();
     openPlayer(title, id, type);
   };
