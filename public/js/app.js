@@ -4,7 +4,6 @@ async function init(){
 }
 
 init()
-
 let searchTimeout;
 
 function switchType(type){
