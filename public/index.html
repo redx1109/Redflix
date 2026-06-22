@@ -6,6 +6,10 @@
   <link rel="icon" href="favicon.png" type="image/x-icon">
   <link rel="manifest" href="manifest.json">
   <title>Redflix</title>
+  <meta property="og:title" content="Redflix 🎬">
+  <meta property="og:description" content="Watch free movies & TV shows, no subscription needed!">
+  <meta property="og:image" content="favicon.png">
+  <meta property="og:url" content="https://reddflix.vercel.app">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Playfair+Display:wght@400;500&family=Space+Grotesk:wght@400;500&family=Rajdhani:wght@400;500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
@@ -97,6 +101,7 @@
     <div class="player-frame">
       <div class="player-placeholder">
         <iframe id="playerIframe" src="" allowfullscreen
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
         style="width:100%;height:100%;border:none;"></iframe>
       </div>
     </div>
@@ -108,22 +113,20 @@
     </div>
     <div class="embed-note" style="display:flex;gap:16px;align-items:center;justify-content:center;padding:12px 18px;">
     <select id="srcSelect" onchange="loadEmbed()" style="background:#1a1a1a;color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:4px 8px;font-size:12px">
-      <option value="zxcstream">ZXCStream</option>
+      <option value="zxcstream">ZXCStream ⭐</option>
+      <option value="cinesrc">CineSrc ⭐</option>
+      <option value="autoembed">AutoEmbed ⭐</option>
+      <option value="apiplayer">ApiPlayer ⭐</option>
+      <option value="embedmaster">EmbedMaster</option>
+      <option value="vidzee">VidZee 4K ✅</option>
+      <option value="twoembed">2Embed ✅</option>
       <option value="peachify">Peachify 🍑</option>
       <option value="vidplus">VidPlus 🌐</option>
-      <option value="vidzee">VidZee 4K ✅</option>
-      <option value="vidapi">VidAPI ✅</option>
-      <option value="autoembed">AutoEmbed ✅</option>
-      <option value="apiplayer">ApiPlayer ✅</option>
-      <option value="primesrc">PrimeSrc (subs)</option>
-      <option value="ezvidapi">EzVidAPI</option>
-      <option value="vidlink">VidLink</option>  
-      <option value="vidsrcsbs">VidSrc.sbs ✅</option>
-      <option value="twoembed">2Embed ✅</option>
+      <option value="primesrc">PrimeSrc</option>
+      <option value="vidlink">VidLink</option>
       <option value="twoembedskin">2Embed Skin</option> 
       <option value="videasy">VidEasy</option> 
       <option value="vidfast">VidFast ⚡</option>
-      <option value="cinesrc">CineSrc</option>
     </select>
   <input id="tmdbInput" type="number" style="display:none">
   <button id="nextEpBtn" onclick="nextEpisode()" style="display:none;background:rgba(255,255,255,0.08);color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer">Next EP ▶</button>
