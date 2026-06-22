@@ -2,6 +2,7 @@ function movieCard(m, small=false, index=0){
   const c = document.createElement('div');
   const inList = JSON.parse(localStorage.getItem('myList')||'[]').find(x=>x.id===m.id);
   c.className = small ? 'trending-card' : 'movie-card';
+  c.setAttribute('data-id', m.id)
   c.style.animationDelay = `${index * 0.05}s`;
   const poster = m.poster_path
   ? `<img class="poster-img" src="${IMG_BASE}${m.poster_path}" alt="${m.title}" loading="lazy">`
@@ -13,7 +14,7 @@ function movieCard(m, small=false, index=0){
       ${ratingBadge}
       <div class="movie-overlay">
   <div style="display:flex;gap:6px;align-items:center;">
-  <div class="play-btn" onclick="event.stopPropagation();openPlayer('${(m.title||m.name).replace(/'/g,"\\'")}', '${m.id}', '${m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType)}')"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
+  <div class="play-btn" onclick="event.stopPropagation();window._currentPoster='${IMG_BASE}${m.poster_path}';openPlayer('${(m.title||m.name).replace(/'/g,"\\'")}', '${m.id}', '${m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType)}')"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
   <div class="add-btn" onclick="toggleList(event, ${m.id}, '${(m.title||m.name).replace(/'/g,"\\'")}', '${m.poster_path}')"><i class="ti ti-${inList?'x':'plus'}" style="font-size:14px"></i></div>
   </div>
       </div>
