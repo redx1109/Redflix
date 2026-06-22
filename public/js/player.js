@@ -4,7 +4,9 @@ async function openPlayer(title, id='', type=currentType){
   currentType = type;
   document.getElementById('playerTitle').textContent = title;
   const posterEl = document.getElementById('detailPoster').querySelector('img');
-  const posterPath = posterEl ? posterEl.src.replace(IMG_BASE, '') : '';
+  const posterPath = posterEl?.src || window._currentPoster || '';
+  console.log('posterEl.src:', posterEl?.src);
+  console.log('posterPath saved:', posterPath);
   saveProgress(title, id, type, posterPath, type !== 'movie' ? 1 : null, type !== 'movie' ? 1 : null); 
   document.getElementById('tmdbInput').value = id;
   document.getElementById('playerIframe').src = '';
