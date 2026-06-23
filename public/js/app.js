@@ -1,9 +1,12 @@
+
 async function init(){
-  await Promise.all([loadGenres(), fetchTrending(), fetchPopular()]);
+  await Promise.all([loadGenres(), fetchTrending(), fetchPopular(),]);
+  renderContinueRow()
   setTimeout(showContinuePopup, 1000);
 }
 
 init()
+
 let searchTimeout;
 
 function switchType(type){
@@ -56,20 +59,21 @@ function handleSearch(q){
     return;
   }
   searchTimeout = setTimeout(async () => {
-    const [movieRes, tvRes] = await Promise.all([
-        fetch(`${TMDB_BASE}/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}`),
-        fetch(`${TMDB_BASE}/search/tv?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}`)
-    ]);
-    const movieData = await movieRes.json();
-    const tvData = await tvRes.json();
+    const [movieRes, tvRes, personRes] = await Promise.all([
+    fetch(`${TMDB_BASE}/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}&include_adult=false`),
+    fetch(`${TMDB_BASE}/search/tv?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}&include_adult=false`),
+    fetch(`${TMDB_BASE}/search/person?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}`)
+]);
+const movieData = await movieRes.json();
+const tvData = await tvRes.json();
+const personData = await personRes.json();
 
-    const movies = movieData.results.map(m => ({...m, _resultType: 'movie'}));
-    const tvShows = tvData.results.map(m => ({
-        ...m,
-        _resultType: m.genre_ids?.includes(16) ? 'anime' : 'series'
-    }));
-
-    const combined = [...movies, ...tvShows].sort((a,b) => b.popularity - a.popularity);
+const personMovies = (personData.results?.[0]?.known_for || []).map(m => ({...m, _resultType: m.media_type === 'tv' ? 'tv' : 'movie'}));
+const movies = movieData.results.map(m => ({...m, _resultType: 'movie'}));
+const tvShows = tvData.results.map(m => ({...m, _resultType: m.genre_ids?.includes(16) ? 'anime' : 'tv'}));
+const combined = [...movies, ...tvShows, ...personMovies]
+  .filter((v,i,a) => a.findIndex(x=>x.id===v.id)===i)
+  .sort((a,b) => b.popularity - a.popularity);
     renderGrid(combined);
     document.getElementById('gridTitle').textContent = `Results for "${q}"`;
   }, 400);
