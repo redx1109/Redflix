@@ -1,9 +1,9 @@
-function toggleList(e, id, title, poster){
+function toggleList(e, id, title, poster, rating=0, year=''){
   e.stopPropagation();
   let list = JSON.parse(localStorage.getItem('myList') || '[]');
   const exists = list.find(m => m.id === id);
   if(exists) list = list.filter(m => m.id !== id);
-  else list.push({id, title, poster});
+  else list.push({id, title, poster, rating, year});
   const btn = e.currentTarget;
   btn.innerHTML = exists 
   ? '<i class="ti ti-plus" style="font-size:14px"></i>'
@@ -23,9 +23,15 @@ function showMyList(){
   renderGrid(list.map(m => ({...m, poster_path: m.poster, title: m.title})));
 }
 
-function saveProgress(title, id, type, poster, season=null, episode=null){
-  const data = { title, id, type, poster, season, episode };
+function saveProgress(title, id, type, poster, season=null, episode=null, year='', rating=0){
+  const data = { title, id, type, poster, season, episode, year, rating };
   localStorage.setItem('continueWatching', JSON.stringify(data));
+
+  let list = JSON.parse(localStorage.getItem('continueList') || '[]');
+  list = list.filter(x => x.id != id);
+  list.unshift(data);
+  list = list.slice(0, 10);
+  localStorage.setItem('continueList', JSON.stringify(list));
 }
 
 function showContinuePopup(){
