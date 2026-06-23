@@ -8,14 +8,17 @@ function movieCard(m, small=false, index=0){
   ? `<img class="poster-img" src="${IMG_BASE}${m.poster_path}" alt="${m.title}" loading="lazy">`
   : `<div class="poster-fallback"><i class="ti ti-movie"></i><span>${m.title}</span></div>`;
   const ratingBadge = `<div class="movie-rating"><i class="ti ti-star-filled" style="font-size:10px"></i>${m.vote_average?.toFixed(1)||'?'}</div>`;
+  const progress = JSON.parse(localStorage.getItem('continueList')||'[]').find(x=>x.id==m.id);
+  const progressBar = progress ? `<div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.1)"><div style="height:100%;width:${progress.percent||30}%;background:#e50914"></div></div>` : '';
   c.innerHTML = `
     <div class="movie-poster">
-      ${poster}
+      ${poster} 
       ${ratingBadge}
+      ${progressBar}
       <div class="movie-overlay">
   <div style="display:flex;gap:6px;align-items:center;">
-  <div class="play-btn" onclick="event.stopPropagation();window._currentPoster='${IMG_BASE}${m.poster_path}';openPlayer('${(m.title||m.name).replace(/'/g,"\\'")}', '${m.id}', '${m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType)}')"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
-  <div class="add-btn" onclick="toggleList(event, ${m.id}, '${(m.title||m.name).replace(/'/g,"\\'")}', '${m.poster_path}')"><i class="ti ti-${inList?'x':'plus'}" style="font-size:14px"></i></div>
+  <div class="play-btn" onclick="event.stopPropagation();window._currentPoster='${IMG_BASE}${m.poster_path}';window._metaYear='${(m.release_date||m.first_air_date||"").slice(0,4)}';window._metaRating=${m.vote_average||0};openPlayer('${(m.title||m.name).replace(/'/g,"\\'")}', '${m.id}', '${m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType)}')"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
+  <div class="add-btn" onclick="toggleList(event, ${m.id}, '${(m.title||m.name).replace(/'/g,"\\'")}', '${m.poster_path}', '${m.vote_average||0}', '${(m.release_date||m.first_air_date||'').slice(0,4)}')"><i class="ti ti-${inList?'x':'plus'}" style="font-size:14px"></i></div>
   </div>
       </div>
     </div>
@@ -32,6 +35,30 @@ function movieCard(m, small=false, index=0){
     if(!e.target.closest('.add-btn')) openDetail(m.id, m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType));
   };
   return c;
+}
+
+function renderContinueRow(){
+  document.getElementById('continueRow')?.closest('.section')?.remove();
+  const list = JSON.parse(localStorage.getItem('continueList') || '[]');
+  if(!list.length) return;
+  // inject section before trending
+  const section = document.createElement('div');
+  section.className = 'section';
+  section.innerHTML = `<div class="section-header"><span class="section-title">▶ Continue Watching</span></div><div class="trending-row" id="continueRow"></div>`;
+  document.getElementById('trendingRow').closest('.section').before(section);
+  const row = document.getElementById('continueRow');
+  list.forEach((m, i) => {
+    const card = movieCard({
+      id: m.id,
+      title: m.title,
+      poster_path: m.poster?.replace(`${IMG_BASE}`,'') || '',
+      _resultType: m.type,
+      vote_average: m.rating,
+      release_date: m.year ? `${m.year}-01-01` : '',
+      first_air_date: m.year ? `${m.year}-01-01` : ''
+    }, true, i);
+    row.appendChild(card);
+  });
 }
 
 function renderGenres(){
@@ -81,3 +108,4 @@ function closeDetail(){
   document.getElementById('detailModal').classList.remove('open');
   document.body.style.overflow = '';
 }
+
