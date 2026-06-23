@@ -10,7 +10,7 @@ async function loadGenres(){
 
 async function fetchTrending(){
   const type = currentType === 'anime' ? 'tv' : currentType;
-  const res = await fetch(`${TMDB_BASE}/trending/${type}/week?api_key=${TMDB_KEY}`);
+  const res = await fetch(`${TMDB_BASE}/trending/${type}/week?api_key=${TMDB_KEY}&include_adult=${includeAdult}`);
   const data = await res.json();
   renderTrending(data.results);
   updateHero(data.results[0]);
@@ -20,16 +20,16 @@ async function fetchPopular(genreId=''){
   let url;
   if(currentType === 'movie'){
     url = genreId
-      ? `${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&with_genres=${genreId}&sort_by=popularity.desc`
-      : `${TMDB_BASE}/movie/popular?api_key=${TMDB_KEY}`;
+      ? `${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&with_genres=${genreId}&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc'}`
+      : `${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc'}`
   } else if(currentType === 'tv'){
     url = genreId
-      ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&sort_by=popularity.desc`
-      : `${TMDB_BASE}/tv/popular?api_key=${TMDB_KEY}`;
+      ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc'}`
+      : `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc'}`
   } else {
     url = genreId
-      ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&with_keywords=210024&sort_by=popularity.desc`
-      : `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=popularity.desc`;
+      ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&with_keywords=210024&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc'}`
+      : `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc'}`;
   }
   currentUrl = url;
   currentPage = 1;
@@ -64,6 +64,9 @@ async function openDetail(id, type='movie'){
   document.getElementById('detailGenres').innerHTML = genres.map(g=>`<span class="detail-genre-tag">${g.name}</span>`).join('');
   document.getElementById('detailCast').innerHTML = cast.map(c=>`<span class="cast-chip">${c.name}</span>`).join('');
   document.getElementById('detailPlayBtn').onclick = () => {
+    console.log('btn clicked', m.vote_average, year);
+    window._metaYear = year;
+    window._metaRating = m.vote_average || 0;
     window._currentPoster = poster;
     closeDetail();
     openPlayer(title, id, type);
