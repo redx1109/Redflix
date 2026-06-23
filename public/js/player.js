@@ -7,7 +7,8 @@ async function openPlayer(title, id='', type=currentType){
   const posterPath = posterEl?.src || window._currentPoster || '';
   console.log('posterEl.src:', posterEl?.src);
   console.log('posterPath saved:', posterPath);
-  saveProgress(title, id, type, posterPath, type !== 'movie' ? 1 : null, type !== 'movie' ? 1 : null); 
+  const metaYear = window._metaYear || '';
+  const metaRating = window._metaRating || 0;saveProgress(title, id, type, posterPath, type !== 'movie' ? 1 : null, type !== 'movie' ? 1 : null, metaYear, metaRating);
   document.getElementById('tmdbInput').value = id;
   document.getElementById('playerIframe').src = '';
   document.getElementById('playerModal').classList.add('open');
@@ -95,6 +96,7 @@ function loadEmbed(){
     iframe().setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
     if(embedNote) embedNote.textContent = '';
   }
+  saveProgress(document.getElementById('playerTitle').textContent, id, currentType, window._currentPoster || '', currentType !== 'movie' ? s : null, currentType !== 'movie' ? e : null, window._metaYear||'', window._metaRating||0);
   document.getElementById('playerIframe').src = urls[src];
 }
 
