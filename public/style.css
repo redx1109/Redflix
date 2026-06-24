@@ -221,7 +221,7 @@ nav {
   flex-shrink: 0;
 }
 
-.movie-info { margin-top: 8px; }
+.movie-info { margin-top: 8px; overflow: hidden; width: 100%; }
 .movie-title { font-size: 13px; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .movie-meta { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
 .movie-year { font-size: 11px; color: rgba(255,255,255,0.4); }
@@ -235,8 +235,8 @@ nav {
 .trending-row::-webkit-scrollbar { height: 3px; }
 .trending-row::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
 .trending-row::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
-.trending-card { flex: 0 0 160px; cursor: pointer;  min-width: 0; max-width: 160px;}
-
+.trending-card { flex: 0 0 150px; width: 150px; max-width: 150px; cursor: pointer; overflow: hidden; }
+.trending-card .movie-info { width: 100%; overflow: hidden; }
 .player-modal {
   position: fixed; inset: 0; background: rgba(0,0,0,0.92);
   display: none; align-items: center; justify-content: center;
@@ -306,7 +306,7 @@ nav {
   }
 
   .trending-row { gap: 10px; }
-  .trending-card { flex: 0 0 130px; }
+  .trending-card { flex: 0 0 130px; width: 130px; max-width: 130px; }
 
   .player-box { border-radius: 8px; }
 
