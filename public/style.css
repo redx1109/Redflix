@@ -55,9 +55,9 @@ body {
 .movie-card:hover .movie-poster { box-shadow: 0 14px 38px rgba(229,9,20,0.55); }
 .trending-card .movie-info { width: 160px; overflow: hidden; }
 .trending-card .movie-poster {
-  height: 240px;
+  height: 220px;
   aspect-ratio: unset;
-  width: 150px;
+  width: 100%;
 }
 
 #app { min-height: 100vh; background: #0a0a0f; }
