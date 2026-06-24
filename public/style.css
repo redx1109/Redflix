@@ -7,12 +7,9 @@
 --accent-glow: rgba(229, 9, 20, 0.35);
   --surface: #0d0d1c;
   --border: rgba(255,255,255,0.07);
-  --tv-safe: clamp(40px, 8vw, 120px);
 }
 body {
-  font-family: var(--font-sans);
   background: #07070f;
-  font-size: clamp(14px, 1.5vw, 22px);
   color: #fff;
   min-height: 100vh;
   font-family: 'Orbitron', sans-serif;
@@ -56,7 +53,7 @@ body {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 .movie-card:hover .movie-poster { box-shadow: 0 14px 38px rgba(229,9,20,0.55); }
-
+.trending-card .movie-info { width: 160px; overflow: hidden; }
 .trending-card .movie-poster {
   height: 240px;
   aspect-ratio: unset;
@@ -238,7 +235,7 @@ nav {
 .trending-row::-webkit-scrollbar { height: 3px; }
 .trending-row::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
 .trending-row::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
-.trending-card { flex: 0 0 160px; cursor: pointer; }
+.trending-card { flex: 0 0 160px; cursor: pointer;  min-width: 0; max-width: 160px;}
 
 .player-modal {
   position: fixed; inset: 0; background: rgba(0,0,0,0.92);
@@ -297,9 +294,10 @@ nav {
   }
   .movie-overlay { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 30%); }
   .search-bar {width: 100%;}
-  }
+  
   .nav-links { display: flex; }
   .hero { padding: 40px 16px 30px; }
+}
   .hero h1 { font-size: 24px; }
   .section { padding: 24px 16px; }
   .movies-grid {
@@ -437,24 +435,12 @@ nav {
     z-index: 5;
   }
 }
-
-@media (min-width: 1920px) and (pointer: coarse) {
-  body { font-size: clamp(20px, 2vw, 28px); }
-  
-  nav { padding: 20px var(--tv-safe); }
-  .section { padding: 40px var(--tv-safe); }
-  .genre-tabs { padding: 0 var(--tv-safe) 24px; }
-  .hero { padding: 80px var(--tv-safe) 60px; }
-  
-  .hero h1 { font-size: clamp(48px, 4vw, 72px); }
-  .section-title { font-size: 26px; }
-  .movie-title { font-size: 16px; }
-  
-  .movies-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-  .trending-card { flex: 0 0 220px; }
-  
-  :focus-visible { outline: 4px solid #e50914; outline-offset: 4px; }
-  
-  .btn-primary, .btn-secondary { padding: 14px 30px; font-size: 18px; }
-  .genre-tab { padding: 10px 24px; font-size: 16px; }
+#playerIframe {
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+}
+.player-frame {
+  position: relative;
+  isolation: isolate;
 }
