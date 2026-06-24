@@ -20,7 +20,7 @@ function showMyList(){
   document.getElementById('gridTitle').textContent = '❤️ My List';
   document.getElementById('popularSection').style.display = 'block';
   document.getElementById('moviesGrid').innerHTML = '';
-  renderGrid(list.map(m => ({...m, poster_path: m.poster, title: m.title})));
+  renderGrid(list.map(m => ({...m, poster_path: m.poster, title: m.title, vote_average: parseFloat(m.rating)||0, release_date: m.year ? `${m.year}-01-01` : ''})));
 }
 
 function saveProgress(title, id, type, poster, season=null, episode=null, year='', rating=0){
