@@ -58,6 +58,18 @@ function renderContinueRow(){
       first_air_date: m.year ? `${m.year}-01-01` : ''
     }, true, i);
     row.appendChild(card);
+    const removeBtn = document.createElement('div');
+    removeBtn.innerHTML = `<i class="ti ti-x"></i>`;
+    removeBtn.style.cssText = 'position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.7);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:#fff;z-index:10';
+    removeBtn.onclick = (e) => {
+      e.stopPropagation();
+      let list = JSON.parse(localStorage.getItem('continueList')||'[]');
+      list = list.filter(x => x.id != m.id);
+      localStorage.setItem('continueList', JSON.stringify(list));
+      renderContinueRow();
+    };
+    card.style.position = 'relative';
+    card.appendChild(removeBtn);
   });
 }
 
