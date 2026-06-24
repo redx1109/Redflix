@@ -1,9 +1,9 @@
-function toggleList(e, id, title, poster, rating=0, year=''){
+function toggleList(e, id, title, poster, rating=0, year='', type='movie'){
   e.stopPropagation();
   let list = JSON.parse(localStorage.getItem('myList') || '[]');
   const exists = list.find(m => m.id === id);
   if(exists) list = list.filter(m => m.id !== id);
-  else list.push({id, title, poster, rating, year});
+  else list.push({id, title, poster, rating, year, type});
   const btn = e.currentTarget;
   btn.innerHTML = exists 
   ? '<i class="ti ti-plus" style="font-size:14px"></i>'
@@ -20,7 +20,7 @@ function showMyList(){
   document.getElementById('gridTitle').textContent = '❤️ My List';
   document.getElementById('popularSection').style.display = 'block';
   document.getElementById('moviesGrid').innerHTML = '';
-  renderGrid(list.map(m => ({...m, poster_path: m.poster, title: m.title, vote_average: parseFloat(m.rating)||0, release_date: m.year ? `${m.year}-01-01` : ''})));
+  renderGrid(list.map(m => ({...m, poster_path: m.poster, title: m.title, vote_average: parseFloat(m.rating)||0, release_date: m.year ? `${m.year}-01-01` : '', _resultType: m.type})));
 }
 
 function saveProgress(title, id, type, poster, season=null, episode=null, year='', rating=0){
