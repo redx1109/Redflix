@@ -60,10 +60,10 @@ function handleSearch(q){
   }
   searchTimeout = setTimeout(async () => {
     const [movieRes, tvRes, personRes] = await Promise.all([
-    fetch(`${TMDB_BASE}/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}&include_adult=false`),
-    fetch(`${TMDB_BASE}/search/tv?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}&include_adult=false`),
+    fetch(`${TMDB_BASE}/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}&include_adult=${includeAdult}`),
+    fetch(`${TMDB_BASE}/search/tv?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}&include_adult=${includeAdult}`),
     fetch(`${TMDB_BASE}/search/person?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}`)
-]);
+  ]);
 const movieData = await movieRes.json();
 const tvData = await tvRes.json();
 const personData = await personRes.json();
