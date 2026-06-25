@@ -18,21 +18,22 @@ async function fetchTrending(){
 
 async function fetchPopular(genreId=''){
   let url;
+  const sort = document.getElementById('sortSelect')?.value || 'popularity.desc';
   if(currentType === 'movie'){
     url = genreId
-      ? `${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&with_genres=${genreId}&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc&include_adult=${includeAdult}'}`
-      : `${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc&include_adult=${includeAdult}'}`
+      ? `${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&with_genres=${genreId}&sort_by=${sort}&include_adult=${includeAdult}`
+      : `${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&sort_by=${sort}&include_adult=${includeAdult}`
   } else if(currentType === 'tv'){
     url = genreId
-      ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc&include_adult=${includeAdult}'}`
-      : `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc&include_adult=${includeAdult}'}`
+      ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&sort_by=${sort}&include_adult=${includeAdult}`
+      : `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&sort_by=${sort}&include_adult=${includeAdult}`
   } else {
     url = genreId
-      ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&with_keywords=210024&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc&include_adult=${includeAdult}'}`
-      : `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=${document.getElementById('sortSelect')?.value||'popularity.desc&include_adult=${includeAdult}'}`;
+      ? `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_genres=${genreId}&with_keywords=210024&sort_by=${sort}&include_adult=${includeAdult}`
+      : `${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=${sort}&include_adult=${includeAdult}`;
   }
   currentUrl = url;
-  currentPage = 1;
+  currentPage = 1;  
   const res = await fetch(url);
   const data = await res.json();
   renderGrid(data.results);
