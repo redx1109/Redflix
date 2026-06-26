@@ -64,7 +64,10 @@ function loadEmbed(){
       embedmaster: `https://embedmaster.link/movie/${id}`,
       filmu: `https://embed.filmu.in/movie/${id}`,
       vidnest: `https://vidnest.fun/movie/${id}`,
-      mapplee: `https://mapplee.com/watch/movie/${id}`
+      mapplee: `https://mapplee.com/watch/movie/${id}`,
+      vidking: `https://www.vidking.net/embed/movie/${id}`,
+      movie: `https://111movies.net/movie/${id}`,
+      vidcore: `https://vidcore.org/embed/movie/${id}?autoPlay=true`
     };  
   } else {
     urls = {
@@ -83,11 +86,14 @@ function loadEmbed(){
       embedmaster: `https://embedmaster.link/movie/${id}/${s}/${e}`,
       filmu: `https://embed.filmu.in/tv/${id}/${s}/${e}`,
       vidnest: `https://vidnest.fun/movie/${id}/${s}/${e}`,
+      vidking: `https://www.vidking.net/embed/tv/${id}/${s}/${e}`,
+      movie: `https://111movies.net/tv/${id}/${s}/${e}`,
+      vidcore: `https://vidcore.org/embed/tv/${id}/${s}/${e}?autoPlay=true`
     };
   }
   
   const noAds = ['zxcstream','autoembed','cinesrc','apiplayer','filmu']
-  const noSandbox = ['mapplee','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noSandbox = ['vidking','movie','mapplee','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
