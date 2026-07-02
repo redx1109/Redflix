@@ -5,7 +5,7 @@ function movieCard(m, small=false, index=0){
   c.setAttribute('data-id', m.id)
   c.style.animationDelay = `${index * 0.05}s`;
   const poster = m.poster_path
-  ? `<img class="poster-img" src="${IMG_BASE}${m.poster_path}" alt="${m.title}" loading="lazy">`
+  ? `<img class="poster-img" src="${IMG_BASE}${m.poster_path}" alt="${m.title}" loading="lazy" decoding="async">`
   : `<div class="poster-fallback"><i class="ti ti-movie"></i><span>${m.title}</span></div>`;
   const ratingBadge = `<div class="movie-rating"><i class="ti ti-star-filled" style="font-size:10px"></i>${m.vote_average?.toFixed(1)||'?'}</div>`;
   const progress = JSON.parse(localStorage.getItem('continueList')||'[]').find(x=>x.id==m.id);
@@ -93,7 +93,7 @@ function renderGenres(){
 function renderTrending(movies){
   const el = document.getElementById('trendingRow');
   el.innerHTML = '';
-  movies.slice(0,8).forEach((m, i) => el.appendChild(movieCard(m, true, i)));
+  movies.slice(0,10).forEach((m, i) => el.appendChild(movieCard(m, true, i)));
 }
 
 function renderGrid(movies){
@@ -104,7 +104,7 @@ function renderGrid(movies){
 
 function updateHero(m){
   if(!m) return;
-  const backdrop = m.backdrop_path ? `https://image.tmdb.org/t/p/original${m.backdrop_path}` : '';
+  const backdrop = m.backdrop_path ? `https://image.tmdb.org/t/p/w1280${m.backdrop_path}` : '';
   const title = m.title || m.name;
   const overview = m.overview?.slice(0,150)+'...' || '';
   const hero = document.querySelector('.hero');
