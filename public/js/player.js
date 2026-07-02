@@ -49,51 +49,62 @@ function loadEmbed(){
   let urls;
   if(currentType === 'movie'){
     urls = {
-      zxcstream: `https://zxcstream.xyz/player/movie/${id}?dubLang=hi`,
-      autoembed: `https://autoembed.co/movie/tmdb/${id}`,
-      apiplayer: `https://apiplayer.ru/embed/movie/${id}`,
-      primesrc: `https://primesrc.me/embed/movie?tmdb=${id}`,
-      vidlink: `https://vidlink.pro/movie/${id}?player=jw&multiLang=true&autoplay=true`,
-      twoembed: `https://www.2embed.cc/embed/${id}`,
-      twoembedskin: `https://www.2embed.skin/embed/${id}`,
-      videasy: `https://player.videasy.net/movie/${id}`,
-      vidfast:   `https://vidfast.pro/movie/${id}`,
-      vidzee: `https://player.vidzee.wtf/embed/movie/${id}`,
-      cinesrc: `https://cinesrc.st/embed/movie/${id}`,
-      peachify: `https://peachify.top/embed/movie/${id}`,
-      embedmaster: `https://embedmaster.link/movie/${id}`,
-      filmu: `https://embed.filmu.in/movie/${id}`,
-      vidnest: `https://vidnest.fun/movie/${id}`,
-      mapplee: `https://mapplee.com/watch/movie/${id}`,
-      vidking: `https://www.vidking.net/embed/movie/${id}`,
-      movie: `https://111movies.net/movie/${id}`,
-      vidcore: `https://vidcore.org/embed/movie/${id}?autoPlay=true`
+      zxcstream: `https://zxcstream.xyz/player/movie/${id}?dubLang=hi?autoPlay=true`,
+      autoembed: `https://autoembed.co/movie/tmdb/${id}?autoPlay=true`,
+      apiplayer: `https://apiplayer.ru/embed/movie/${id}?autoPlay=true`,
+      primesrc: `https://primesrc.me/embed/movie?tmdb=${id}?autoPlay=true`,
+      vidlink: `https://vidlink.pro/movie/${id}?player=jw&multiLang=true&autoplay=true?autoPlay=true`,
+      twoembed: `https://www.2embed.cc/embed/${id}?autoPlay=true`,
+      twoembedskin: `https://www.lookmovie2.skin/embed/player/${id}?autoPlay=true`,
+      videasy: `https://player.videasy.net/movie/${id}?autoPlay=true`,
+      vidfast:   `https://vidfast.pro/movie/${id}?autoPlay=true`,
+      vidzee: `https://player.vidzee.wtf/embed/movie/${id}?autoPlay=true`,
+      cinesrc: `https://cinesrc.st/embed/movie/${id}?autoPlay=true`,
+      peachify: `https://peachify.top/embed/movie/${id}?autoPlay=true`,
+      embedmaster: `https://embedmaster.link/movie/${id}?autoPlay=true`,
+      filmu: `https://embed.filmu.in/movie/${id}?autoPlay=true`,
+      vidnest: `https://vidnest.fun/movie/${id}?autoPlay=true`,
+      mapplee: `https://mapplee.com/watch/movie/${id}?autoPlay=true`,
+      vidking: `https://www.vidking.net/embed/movie/${id}?autoPlay=true`,
+      movie: `https://111movies.net/movie/${id}?autoPlay=true`,
+      vidcore: `https://vidcore.org/embed/movie/${id}?autoPlay=true`,
+      xpass: `https://play.xpass.top/e/movie/${id}?autoPlay=true`,
+      vidup: `https://vidup.to/movie/${id}?autoPlay=true`,
+      cinemaos: `https://cinemaos.tech/player/${id}`,
+      nhd: `https://nhdapi.com/embed/movie/${id}`,
+      vidplus: `https://player2.vidplus.pro/embed/movie/${id}?autoplay=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`
     };  
   } else {
     urls = {
-      zxcstream: `https://zxcstream.xyz/player/tv/${id}/${s}/${e}?dubLang=hi`,
-      autoembed: `https://autoembed.co/tv/tmdb/${id}-${s}-${e}`,
+      zxcstream: `https://zxcstream.xyz/player/tv/${id}/${s}/${e}?dubLang=hi?autoPlay=true`,
+      autoembed: `https://autoembed.co/tv/tmdb/${id}-${s}-${e}?autoPlay=true`,
       apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}&ds_lang=hi`,
       primesrc: `https://primesrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?player=jw&multiLang=true&autoplay=true`,
-      twoembed: `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}`,
-      twoembedskin: `https://www.2embed.skin/embedtv/${id}&s=${s}&e=${e}`,
-      videasy: `https://player.videasy.net/tv/${id}/${s}/${e}`,
-      vidfast:   `https://vidfast.pro/tv/${id}/${s}/${e}`,
-      vidzee: `https://player.vidzee.wtf/embed/tv/${id}/${s}/${e}`,
-      cinesrc: `https://cinesrc.st/embed/tv/${id}?s=${s}&e=${e}`,
-      peachify: `https://peachify.top/embed/tv/${id}/${s}/${e}`,
-      embedmaster: `https://embedmaster.link/movie/${id}/${s}/${e}`,
-      filmu: `https://embed.filmu.in/tv/${id}/${s}/${e}`,
-      vidnest: `https://vidnest.fun/movie/${id}/${s}/${e}`,
-      vidking: `https://www.vidking.net/embed/tv/${id}/${s}/${e}`,
-      movie: `https://111movies.net/tv/${id}/${s}/${e}`,
-      vidcore: `https://vidcore.org/embed/tv/${id}/${s}/${e}?autoPlay=true`
+      twoembed: `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}?autoPlay=true`,
+      twoembedskin: `https://www.2embed.skin/embedtv/${id}&s=${s}&e=${e}?autoPlay=true`,
+      videasy: `https://player.videasy.net/tv/${id}/${s}/${e}?autoPlay=true`,
+      vidfast:   `https://vidfast.pro/tv/${id}/${s}/${e}?autoPlay=true`,
+      vidzee: `https://player.vidzee.wtf/embed/tv/${id}/${s}/${e}?autoPlay=true`,
+      cinesrc: `https://cinesrc.st/embed/tv/${id}?s=${s}&e=${e}?autoPlay=true`,
+      peachify: `https://peachify.top/embed/tv/${id}/${s}/${e}?autoPlay=true`,
+      embedmaster: `https://embedmaster.link/tv/${id}/${s}/${e}?autoPlay=true`,
+      filmu: `https://embed.filmu.in/tv/${id}/${s}/${e}?autoPlay=true`,
+      vidnest: `https://vidnest.fun/tv/${id}/${s}/${e}?autoPlay=true`,
+      vidking: `https://www.vidking.net/embed/tv/${id}/${s}/${e}?autoPlay=true`,
+      movie: `https://111movies.net/tv/${id}/${s}/${e}?autoPlay=true`,
+      vidcore: `https://vidcore.org/embed/tv/${id}/${s}/${e}?autoPlay=true`,
+      xpass: `https://play.xpass.top/e/tv/${id}/${s}/${e}?autoPlay=true`,
+      vidup: `https://vidup.to/tv/${id}/${s}/${e}?autoPlay=true`,
+      cinemaos: `https://cinemaos.tech/player/${id}/${s}/${e}`,
+      nhd: `https://nhdapi.com/embed/tv/${id}/${s}/${e}`,
+      vidplus: `https://player2.vidplus.pro/embed/tv/${id}/${s}/${e}?autoplay=true&autonext=true&nextbutton=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&episodelist=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`
     };
   }
-  
-  const noAds = ['zxcstream','autoembed','cinesrc','apiplayer','filmu']
-  const noSandbox = ['vidking','movie','mapplee','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const download = ['https://nhdapi.com/dl/movie/{tmdbId/imdbId},https://nhdapi.com/dl/tv/{tmdbId/imdbId}/{season}/{episode}'
+  ]
+  const noAds = ['nhd','cinemaos','zxcstream','autoembed','cinesrc','apiplayer','filmu']
+  const noSandbox = ['vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
