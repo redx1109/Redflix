@@ -78,6 +78,6 @@ function buildThemeSwitcher() {
 // Init on load
 document.addEventListener('DOMContentLoaded', () => {
   buildThemeSwitcher();
-  const saved = localStorage.getItem('reddflix-theme') || 'gold';
+  const saved = localStorage.getItem('reddflix-theme') || 'Redflix';
   applyTheme(saved);
 });
