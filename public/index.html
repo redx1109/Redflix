@@ -8,11 +8,17 @@
   <link rel="apple-touch-icon" href="favicon.png" type="image/x-icon">
   <link rel="manifest" href="manifest.json">
   <title>Redflix</title>
+  <meta name="description" content="Watch free movies & TV shows online in HD. No subscription, no signup — thousands of titles ready to stream on Redflix.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://reddflix.vercel.app">
   <meta property="og:title" content="Redflix">
   <meta property="og:description" content="Watch free movies & TV shows, no subscription needed!">
   <meta property="og:image" content="favicon.png">
   <meta property="og:url" content="https://reddflix.vercel.app">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://image.tmdb.org">
+  <link rel="preconnect" href="https://api.themoviedb.org">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Playfair+Display:wght@400;500&family=Space+Grotesk:wght@400;500&family=Rajdhani:wght@400;500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 </head>
@@ -113,7 +119,7 @@
     </div>
     <div class="player-frame">
       <div class="player-placeholder">
-        <iframe id="playerIframe" src="" allowfullscreen
+        <iframe id="playerIframe" data-src="" allowfullscreen
         sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
         style="width:100%;height:100%;border:none;"></iframe>
       </div>
@@ -126,8 +132,8 @@
     </div>
     <div class="embed-note" style="display:flex;gap:16px;align-items:center;justify-content:center;padding:12px 18px;"><span id="adWarning" style="color:#ff4444;font-size:12px"></span>
     <select id="srcSelect" onchange="loadEmbed()" style="background:#1a1a1a;color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:4px 8px;font-size:12px">
-      <option value="zxcstream">ZXCStream ⭐</option>
-      <option value="cinesrc">CineSrc(Sub)⭐</option>
+      <option value="zxcstream">ZXCStream(Sub-Dub) ⭐</option>
+      <option value="cinesrc">CineSrc(Sub) ⭐</option>
       <option value="filmu">FilmU(Sub) ⚡ ⭐</option>
       <option value="autoembed">AutoEmbed(Sub) ⭐</option>
       <option value="vidcore">Vidcore(Sub) ⚡ ⭐</option>
@@ -137,7 +143,7 @@
       <option value="embedmaster">EmbedMaster (Sub)</option>
       <option value="vidlink">VidLink(Sub) ⚡</option>
       <option value="twoembed">2Embed </option>
-      <option value="twoembedskin">2Embed Skin</option> 
+      <option value="twoembedskin">2Embed Skin(Sub) </option> 
       <option value="vidfast">VidFast(Sub) ⚡</option>
       <option value="vidzee">VidZee4K(Dub) ⚡</option>
       <option value="vidnest">Vidnest(Sub) ⚡</option>
@@ -163,12 +169,12 @@
     <button onclick="dismissPopup()" style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.08);border:none;color:rgba(255,255,255,0.6);font-size:18px;cursor:pointer;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">✕</button>
   </div>
 </div>
-<script src="js/config.js"></script>
-<script src="js/storage.js"></script>
-<script src="js/render.js"></script>
-<script src="js/api.js"></script>
-<script src="js/player.js"></script>
-<script src="js/app.js"></script>
-<script src="themes/theme-switcher.js"></script>
+<script src="js/config.js" defer></script>
+<script src="js/storage.js" defer></script>
+<script src="js/render.js" defer></script>
+<script src="js/api.js" defer></script>
+<script src="js/player.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="themes/theme-switcher.js" defer></script>
 </body>
 </html> 
