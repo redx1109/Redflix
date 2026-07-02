@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://reddflix.vercel.app/sitemap.xml
