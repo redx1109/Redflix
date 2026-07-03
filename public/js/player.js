@@ -72,7 +72,8 @@ function loadEmbed(){
       vidup: `https://vidup.to/movie/${id}?autoPlay=true`,
       cinemaos: `https://cinemaos.tech/player/${id}`,
       nhd: `https://nhdapi.com/embed/movie/${id}`,
-      vidplus: `https://player2.vidplus.pro/embed/movie/${id}?autoplay=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`
+      vidplus: `https://player2.vidplus.pro/embed/movie/${id}?autoplay=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`,
+      anyembed: `https://anyembed.xyz/embed/tmdb-movie-${id}?theme=red&logo=false`
     };  
   } else {
     urls = {
@@ -98,12 +99,13 @@ function loadEmbed(){
       vidup: `https://vidup.to/tv/${id}/${s}/${e}?autoPlay=true`,
       cinemaos: `https://cinemaos.tech/player/${id}/${s}/${e}`,
       nhd: `https://nhdapi.com/embed/tv/${id}/${s}/${e}`,
-      vidplus: `https://player2.vidplus.pro/embed/tv/${id}/${s}/${e}?autoplay=true&autonext=true&nextbutton=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&episodelist=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`
+      vidplus: `https://player2.vidplus.pro/embed/tv/${id}/${s}/${e}?autoplay=true&autonext=true&nextbutton=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&episodelist=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`,
+      anyembed: `https://anyembed.xyz/embed/tmdb-tv-${id}-${s}-${e}?theme=red&logo=false`
     };
   }
   const download = ['https://nhdapi.com/dl/movie/{tmdbId/imdbId},https://nhdapi.com/dl/tv/{tmdbId/imdbId}/{season}/{episode}'
   ]
-  const noAds = ['nhd','cinemaos','zxcstream','autoembed','cinesrc','apiplayer','filmu']
+  const noAds = ['anyembed','nhd','cinemaos','zxcstream','autoembed','cinesrc','apiplayer','filmu']
   const noSandbox = ['vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
