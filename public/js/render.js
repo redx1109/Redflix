@@ -104,8 +104,6 @@ function renderGrid(movies){
 
 function updateHero(m){
   if(!m) return;
-  hero.style.backgroundImage = `linear-gradient(...), url(${backdrop})`;
-  hero.setAttribute('fetchpriority', 'high');
   const backdrop = m.backdrop_path ? `https://image.tmdb.org/t/p/w1280${m.backdrop_path}` : '';
   const title = m.title || m.name;
   const overview = m.overview?.slice(0,150)+'...' || '';
