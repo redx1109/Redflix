@@ -24,21 +24,20 @@
 </head>
 <body>
 <div id="app">
+  <div class="logo"><span>Redflix</span></div>
   <nav>
-    <div class="logo">Redflix</div>
     <div class="nav-links">
-      <a class="active" onclick="switchToHome()">Home</a>
-      <a onclick="switchType('movie')">Movies</a>
-      <a onclick="switchType('tv')">TV Shows</a>
-      <a onclick="switchType('anime')">Anime</a>
-      <a onclick="showMyList()">My List</a>
-    </div>
-    <div class="search-bar">
-      <i class="ti ti-search" style="font-size:15px;color:rgba(255,255,255,0.3)" aria-hidden="true"></i>
-      <input type="text" placeholder="Search movies, shows..." oninput="handleSearch(this.value)">
+      <a class="active" onclick="switchToHome()"><i class="ti ti-home"></i> Home</a>
+      <a onclick="switchType('movie')"><i class="ti ti-movie"></i> Movies</a>
+      <a onclick="switchType('tv')"><i class="ti ti-device-tv"></i> Shows</a>
+      <a onclick="switchType('anime')"><i class="ti ti-sparkles"></i> Anime</a>
+      <a onclick="showMyList()"><i class="ti ti-bookmark"></i> Playist</a>
     </div>
   </nav>
-
+  <div class="search-bar">
+      <i class="ti ti-search" style="font-size:15px;color:rgba(255,255,255,0.3)" aria-hidden="true"></i>
+      <input type="text" placeholder="Search movies, shows..." oninput="handleSearch(this.value)">
+  </div>
   <div class="hero">
     <div class="hero-content">
       <div class="hero-badge"><i class="ti ti-trending-up" style="font-size:13px" aria-hidden="true"></i> Trending now</div>
@@ -128,8 +127,9 @@
     </div>
     <div class="embed-note" style="display:flex;gap:16px;align-items:center;justify-content:center;padding:12px 18px;"><span id="adWarning" style="color:#ff4444;font-size:12px"></span>
     <select id="srcSelect" onchange="loadEmbed()" style="background:#1a1a1a;color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:4px 8px;font-size:12px">
-      <option value="cinemaos">CinemaOS(Sub-Dub) ⚡ ⭐</option>
       <option value="zxcstream">ZXCStream(Sub-Dub) ⚡ ⭐</option>
+      <option value="anyembed">AnyEmbed(Sub-Dub) ⭐</option>
+      <option value="cinemaos">CinemaOS(Sub-Dub) ⚡ ⭐</option>
       <option value="nhd">NHD(Sub-Dub) ⚡ ⭐</option>
       <option value="vidup">VidUp(Sub) ⚡ ⭐</option>
       <option value="movie">Movie(Sub) ⚡ ⭐</option>
@@ -140,7 +140,7 @@
       <option value="apiplayer">ApiPlayer(Sub) ⭐</option>
       <option value="cinesrc">CineSrc(Sub) ⭐</option>
       <option value="xpass">xpass</option>
-      <option value="peachify">Peachify (Dub)</option>
+      <option value="peachify">Peachify(Dub)</option>
       <option value="videasy">VidEasy(Sub) ⚡</option> 
       <option value="embedmaster">EmbedMaster (Sub)</option>
       <option value="vidlink">VidLink(Sub) ⚡</option>
@@ -172,10 +172,9 @@
 </div>
 <script src="js/config.js" defer></script>
 <script src="js/storage.js" defer></script>
-<script src="js/render.js" defer></script>
+<script src="js/render.js"></script>
 <script src="js/api.js" defer></script>
 <script src="js/player.js" defer></script>
 <script src="js/app.js" defer></script>
-<script src="themes/theme-switcher.js" defer></script>
 </body>
-</html> 
+</html> s
