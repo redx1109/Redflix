@@ -101,7 +101,7 @@ nav {
   padding: 8px 16px;
   position:absolute; 
   display: flex;
-  gap: 20px;
+  gap: clamp(10px, 5vw, 40px);
   align-items: center;
   top: 20px; left: 1050px;
   z-index: 101;
@@ -375,7 +375,7 @@ i.ti { display: flex; justify-content: center;}
     border-radius: 999px;
     padding: 10px 10px;
   }
-  .nav-links { gap: 2px; position: static; left: auto; top: auto;background: none; backdrop-filter: none; height: 7vh;}
+  .nav-links { position: static; left: auto; top: auto;background: none; backdrop-filter: none; height: 7vh; width: auto;}
   .movies-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -389,7 +389,7 @@ i.ti { display: flex; justify-content: center;}
     padding: 8px 10px;
     left: 6px; right: 6px; bottom: 6px;
   }
-  .nav-links a { font-size: 12px; padding: 3px 6px; gap:2px }
+  .nav-links a { font-size: 12px; padding: 3px 6px; width: auto;}
   .nav-links a.active { padding: 3px 8px; }
 }
 
@@ -399,7 +399,7 @@ i.ti { display: flex; justify-content: center;}
   .hero-btns { flex-direction: column; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
   .movies-grid { grid-template-columns: repeat(2, 1fr); }
-  .nav-links { gap: 15px; padding-bottom: 25px; }
+  .nav-links { padding-bottom: 25px;}
 }
 
 .detail-modal {
