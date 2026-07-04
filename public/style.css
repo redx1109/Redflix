@@ -375,7 +375,7 @@ i.ti { display: flex; justify-content: center;}
     border-radius: 999px;
     padding: 10px 10px;
   }
-  .nav-links { position: static; left: auto; top: auto;background: none; backdrop-filter: none; height: 7vh; width: auto;}
+  .nav-links {gap: 4px; position: static; left: auto; top: auto;background: none; backdrop-filter: none; height: 7vh; width: auto;}
   .movies-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
