@@ -358,9 +358,11 @@ nav { gap: 40px; }
   }
   .nav-links a.active {
     color: #fff;
+    height:50px;
     background: rgba(229,9,20,0.8);
     border-radius: 8px;
     padding: 4px 10px;
+    
   }
   .nav-links { gap: 2px; position: static; left: auto; top: auto;background: none; backdrop-filter: none; height: 7vh;}
   .movies-grid {
