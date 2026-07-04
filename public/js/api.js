@@ -107,14 +107,9 @@ async function loadEpisodes(id, season=1){
   const seasonsRes = await fetch(`${TMDB_BASE}/tv/${id}?api_key=${TMDB_KEY}`);
   const showData = await seasonsRes.json();
   const seasonTabs = document.getElementById('seasonTabs');
-  seasonTabs.innerHTML = '';
-  showData.seasons.filter(s=>s.season_number>0).forEach(s => {
-    const btn = document.createElement('button');
-    btn.textContent = `S${s.season_number}`;
-    btn.style.cssText = `padding:4px 10px;border-radius:6px;border:0.5px solid rgba(255,255,255,0.15);background:${s.season_number==season?'#e50914':'rgba(255,255,255,0.05)'};color:#fff;font-size:12px;cursor:pointer`;
-    btn.onclick = () => loadEpisodes(id, s.season_number);
-    seasonTabs.appendChild(btn);
-  });
+  seasonTabs.innerHTML = `<select style="background:#1a1a1a;color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:5px 10px;font-size:12px" onchange="loadEpisodes(${id}, this.value)">
+    ${showData.seasons.filter(s=>s.season_number>0).map(s=>`<option value="${s.season_number}" ${s.season_number==season?'selected':''}>Season ${s.season_number}</option>`).join('')}
+  </select>`;
 
   // render episode list
   const epList = document.getElementById('episodeList');
@@ -122,7 +117,14 @@ async function loadEpisodes(id, season=1){
   data.episodes?.forEach(ep => {
     const btn = document.createElement('button');
     btn.style.cssText = `background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;color:#fff;font-size:12px;cursor:pointer;text-align:left;`;
-    btn.innerHTML = `<div style="color:#e50914;font-size:11px;margin-bottom:2px">EP ${ep.episode_number}</div><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ep.name}</div>`;
+    const still = ep.still_path ? `https://image.tmdb.org/t/p/w300${ep.still_path}` : '';
+btn.style.padding = '0';
+btn.innerHTML = `
+  ${still ? `<img src="${still}" style="width:100%;height:80px;object-fit:cover;border-radius:8px 8px 0 0">` : ''}
+  <div style="padding:6px 8px">
+    <div style="color:#e50914;font-size:11px;margin-bottom:2px">EP ${ep.episode_number}</div>
+    <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ep.name}</div>
+  </div>`;
     btn.onclick = () => {
     document.getElementById('seasonInput').value = season;
     document.getElementById('episodeInput').value = ep.episode_number;
