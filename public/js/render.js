@@ -93,7 +93,7 @@ function renderGenres(){
 function renderTrending(movies){
   const el = document.getElementById('trendingRow');
   el.innerHTML = '';
-  movies.slice(0,10).forEach((m, i) => el.appendChild(movieCard(m, true, i)));
+  (movies||[]).slice(0,10).forEach((m, i) => el.appendChild(movieCard(m, true, i)));
 }
 
 function renderGrid(movies){
