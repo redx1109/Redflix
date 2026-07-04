@@ -73,7 +73,9 @@ function loadEmbed(){
       cinemaos: `https://cinemaos.tech/player/${id}`,
       nhd: `https://nhdapi.com/embed/movie/${id}`,
       vidplus: `https://player2.vidplus.pro/embed/movie/${id}?autoplay=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`,
-      anyembed: `https://anyembed.xyz/embed/tmdb-movie-${id}?theme=red&logo=false`
+      anyembed: `https://anyembed.xyz/embed/tmdb-movie-${id}?theme=red&logo=false`,
+      oneembed: `https://1embed.cc/embed/movie/${id}`,
+      fmovies: `https://fmovies4u.com/embed/movie/${id}?autoPlay=true?nextButton=true?sub=en?serve1`,
     };  
   } else {
     urls = {
@@ -100,13 +102,16 @@ function loadEmbed(){
       cinemaos: `https://cinemaos.tech/player/${id}/${s}/${e}`,
       nhd: `https://nhdapi.com/embed/tv/${id}/${s}/${e}`,
       vidplus: `https://player2.vidplus.pro/embed/tv/${id}/${s}/${e}?autoplay=true&autonext=true&nextbutton=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&episodelist=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`,
-      anyembed: `https://anyembed.xyz/embed/tmdb-tv-${id}-${s}-${e}?theme=red&logo=false`
+      anyembed: `https://anyembed.xyz/embed/tmdb-tv-${id}-${s}-${e}?theme=red&logo=false`,
+      oneembed: `https://1embed.cc/embed/tv/${id}/${s}/${e}`,
+      fmovies: `https://fmovies4u.com/embed/tv/${id}/${s}/${e}?autoPlay=true?nextButton=true?sub=en?serve1`,
     };
   }
-  const download = ['https://nhdapi.com/dl/movie/{tmdbId/imdbId},https://nhdapi.com/dl/tv/{tmdbId/imdbId}/{season}/{episode}'
-  ]
-  const noAds = ['nhd','cinemaos','zxcstream','autoembed','cinesrc','apiplayer','filmu']
-  const noSandbox = ['anyembed','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
+    oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
+  }
+  const noAds = ['oneembed','nhd','cinemaos','zxcstream','autoembed','cinesrc','apiplayer','filmu']
+  const noSandbox = ['fmovies','anyembed','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
