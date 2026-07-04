@@ -17,6 +17,8 @@ function showMyList(){
   document.querySelector('.hero').style.display = 'none';
   document.querySelector('.genre-tabs').style.display = 'none';
   document.getElementById('trendingRow').closest('.section').style.display = 'none';
+  document.querySelector('.search-bar').style.display = 'none';
+  document.querySelector('.section').style.display = 'none';
   document.getElementById('gridTitle').textContent = '❤️ My List';
   document.getElementById('popularSection').style.display = 'block';
   document.getElementById('moviesGrid').innerHTML = '';
