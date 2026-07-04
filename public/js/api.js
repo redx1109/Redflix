@@ -106,8 +106,9 @@ async function loadEpisodes(id, season=1){
   // render season tabs
   const seasonsRes = await fetch(`${TMDB_BASE}/tv/${id}?api_key=${TMDB_KEY}`);
   const showData = await seasonsRes.json();
+  const seasonPoster = data.poster_path ? `https://image.tmdb.org/t/p/w300${data.poster_path}` : '';
   const seasonTabs = document.getElementById('seasonTabs');
-  seasonTabs.innerHTML = `<select style="background:#1a1a1a;color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:5px 10px;font-size:12px" onchange="loadEpisodes(${id}, this.value)">
+  seasonTabs.innerHTML = `${seasonPoster ? `<img src="${seasonPoster}" style="padding-top:25px;height:25vh;object-fit:cover;border-radius:6px">` : ''}<select style="background:#1a1a1a;color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:5px 10px;font-size:12px" onchange="loadEpisodes(${id}, this.value)">
     ${showData.seasons.filter(s=>s.season_number>0).map(s=>`<option value="${s.season_number}" ${s.season_number==season?'selected':''}>Season ${s.season_number}</option>`).join('')}
   </select>`;
 
