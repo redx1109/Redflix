@@ -70,12 +70,14 @@ function loadEmbed(){
       vidcore: `https://vidcore.org/embed/movie/${id}?autoPlay=true`,
       xpass: `https://play.xpass.top/e/movie/${id}?autoPlay=true`,
       vidup: `https://vidup.to/movie/${id}?autoPlay=true`,
-      cinemaos: `https://cinemaos.tech/player/${id}`,
+      cinemaos: `https://cinemaos.tech/player/${id}?autoPlay=true`,
       nhd: `https://nhdapi.com/embed/movie/${id}`,
       vidplus: `https://player2.vidplus.pro/embed/movie/${id}?autoplay=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`,
       anyembed: `https://anyembed.xyz/embed/tmdb-movie-${id}?theme=red&logo=false`,
       oneembed: `https://1embed.cc/embed/movie/${id}`,
       fmovies: `https://fmovies4u.com/embed/movie/${id}?autoPlay=true?nextButton=true?sub=en?serve1`,
+      xstream: `https://embed.7xstream.tv/embed/movie/${id}`,
+      ntg: `https://www.NontonGo.win/embed/movie/${id}`,
     };  
   } else {
     urls = {
@@ -99,19 +101,21 @@ function loadEmbed(){
       vidcore: `https://vidcore.org/embed/tv/${id}/${s}/${e}?autoPlay=true`,
       xpass: `https://play.xpass.top/e/tv/${id}/${s}/${e}?autoPlay=true`,
       vidup: `https://vidup.to/tv/${id}/${s}/${e}?autoPlay=true`,
-      cinemaos: `https://cinemaos.tech/player/${id}/${s}/${e}`,
+      cinemaos: `https://cinemaos.tech/player/${id}/${s}/${e}?autoPlay=true`,
       nhd: `https://nhdapi.com/embed/tv/${id}/${s}/${e}`,
       vidplus: `https://player2.vidplus.pro/embed/tv/${id}/${s}/${e}?autoplay=true&autonext=true&nextbutton=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&episodelist=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`,
       anyembed: `https://anyembed.xyz/embed/tmdb-tv-${id}-${s}-${e}?theme=red&logo=false`,
       oneembed: `https://1embed.cc/embed/tv/${id}/${s}/${e}`,
       fmovies: `https://fmovies4u.com/embed/tv/${id}/${s}/${e}?autoPlay=true?nextButton=true?sub=en?serve1`,
+      xstream: `https://embed.7xstream.tv/embed/tv/${id}/${s}/${e}`,
+      ntg: `https://www.NontonGo.win/embed/tv/${id}/${s}/${e}`,
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
-  const noAds = ['oneembed','nhd','cinemaos','zxcstream','autoembed','cinesrc','apiplayer','filmu']
-  const noSandbox = ['fmovies','anyembed','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noAds = ['ntg','oneembed','nhd','zxcstream','autoembed','cinesrc','apiplayer','filmu']
+  const noSandbox = ['cinemaos','fmovies','anyembed','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
@@ -121,17 +125,14 @@ function loadEmbed(){
     if(embedNote) embedNote.textContent = '';
   }
   saveProgress(document.getElementById('playerTitle').textContent, id, currentType, window._currentPoster || '', currentType !== 'movie' ? s : null, currentType !== 'movie' ? e : null, window._metaYear||'', window._metaRating||0);
+  if(src === 'cinemaos'){ window.open(urls[src], '_blank'); return; }
   document.getElementById('playerIframe').src = urls[src];
 }
 
-iframe()?.addEventListener('load', () => {
-  iframe().contentWindow.addEventListener('click', e => {
-    e.stopPropagation();
-  });
-});
-
 // Clean Ad Blocker
+const realOpen = window.open.bind(window);
 window.open = (url, target) => {
+  if (url && url.includes('cinemaos.tech')) return realOpen(url, '_blank');
   if (target === '_blank' || !url || url === 'about:blank') return null;
   return null;
 };
