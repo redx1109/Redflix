@@ -105,8 +105,8 @@ function loadEmbed(){
   }
   const download = ['https://nhdapi.com/dl/movie/{tmdbId/imdbId},https://nhdapi.com/dl/tv/{tmdbId/imdbId}/{season}/{episode}'
   ]
-  const noAds = ['anyembed','nhd','cinemaos','zxcstream','autoembed','cinesrc','apiplayer','filmu']
-  const noSandbox = ['vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noAds = ['nhd','cinemaos','zxcstream','autoembed','cinesrc','apiplayer','filmu']
+  const noSandbox = ['anyembed','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
