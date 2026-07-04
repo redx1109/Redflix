@@ -398,7 +398,7 @@ i.ti { display: flex; justify-content: center;}
   .hero-btns { flex-direction: column; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
   .movies-grid { grid-template-columns: repeat(2, 1fr); }
-  .nav-links { gap: 25px; padding-bottom: 25px; }
+  .nav-links { gap: 15px; padding-bottom: 25px; }
 }
 
 .detail-modal {
