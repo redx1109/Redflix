@@ -280,14 +280,14 @@ i.ti { display: flex; justify-content: center;}
 .trending-card { flex: 0 0 220px; width: 220px; max-width: 220px; cursor: pointer; overflow: hidden; }
 .trending-card .movie-info { width: 100%; overflow: hidden; }
 .player-modal {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.92);
+  position: fixed; inset: 0; background: #000;
   display: none; align-items: center; justify-content: center;
   z-index: 1000; padding: 20px;
 }
 .player-modal.open { display: flex; }
 
 .player-box {
-  background: #0d0d1c; border-radius: 16px;
+  background: #000; border-radius: 16px;
   width: 100%; max-width: 720px;
   overflow: hidden;
   box-shadow: 0 25px 60px rgba(0,0,0,0.9);
@@ -430,6 +430,7 @@ i.ti { display: flex; justify-content: center;}
 .detail-content {
   display: flex; gap: 24px; padding: 0 24px 24px;
   position: relative; margin-top: -80px;
+  background-color: #000;
 }
 .detail-poster {
   flex: 0 0 140px; height: 210px; border-radius: 10px;
@@ -481,9 +482,9 @@ i.ti { display: flex; justify-content: center;}
     opacity: 1;
   }
 }
-#seasonTabs { display:flex; gap:8px; flex-wrap:wrap; }
+#seasonTabs { display:flex; gap:8px; flex-wrap:wrap; grid-template-columns: 1fr; }
 
-#episodeList { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:8px; max-height:180px; overflow-y:auto; width:100%; }
+#episodeList { display:grid; grid-template-columns: 1fr; gap:8px; max-height:180px; overflow-y:auto; width:100%; }
 
 @media (min-width: 1280px) and (pointer: coarse) {
   .detail-box {
