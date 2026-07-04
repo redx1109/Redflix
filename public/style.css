@@ -122,11 +122,12 @@ i.ti { display: flex; justify-content: center;}
   color: #fff;
   background-color: #e50914;
   padding: 10px;
-  transition: background-color 0.3s, color 0.3s;
+  transition: 0.3s, color 0.3s;
   border-radius: 999px;
 }
 .nav-links a.active {
   padding: 10px;
+  background-color: #e50914;
 }
 .search-bar {
   color:#fff;
@@ -359,18 +360,18 @@ i.ti { display: flex; justify-content: center;}
     position: fixed;
     bottom: 10px; left: 10px; right: 10px;
     top: auto;
-    border-radius: 16px;
+    border-radius: 999px;
     background: rgba(13,13,28,0.1);
     backdrop-filter: blur(12px);
     max-width: 92vw;
     margin: 0 auto;
-    height: auto;
+    height: 7vh;
   }
   .nav-links a.active {
     color: #fff;
     height:50px;
     background: rgba(229,9,20,0.8);
-    border-radius: 8px;
+    border-radius: 999px;
     padding: 10px 10px;
   }
   .nav-links { gap: 2px; position: static; left: auto; top: auto;background: none; backdrop-filter: none; height: 7vh;}
@@ -382,7 +383,6 @@ i.ti { display: flex; justify-content: center;}
   .hero { padding: 40px 16px 30px; }
   body { padding-bottom: 70px;}
 }
-
 @media (max-width: 380px) {
   nav {
     padding: 8px 10px;
@@ -398,7 +398,7 @@ i.ti { display: flex; justify-content: center;}
   .hero-btns { flex-direction: column; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
   .movies-grid { grid-template-columns: repeat(2, 1fr); }
-  .nav-links { gap: 25px; }
+  .nav-links { gap: 25px; padding-bottom: 25px; }
 }
 
 .detail-modal {
