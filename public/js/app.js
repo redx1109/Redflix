@@ -1,10 +1,9 @@
-
 async function init(){
+  currentType = 'explore';
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular(),]);
   renderContinueRow()
   setTimeout(showContinuePopup, 1000);
 }
-
 init()
 
 let searchTimeout;
@@ -14,19 +13,26 @@ function switchType(type){
   activeGenre = '';
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   event.target.classList.add('active');
+  document.getElementById('continueRow')?.closest('.section')?.remove();
   document.getElementById('gridTitle').textContent =
     type==='movie' ? 'Popular Movies' :
     type==='tv' ? 'Popular TV Shows' : 'Popular Anime';
-  loadGenres();
   fetchTrending();
   fetchPopular();
+  document.querySelector('.search-bar input').value = '';
+  document.getElementById('app').classList.remove('search-active');
+  document.getElementById('popularSection').style.display = 'block';
+  loadGenres();
 }
 
 function switchToHome(){
-  currentType = 'movie';
+  currentType = 'explore';
+  const hero = document.querySelector('.hero');
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   event.target.classList.add('active');
-  document.getElementById('gridTitle').textContent = 'Popular Movies';
+  document.getElementById('gridTitle').textContent = 'Explore';
+  hero.style.display = 'block';
+  renderContinueRow();
   loadGenres();
   fetchTrending();
   fetchPopular();
