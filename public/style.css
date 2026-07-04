@@ -353,8 +353,9 @@ nav { gap: 40px; }
     border-radius: 16px;
     background: rgba(13,13,28,0.1);
     backdrop-filter: blur(12px);
-    width: 100vw;
-    height: 10vh;
+    max-width: 380px;
+    margin: 0 auto;
+    height: auto;
   }
   .nav-links a.active {
     color: #fff;
