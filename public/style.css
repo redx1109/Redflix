@@ -344,7 +344,6 @@ nav { gap: 40px; }
   .genre-tabs { display: none; }
   nav {
     flex-wrap: wrap;
-    gap: 10px;
     padding: 12px 16px;
     justify-content: center;
     position: fixed;
@@ -363,7 +362,7 @@ nav { gap: 40px; }
     border-radius: 8px;
     padding: 4px 10px;
   }
-  .nav-links { position: static; left: auto; top: auto;background: none; backdrop-filter: none; height: 7vh;}
+  .nav-links { gap: 2px; position: static; left: auto; top: auto;background: none; backdrop-filter: none; height: 7vh;}
   .movies-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -376,11 +375,11 @@ nav { gap: 40px; }
 @media (max-width: 380px) {
   nav {
     padding: 8px 10px;
-    gap: 6px;
     left: 6px; right: 6px; bottom: 6px;
   }
-  .nav-links a { font-size: 12px; padding: 3px 6px; }
+  .nav-links a { font-size: 12px; padding: 3px 6px; gap:2px }
   .nav-links a.active { padding: 3px 8px; }
+  
 }
 
 @media (max-width: 480px) {
