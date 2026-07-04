@@ -353,7 +353,7 @@ nav { gap: 40px; }
     border-radius: 16px;
     background: rgba(13,13,28,0.1);
     backdrop-filter: blur(12px);
-    max-width: 380px;
+    max-width: 92vw;
     margin: 0 auto;
     height: auto;
   }
