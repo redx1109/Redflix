@@ -54,6 +54,7 @@ function handleSearch(q){
     return fetchPopular();
   }
   hero.style.display = 'none';
+  document.getElementById('continueRow')?.closest('.section')?.style.setProperty('display', 'none');
   genreTabs.style.display = 'none';
   trendingSection.style.display = 'none';
   document.getElementById('popularSection').style.display = 'block';  
