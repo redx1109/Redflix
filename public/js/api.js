@@ -9,7 +9,14 @@ async function loadGenres(){
 }
 
 async function fetchTrending(){
-  const type = currentType === 'anime' || currentType === 'explore' ? 'tv' : currentType;
+  if(currentType === 'anime'){
+    const res = await fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=popularity.desc&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`);
+    const data = await res.json();
+    renderTrending(data.results);
+    updateHero(data.results[0]);
+    return;
+  }
+  const type = currentType === 'explore' ? 'tv' : currentType;
   const res = await fetch(`${TMDB_BASE}/trending/${type}/week?api_key=${TMDB_KEY}&include_adult=${includeAdult}`);
   const data = await res.json();
   renderTrending(data.results);
@@ -21,11 +28,15 @@ async function fetchPopular(genreId=''){
   const sort = document.getElementById('sortSelect')?.value || 'popularity.desc';
   if(currentType === 'explore'){
     const [mv, tv, an] = await Promise.all([
-      fetch(`${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&sort_by=${sort}&include_adult=${includeAdult}`).then(r=>r.json()),
-      fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&sort_by=${sort}&include_adult=${includeAdult}`).then(r=>r.json()),
-      fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=${sort}&include_adult=${includeAdult}`).then(r=>r.json())
+      fetch(`${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&sort_by=${sort}&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`).then(r=>r.json()),
+      fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&sort_by=${sort}&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`).then(r=>r.json()),
+      fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=popularity.desc&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`).then(r=>r.json())
     ]);
-    const mixed = [...mv.results, ...tv.results, ...an.results].sort(()=>Math.random()-0.5);
+    const mixed = [
+      ...mv.results.map(m=>({...m, media_type:'movie'})),
+      ...tv.results.map(m=>({...m, media_type:'tv'})),
+      ...an.results.map(m=>({...m, media_type:'tv', _resultType:'anime'}))
+    ].sort(()=>Math.random()-0.5);
     currentUrl = '';
     renderGrid(mixed);
     return;
