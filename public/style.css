@@ -373,6 +373,16 @@ nav { gap: 40px; }
   body { padding-bottom: 70px;}
 }
 
+@media (max-width: 380px) {
+  nav {
+    padding: 8px 10px;
+    gap: 6px;
+    left: 6px; right: 6px; bottom: 6px;
+  }
+  .nav-links a { font-size: 12px; padding: 3px 6px; }
+  .nav-links a.active { padding: 3px 8px; }
+}
+
 @media (max-width: 480px) {
   .logo { display: none; }
   .hero h1 { font-size: 20px; }
