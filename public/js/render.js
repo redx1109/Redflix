@@ -17,7 +17,7 @@ function movieCard(m, small=false, index=0){
       ${progressBar}
       <div class="movie-overlay">
   <div style="display:flex;gap:6px;align-items:center;">
-  <div class="play-btn" onclick="event.stopPropagation();window._currentPoster='${IMG_BASE}${m.poster_path}';window._metaYear='${(m.release_date||m.first_air_date||"").slice(0,4)}';window._metaRating=${m.vote_average||0};openPlayer('${(m.title||m.name).replace(/'/g,"\\'")}', '${m.id}', '${m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType)}')"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
+  <div class="play-btn" onclick="event.stopPropagation();window._currentPoster='${m.poster_path ? IMG_BASE+m.poster_path : ""}';window._metaYear='${(m.release_date||m.first_air_date||"").slice(0,4)}';window._metaRating=${m.vote_average||0};openPlayer('${(m.title||m.name).replace(/'/g,"\\'")}', '${m.id}', '${m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType)}')"><i class="ti ti-player-play" style="font-size:14px;margin-left:2px"></i></div>
   <div class="add-btn" onclick="toggleList(event, ${m.id}, '${(m.title||m.name).replace(/'/g,"\\'")}', '${m.poster_path}', '${m.vote_average||0}', '${(m.release_date||m.first_air_date||'').slice(0,4)}', '${m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType)}')"><i class="ti ti-${inList?'x':'plus'}" style="font-size:14px"></i></div>
   </div>
       </div>
@@ -99,7 +99,7 @@ function renderTrending(movies){
 function renderGrid(movies){
   const el = document.getElementById('moviesGrid');
   el.innerHTML = '';
-  movies.forEach((m, i) => el.appendChild(movieCard(m, false, i)));
+  (movies||[]).forEach((m, i) => el.appendChild(movieCard(m, false, i)));
 }
 
 function updateHero(m){
