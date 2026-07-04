@@ -10,6 +10,7 @@ let searchTimeout;
 
 function switchType(type){
   currentType = type;
+  currentPage = 1;
   activeGenre = '';
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   event.target.classList.add('active');
