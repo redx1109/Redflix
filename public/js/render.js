@@ -32,7 +32,7 @@ function movieCard(m, small=false, index=0){
   `;
   const title = m.title || m.name;
   c.querySelector('.movie-poster').onclick = (e) => {
-    if(!e.target.closest('.add-btn')) openDetail(m.id, m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType ? 'tv' : currentType));
+    if(!e.target.closest('.add-btn')) openDetail(m.id, m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType === 'anime' ? 'anime' : m._resultType ? 'tv' : currentType));
   };
   return c;
 }
