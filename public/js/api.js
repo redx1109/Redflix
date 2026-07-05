@@ -22,11 +22,14 @@ async function fetchTrending(){
   renderTrending(data.results);
   updateHero(data.results[0]);
 }
-
+let explorePage = 0;
 async function fetchPopular(genreId=''){
   let url;
+  
   const sort = document.getElementById('sortSelect')?.value || 'popularity.desc';
   if(currentType === 'explore'){
+    if(!currentUrl && currentType !== 'explore') return;
+    explorePage = (explorePage||0)+1;
     const [mv, tv, an] = await Promise.all([
       fetch(`${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&sort_by=${sort}&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`).then(r=>r.json()),
       fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&sort_by=${sort}&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`).then(r=>r.json()),
@@ -37,7 +40,7 @@ async function fetchPopular(genreId=''){
       ...tv.results.map(m=>({...m, media_type:'tv'})),
       ...an.results.map(m=>({...m, media_type:'tv', _resultType:'anime'}))
     ].sort(()=>Math.random()-0.5);
-    currentUrl = '';
+    currentUrl = 'exxplore';
     renderGrid(mixed);
     return;
   }
