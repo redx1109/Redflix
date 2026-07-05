@@ -9,6 +9,7 @@ init()
 let searchTimeout;
 
 function switchType(type){
+  window.scrollTo(0,0);
   currentType = type;
   currentPage = 1;
   activeGenre = '';
