@@ -207,21 +207,23 @@ i.ti { display: flex; justify-content: center;}
 .section-title { font-size: 18px; font-weight: 500; }
 .see-all { font-size: 13px; color: var(--accent); cursor: pointer; }
 
-.genre-tabs { display: flex; gap: 8px; padding: 0 28px 20px; flex-wrap: wrap; }
+.genre-tabs { display: flex; gap: 8px; padding: 0 28px 20px; flex-wrap: wrap;}
 .genre-tab {
   padding: 6px 16px; border-radius: 20px; font-size: 13px; cursor: pointer;
-  color: rgba(255,255,255,0.5);
+  color: #fff;
   background: rgba(255,255,255,0.03); transition: all 0.2s;
-  border-color: #000;
+  border: solid #000;
 }
 .genre-tab:hover {
-  color: #ff6b6b;
-  background: rgba(229,9,20,0.08);
+  color: #fff;
+  background: linear-gradient(135deg, #ff2234, #e50914);
+  box-shadow: 0 2px 12px rgba(229,9,20,0.4);
 }
 .genre-tab.active {
   background: linear-gradient(135deg, #ff2234, #e50914);
   color: #fff;
   box-shadow: 0 2px 12px rgba(229,9,20,0.4);
+  border-color: solid rgba(229,9,20,0.4);
 }
 
 .movies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
