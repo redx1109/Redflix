@@ -40,15 +40,16 @@ body {
   opacity: 0;
   cursor: pointer;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
-}
-.movie-card:not(:hover) {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 .movie-card:hover {
-  transform: translateY(-10px) scale(1.06) !important;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transform: translateY(-10px) scale(1.06);
+  z-index: 5;
+}
+.movie-card {
+  will-change: transform;
 }
 .movie-card:hover .movie-poster { box-shadow: 0 14px 38px rgba(229,9,20,0.55); }
 .trending-card .movie-info { width: 220px; overflow: hidden; }
@@ -57,7 +58,11 @@ body {
   aspect-ratio: unset;
   width: 220px;
 }
-
+.movies-grid { overflow: visible; }
+@keyframes fadeInUp {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 #app { min-height: 100vh; background: #0a0a0f; }
 
 .search-active {
