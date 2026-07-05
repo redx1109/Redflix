@@ -207,7 +207,7 @@ i.ti { display: flex; justify-content: center;}
 .section-title { font-size: 18px; font-weight: 500; }
 .see-all { font-size: 13px; color: var(--accent); cursor: pointer; }
 
-.genre-tabs { display: flex; gap: 8px; padding: 0 28px 20px; flex-wrap: wrap;}
+.genre-tabs { display: flex; gap: 3px; padding: 0 28px 20px; flex-wrap: wrap;}
 .genre-tab {
   padding: 6px 16px; border-radius: 20px; font-size: 13px; cursor: pointer;
   color: #fff;
@@ -226,7 +226,7 @@ i.ti { display: flex; justify-content: center;}
   border-color: solid rgba(229,9,20,0.4);
 }
 
-.movies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.movies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
 .movie-poster {
   width: 100%; aspect-ratio: 2/3; border-radius: 10px; overflow: hidden;
   background: rgba(255,255,255,0.05);
@@ -292,6 +292,7 @@ i.ti { display: flex; justify-content: center;}
   position: fixed; inset: 0; background: #000;
   display: none; align-items: center; justify-content: center;
   z-index: 1000; padding: 20px;
+  box-shadow: 0 14px 38px rgba(229,9,20,0.55);
 }
 .player-modal.open { display: flex; }
 
@@ -357,8 +358,9 @@ i.ti { display: flex; justify-content: center;}
   display: none; align-items: center; justify-content: center;
   z-index: 999; padding: 20px;
   overflow-y: auto;
+  box-shadow: 0 14px 38px rgba(229,9,20,0.55);
 }
-.detail-modal.open { display: flex; }
+.detail-modal.open { display: flex; box-shadow: 0 14px 38px rgba(229,9,20,0.55);}
 .detail-box {
   width: 100%; max-width: 860px; border-radius: 18px;
   overflow: hidden; background: #0d0d1c;
