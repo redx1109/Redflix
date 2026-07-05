@@ -125,14 +125,12 @@ function loadEmbed(){
     if(embedNote) embedNote.textContent = '';
   }
   saveProgress(document.getElementById('playerTitle').textContent, id, currentType, window._currentPoster || '', currentType !== 'movie' ? s : null, currentType !== 'movie' ? e : null, window._metaYear||'', window._metaRating||0);
-  if(src === 'cinemaos'){ window.open(urls[src], '_blank'); return; }
   document.getElementById('playerIframe').src = urls[src];
 }
 
 // Clean Ad Blocker
 const realOpen = window.open.bind(window);
 window.open = (url, target) => {
-  if (url && url.includes('cinemaos.tech')) return realOpen(url, '_blank');
   if (target === '_blank' || !url || url === 'about:blank') return null;
   return null;
 };
