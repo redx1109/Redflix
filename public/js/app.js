@@ -104,9 +104,27 @@ async function loadMore(){
   });
 }
 
+async function loadMoreExplore(){
+  explorePage++;
+  const sort = document.getElementById('sortSelect')?.value || 'popularity.desc';
+  const [mv, tv, an] = await Promise.all([
+    fetch(`${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&sort_by=${sort}&page=${explorePage}&include_adult=${includeAdult}`).then(r=>r.json()),
+    fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&sort_by=${sort}&page=${explorePage}&include_adult=${includeAdult}`).then(r=>r.json()),
+    fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=popularity.desc&page=${explorePage}&include_adult=${includeAdult}`).then(r=>r.json())
+  ]);
+  const mixed = [
+    ...mv.results.map(m=>({...m, media_type:'movie'})),
+    ...tv.results.map(m=>({...m, media_type:'tv'})),
+    ...an.results.map(m=>({...m, media_type:'tv', _resultType:'anime'}))
+  ].sort(()=>Math.random()-0.5);
+  const el = document.getElementById('moviesGrid');
+  mixed.forEach((m,i) => el.appendChild(movieCard(m, false, i)));
+}
+
 window.addEventListener('scroll', () => {
   if(!currentUrl) return; 
   if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 300){
+    if(currentType === 'explore'){ loadMoreExplore(); return; }
     currentPage++;
     fetch(currentUrl + `&page=${currentPage}`)
       .then(r => r.json())
