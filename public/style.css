@@ -207,6 +207,7 @@ i.ti { display: flex; justify-content: center;}
   padding: 6px 16px; border-radius: 20px; font-size: 13px; cursor: pointer;
   color: rgba(255,255,255,0.5);
   background: rgba(255,255,255,0.03); transition: all 0.2s;
+  border-color: #000;
 }
 .genre-tab:hover {
   color: #ff6b6b;
@@ -474,6 +475,7 @@ i.ti { display: flex; justify-content: center;}
   .search-bar { width: 100%;}
   .movies-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
 @media (hover: hover) and (pointer: fine) {
   .movie-overlay .play-btn,
   .movie-overlay .add-btn {
