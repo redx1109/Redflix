@@ -115,7 +115,7 @@ function loadEmbed(){
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
   const noAds = ['ntg','oneembed','nhd','zxcstream','autoembed','cinesrc','apiplayer','filmu']
-  const noSandbox = ['cinemaos','fmovies','anyembed','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noSandbox = ['cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
@@ -134,7 +134,6 @@ window.open = (url, target) => {
   if (target === '_blank' || !url || url === 'about:blank') return null;
   return null;
 };
-
 document.getElementById('playerIframe')?.addEventListener('load', () => {
   try {
     const iw = document.getElementById('playerIframe').contentWindow;
