@@ -37,7 +37,7 @@ function closePlayer(){
   document.getElementById('playerModal').classList.remove('open');
 }
 
-function loadEmbed(){
+async function loadEmbed(){
   const lang = document.getElementById('langSelect')?.value || '';
   const langParam = lang ? `?lang=${lang}` : '';
   const id = document.getElementById('tmdbInput').value;
@@ -46,7 +46,13 @@ function loadEmbed(){
   const e = parseInt(document.getElementById('episodeInput')?.value) || 1;
   
   if(!id) return;
+  let imdbId = id;
+  if(src === 'dub'){
+    const extRes = await fetch(`${TMDB_BASE}/${currentType === 'movie' ? 'movie' : 'tv'}/${id}/external_ids?api_key=${TMDB_KEY}`);
+    imdbId = (await extRes.json()).imdb_id || id;
+  }
   let urls;
+  console.log('Loading embed for', currentType, id, s, e, src, imdbId);
   if(currentType === 'movie'){
     urls = {
       zxcstream: `https://zxcstream.xyz/player/movie/${id}?dubLang=hi?autoPlay=true`,
@@ -78,6 +84,7 @@ function loadEmbed(){
       fmovies: `https://fmovies4u.com/embed/movie/${id}?autoPlay=true?nextButton=true?sub=en?serve1`,
       xstream: `https://embed.7xstream.tv/embed/movie/${id}`,
       ntg: `https://www.NontonGo.win/embed/movie/${id}`,
+      dub: `https://kayel415jek.com/play/${imdbId}`
     };  
   } else {
     urls = {
@@ -109,12 +116,13 @@ function loadEmbed(){
       fmovies: `https://fmovies4u.com/embed/tv/${id}/${s}/${e}?autoPlay=true?nextButton=true?sub=en?serve1`,
       xstream: `https://embed.7xstream.tv/embed/tv/${id}/${s}/${e}`,
       ntg: `https://www.NontonGo.win/embed/tv/${id}/${s}/${e}`,
+      dub: `https://kayel415jek.com/play/${imdbId}`
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
-  const noAds = ['ntg','oneembed','nhd','zxcstream','autoembed','cinesrc','apiplayer','filmu']
+  const noAds = ['dub','ntg','oneembed','nhd','zxcstream','autoembed','cinesrc','apiplayer','filmu']
   const noSandbox = ['cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
