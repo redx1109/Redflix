@@ -71,7 +71,7 @@ html, body { overflow-x: hidden; }
 
 nav {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 40px;
+  gap: clamp(1rem, 3vw, 2.5rem);  
   padding: 14px 28px;
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 0.5px solid rgba(229,9,20,0.15);
@@ -106,7 +106,7 @@ nav {
   padding: 8px 16px;
   position:absolute; 
   display: flex;
-  gap: clamp(10px, 5vw, 30px);
+  gap: clamp(10px, 5vw, 40px);
   align-items: center;
   top: 20px; left: 1050px;
   z-index: 101;
@@ -463,6 +463,8 @@ i.ti { display: flex; justify-content: center;}
     max-width: 92vw;
     margin: 0 auto;
     height: 7vh;
+    width: auto;
+    max-width: min(92vw, 400px);;
   }
   .nav-links a.active {
     color: #fff;
@@ -471,7 +473,16 @@ i.ti { display: flex; justify-content: center;}
     border-radius: 999px;
     padding: 10px 10px;
   }
-  .nav-links {gap: 4px; position: static; left: auto; top: auto;background: none; backdrop-filter: none; height: 7vh; width: auto;}
+  .nav-links { 
+    position: static;
+    left: auto;
+    top: auto;
+    background: none;
+    backdrop-filter: none; 
+    height: 1rem; 
+    width: auto;
+    gap: clamp(0.4rem, 4vw, 1.5rem);
+  }
   .movies-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -497,7 +508,7 @@ i.ti { display: flex; justify-content: center;}
   .hero-btns { flex-direction: column; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
   .movies-grid { grid-template-columns: repeat(2, 1fr); }
-  .nav-links { padding-bottom: 25px;}
+  .nav-links { gap: clamp(6px, 5vw, 40px);}
   .nav-links a.active {padding: 10px;}
 }
 
