@@ -78,7 +78,7 @@ nav {
   position: fixed; top: 0; z-index: 101;
   border-radius: 10px;
   flex-wrap: wrap;
-  width: 100%;
+  width: auto;
 }
 
 .logo {
