@@ -62,7 +62,7 @@ async function loadEmbed(){
       vidlink: `https://vidlink.pro/movie/${id}?player=jw&multiLang=true&autoplay=true?autoPlay=true`,
       twoembed: `https://www.2embed.cc/embed/${id}?autoPlay=true`,
       twoembedskin: `https://www.lookmovie2.skin/embed/player/${id}?autoPlay=true`,
-      videasy: `https://player.videasy.net/movie/${id}?autoPlay=true`,
+      videasy: `https://player.videasy.net/movie/${id}?nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&color=8B5CF6x`,
       vidfast:   `https://vidfast.pro/movie/${id}?autoPlay=true`,
       vidzee: `https://player.vidzee.wtf/embed/movie/${id}?autoPlay=true`,
       cinesrc: `https://cinesrc.st/embed/movie/${id}?autoPlay=true`,
@@ -95,7 +95,7 @@ async function loadEmbed(){
       vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?player=jw&multiLang=true&autoplay=true`,
       twoembed: `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}?autoPlay=true`,
       twoembedskin: `https://www.2embed.skin/embedtv/${id}&s=${s}&e=${e}?autoPlay=true`,
-      videasy: `https://player.videasy.net/tv/${id}/${s}/${e}?autoPlay=true`,
+      videasy: `https://player.videasy.net/tv/${id}/${s}/${e}?nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&color=8B5CF6`,
       vidfast:   `https://vidfast.pro/tv/${id}/${s}/${e}?autoPlay=true`,
       vidzee: `https://player.vidzee.wtf/embed/tv/${id}/${s}/${e}?autoPlay=true`,
       cinesrc: `https://cinesrc.st/embed/tv/${id}?s=${s}&e=${e}?autoPlay=true`,
@@ -123,7 +123,7 @@ async function loadEmbed(){
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
   const noAds = ['dub','ntg','oneembed','nhd','zxcstream','autoembed','cinesrc','apiplayer','filmu']
-  const noSandbox = ['cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','videasy','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noSandbox = ['videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
