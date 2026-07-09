@@ -122,8 +122,8 @@ async function loadEmbed(){
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
-  const noAds = ['dub','ntg','oneembed','nhd','zxcstream','autoembed','cinesrc','apiplayer','filmu']
-  const noSandbox = ['videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noAds = ['dub','ntg','oneembed','nhd','autoembed','cinesrc','apiplayer','filmu']
+  const noSandbox = ['zxcstream','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
