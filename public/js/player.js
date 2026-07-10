@@ -12,17 +12,12 @@ async function openPlayer(title, id='', type=currentType){
   document.getElementById('tmdbInput').value = id;
   document.getElementById('playerIframe').src = '';
   document.getElementById('playerModal').classList.add('open');
-  const epControls = document.getElementById('episodeControls');
   const isShow = type !== 'movie';
-  epControls.style.display = isShow ? 'flex' : 'none';
-  if(isShow && id) loadEpisodes(id);
   document.getElementById('nextEpBtn').style.display = isShow ? 'block' : 'none';
   const sInput = document.getElementById('seasonInput');
   const eInput = document.getElementById('episodeInput');
-  if(sInput) sInput.value = 1;
-  if(eInput) eInput.value = 1;
-  epControls.style.gap = '8px';
-  epControls.style.alignItems = 'center';
+  if(sInput && !sInput.value) sInput.value = 1;
+  if(eInput && !eInput.value) eInput.value = 1;
   if(type === 'anime') {
   const extRes = await fetch(`${TMDB_BASE}/tv/${id}/external_ids?api_key=${TMDB_KEY}`);
   const extData = await extRes.json();
