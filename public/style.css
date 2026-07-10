@@ -409,13 +409,37 @@ html, body { overflow-x: hidden; }
 }
 
 .detail-poster {
+  position: relative;
+  margin-top: 100px;
   flex: 0 0 180px; height: 270px; border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
   background: rgba(255,255,255,0.05);
   box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08);
 }
-
-.detail-poster img { width: 100%; height: 100%; object-fit: cover; }
+#detailSeasonTabs {
+  align-items: flex-start;
+  position: relative;
+}
+#detailSeasonTabs img {
+  position: absolute;
+  flex-shrink: 0;
+  left: -100px;
+  top: 0;
+  width: 180px;
+  height: auto;
+  padding-top: 0;
+  z-index: 101;
+}
+#detailEpisodeControls {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+#detailEpisodeList {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.detail-poster img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px;}
 .detail-info { flex: 1; padding-top: 90px; }
 .detail-info h2 {
   font-size: 26px; font-weight: 700; margin-bottom: 8px;
@@ -538,21 +562,25 @@ html, body { overflow-x: hidden; }
   .movie-overlay { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 30%); }
   .hero { padding: 40px 16px 30px; }
   body { padding-bottom: 70px;}
+  .detail-poster img{
+    margin-top: auto;
+  }
 }
 
 @media (max-width: 480px) {
   .logo { display: none; }
   .hero h1 { font-size: 20px; }
   .hero-btns { flex-direction: column; }
-  .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+  .btn-primary, .btn-secondary { width: 100%; justify-content: center; align-items: center; }
   .movies-grid { grid-template-columns: repeat(2, 1fr); }
-  
 }
 
 @media(max-width: 600px){
   .logo { display: none; }
-  .detail-content {flex-direction: column; align-items: center; margin-top: -100px; text-align: center;}
+  .detail-content {flex-direction: column; align-items: center; text-align: center;}
+  .detail-content {margin-top: -140px; }
   .detail-poster { flex: none; width: 160px; height: 240px; }
+  .season-poster-inject { display: none !important; }
   .detail-info { padding-top: 10px; }
   .movies-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -590,4 +618,8 @@ html, body { overflow-x: hidden; }
 .player-frame {
   position: relative;
   isolation: isolate;
+}
+
+.player-placeholder {
+  pointer-events: none;
 }
