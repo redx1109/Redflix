@@ -6,8 +6,8 @@ function toggleList(e, id, title, poster, rating=0, year='', type='movie'){
   else list.push({id, title, poster, rating, year, type});
   const btn = e.currentTarget;
   btn.innerHTML = exists 
-  ? '<i class="ti ti-plus" style="font-size:14px"></i>'
-  : '<i class="ti ti-x" style="font-size:14px"></i>';
+  ? '<i class="ti ti-plus spin-swap" style="font-size:14px"></i>'
+  : '<i class="ti ti-x spin-swap" style="font-size:14px"></i>';
   localStorage.setItem('myList', JSON.stringify(list));
 }
 
