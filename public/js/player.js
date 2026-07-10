@@ -63,7 +63,7 @@ async function loadEmbed(){
       twoembed: `https://www.2embed.cc/embed/${id}?autoPlay=true`,
       twoembedskin: `https://www.lookmovie2.skin/embed/player/${id}?autoPlay=true`,
       videasy: `https://player.videasy.net/movie/${id}?nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&color=8B5CF6x`,
-      vidfast:   `https://vidfast.pro/movie/${id}?autoPlay=true`,
+      vidfast: `https://vidfast.vc/movie/${id}?autoPlay=true`,
       vidzee: `https://player.vidzee.wtf/embed/movie/${id}?autoPlay=true`,
       cinesrc: `https://cinesrc.st/embed/movie/${id}?autoPlay=true`,
       peachify: `https://peachify.top/embed/movie/${id}?autoPlay=true`,
@@ -84,7 +84,9 @@ async function loadEmbed(){
       fmovies: `https://fmovies4u.com/embed/movie/${id}?autoPlay=true?nextButton=true?sub=en?serve1`,
       xstream: `https://embed.7xstream.tv/embed/movie/${id}`,
       ntg: `https://www.NontonGo.win/embed/movie/${id}`,
-      dub: `https://kayel415jek.com/play/${imdbId}`
+      dub: `https://kayel415jek.com/play/${imdbId}`,
+      share: `https://share.cdnm.ink/embed/tmdb/${id}`,
+      nexa: `https://nxsha.space/embed/movie/${id}`
     };  
   } else {
     urls = {
@@ -96,7 +98,7 @@ async function loadEmbed(){
       twoembed: `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}?autoPlay=true`,
       twoembedskin: `https://www.2embed.skin/embedtv/${id}&s=${s}&e=${e}?autoPlay=true`,
       videasy: `https://player.videasy.net/tv/${id}/${s}/${e}?nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&color=8B5CF6`,
-      vidfast:   `https://vidfast.pro/tv/${id}/${s}/${e}?autoPlay=true`,
+      vidfast:   `https://vidfast.vc/tv/${id}/${s}/${e}?autoPlay=true`,
       vidzee: `https://player.vidzee.wtf/embed/tv/${id}/${s}/${e}?autoPlay=true`,
       cinesrc: `https://cinesrc.st/embed/tv/${id}?s=${s}&e=${e}?autoPlay=true`,
       peachify: `https://peachify.top/embed/tv/${id}/${s}/${e}?autoPlay=true`,
@@ -116,20 +118,22 @@ async function loadEmbed(){
       fmovies: `https://fmovies4u.com/embed/tv/${id}/${s}/${e}?autoPlay=true?nextButton=true?sub=en?serve1`,
       xstream: `https://embed.7xstream.tv/embed/tv/${id}/${s}/${e}`,
       ntg: `https://www.NontonGo.win/embed/tv/${id}/${s}/${e}`,
-      dub: `https://kayel415jek.com/play/${imdbId}`
+      dub: `https://kayel415jek.com/play/${imdbId}`,
+      share: `https://share.cdnm.ink/embed/tmdb/${id}/${s}/${e}`,
+      nexa: `https://nxsha.space/embed/tv/${id}/${s}/${e}`
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
   const noAds = ['dub','ntg','oneembed','nhd','autoembed','cinesrc','apiplayer','filmu']
-  const noSandbox = ['zxcstream','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','vidnest','embedmaster','peachify','vidfast','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noSandbox = ['zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
     if(embedNote) embedNote.textContent = '⚠️ Ads possible on this source';
   } else {
-    iframe().setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
+    iframe().setAttribute('sandbox','allow-scripts allow-same-origin allow-forms allow-presentation');
     if(embedNote) embedNote.textContent = '';
   }
   saveProgress(document.getElementById('playerTitle').textContent, id, currentType, window._currentPoster || '', currentType !== 'movie' ? s : null, currentType !== 'movie' ? e : null, window._metaYear||'', window._metaRating||0);
@@ -150,7 +154,10 @@ document.getElementById('playerIframe')?.addEventListener('load', () => {
     iw.confirm = () => null;
   } catch(e) {}
 });
-
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[target="_blank"]');
+  if(a && iframe().contains(a)) e.preventDefault();
+}, true);
 window.addEventListener('beforeunload', e => {
   e.preventDefault();
   e.returnValue = '';
