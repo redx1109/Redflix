@@ -101,17 +101,37 @@
           <span id="detailYear"></span>
           <span id="detailRuntime"></span>
           <span id="detailRating"></span>
+          <span id="detailAge" style="border:1px solid rgba(255,255,255,0.3);padding:1px 6px;border-radius:4px;font-size:11px"></span>
         </div>
         <div class="detail-genres" id="detailGenres"></div>
-        <p class="detail-overview" id="detailOverview"></p>
+        <div style="display:flex;gap:16px;font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px">
+          <span id="detailDirector"></span>
+          <span id="detailWriter"></span>
+        </div>
+        <div style="display:flex;gap:16px;font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:12px">
+          <span id="detailBudget"></span>
+          <span id="detailRevenue"></span>
+        </div>
         <div class="detail-cast" id="detailCast"></div>
+        <p class="detail-overview" id="detailOverview"></p>
+        <div id="detailEpisodeControls" style="display:none;width:100%;padding:10px 18px;border-top:0.5px solid rgba(255,255,255,0.08);">
+          <input id="seasonInput" type="hidden" value="1">
+          <input id="episodeInput" type="hidden" value="1">
+          <div id="detailSeasonTabs" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"></div>
+          <div id="detailEpisodeList" style="display:grid;gap:10px"></div>
+        </div>
         <div class="detail-btns">
           <button class="btn-primary" id="detailPlayBtn">
             <i class="ti ti-player-play"></i> Play Now
           </button>
           <button class="btn-secondary" onclick="closeDetail()">Close</button>
+          <button class="btn-secondary" id="detailTrailerBtn" style="display:none"><i class="ti ti-brand-youtube"></i> Trailer</button>
         </div>
       </div>
+    </div>
+    <div class="section" id="similarSection" style="padding:24px 0 0">
+      <div class="section-title" style="padding:0 24px 12px">More Like This</div>
+      <div class="trending-row" id="similarRow" style="padding:0 24px"></div>
     </div>
   </div>
 </div>
@@ -125,15 +145,11 @@
       <div class="player-placeholder">
         <iframe id="playerIframe" data-src="" allowfullscreen
         sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
+        allow="autoplay; encrypted-media; fullscreen"
         style="width:100%;height:100%;border:none;"></iframe>
       </div>
     </div>
-    <div id="episodeControls" style="display:none;width:100%;padding:10px 18px;border-top:0.5px solid rgba(255,255,255,0.08);">
-      <input id="seasonInput" type="hidden" value="1">
-      <input id="episodeInput" type="hidden" value="1">
-      <div id="seasonTabs" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"></div>
-      <div id="episodeList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;max-height:200px;overflow-y:auto;"></div>
-    </div>
+    
     <div class="embed-note" style="display:flex;gap:16px;align-items:center;justify-content:center;padding:12px 18px;"><span id="adWarning" style="color:#ff4444;font-size:12px"></span>
     <select id="srcSelect" onchange="loadEmbed()" style="background:#1a1a1a;color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:4px 8px;font-size:12px">
       <option value="nexa">Nexa(Sub-Dub) ⚡ ⭐</option>
