@@ -523,8 +523,6 @@ html, body { overflow-x: hidden; }
     width: auto;
     max-width: none;
     flex-shrink: 0;
-    padding-bottom: 9px;
-    margin-bottom: 15px;
   }  
 
   .nav-links { 
