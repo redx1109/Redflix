@@ -117,6 +117,7 @@ function updateHero(m){
 }
 
 function closeDetail(){
+  document.body.style.overflow = '';
   document.getElementById('detailModal').classList.remove('open');
   document.body.style.overflow = '';
 }
