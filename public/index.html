@@ -26,15 +26,23 @@
 <body>
 <div id="app">
   <div class="logo"><span>Redflix</span></div>
-  <nav>
-    <div class="nav-links">
-      <a class="active" onclick="switchToHome()"><i class="ti ti-home"></i> Home</a>
-      <a onclick="switchType('movie')"><i class="ti ti-movie"></i> Movies</a>
-      <a onclick="switchType('tv')"><i class="ti ti-device-tv"></i> Shows</a>
-      <a onclick="switchType('anime')"><i class="ti ti-sparkles"></i> Anime</a>
-      <a onclick="showMyList()"><i class="ti ti-bookmark"></i> Playist</a>
+  <div class="nav">
+    <div class="nav-links active" id="home" onclick="switchToHome()">
+      <i class="ti ti-home"></i><span>Home</span>
     </div>
-  </nav>
+    <div class="nav-links" id="movies" onclick="switchType('movie')">
+      <i class="ti ti-movie"></i><span>Movies</span>
+    </div>
+    <div class="nav-links" id="shows" onclick="switchType('tv')">
+      <i class="ti ti-device-tv"></i><span>Shows</span>
+    </div>
+    <div class="nav-links" id="anime" onclick="switchType('anime')">
+      <i class="ti ti-sparkles"></i><span>Anime</span>
+    </div>
+    <div class="nav-links" id="playlist" onclick="showMyList()">
+      <i class="ti ti-bookmark"></i><span>Playlist</span>
+    </div>
+  </div>
   <div class="search-bar">
       <i class="ti ti-search" style="font-size:15px;color:rgba(255,255,255,0.3)" aria-hidden="true"></i>
       <input type="text" placeholder="Search movies, shows..." oninput="handleSearch(this.value)">
