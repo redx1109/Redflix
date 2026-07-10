@@ -13,7 +13,7 @@ function switchType(type){
   currentType = type;
   currentPage = 1;
   activeGenre = '';
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.nav-links').forEach(a => a.classList.remove('active'));
   document.querySelector('.search-bar').style.removeProperty('display');
   event.target.classList.add('active');
   document.getElementById('continueRow')?.closest('.section')?.remove();
@@ -32,7 +32,7 @@ function switchToHome(){
   currentType = 'explore';
   const hero = document.querySelector('.hero');
   document.querySelector('.search-bar').style.removeProperty('display');
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.nav-links').forEach(a => a.classList.remove('active'));
   event.target.classList.add('active');
   document.getElementById('gridTitle').textContent = 'Explore';
   hero.style.display = 'block';
