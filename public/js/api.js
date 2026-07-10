@@ -66,9 +66,10 @@ async function fetchPopular(genreId=''){
 }
 
 async function openDetail(id, type='movie'){
+  document.body.style.overflow = 'hidden';
   const endpoint = type === 'movie'
-    ? `${TMDB_BASE}/movie/${id}?api_key=${TMDB_KEY}&append_to_response=credits`
-    : `${TMDB_BASE}/tv/${id}?api_key=${TMDB_KEY}&append_to_response=credits`;
+    ? `${TMDB_BASE}/movie/${id}?api_key=${TMDB_KEY}&append_to_response=credits,similar,videos,release_dates`
+    : `${TMDB_BASE}/tv/${id}?api_key=${TMDB_KEY}&append_to_response=credits,similar,videos,content_ratings`;
   const res = await fetch(endpoint);
   const m = await res.json();
   const title = m.title || m.name;
@@ -79,6 +80,14 @@ async function openDetail(id, type='movie'){
   const backdrop = m.backdrop_path ? `https://image.tmdb.org/t/p/w1280${m.backdrop_path}` : '';
   const poster = m.poster_path ? `${IMG_BASE}${m.poster_path}` : '';
   const cast = m.credits?.cast?.slice(0,8) || [];
+  const director = m.credits?.crew?.find(c=>c.job==='Director')?.name || '';
+  const writer = m.credits?.crew?.find(c=>['Writer','Screenplay'].includes(c.job))?.name || '';
+  const trailer = m.videos?.results?.find(v=>v.type==='Trailer' && v.site==='YouTube');
+  const ageRating = type === 'movie'
+    ? m.release_dates?.results?.find(r=>r.iso_3166_1==='US')?.release_dates?.find(d=>d.certification)?.certification || ''
+    : m.content_ratings?.results?.find(r=>r.iso_3166_1==='US')?.rating || '';
+  const budget = m.budget ? `$${(m.budget/1e6).toFixed(1)}M` : '';
+  const revenue = m.revenue ? `$${(m.revenue/1e6).toFixed(1)}M` : '';
   const genres = m.genres || [];
 
   document.getElementById('detailBackdrop').style.backgroundImage = backdrop ? `url(${backdrop})` : '';
@@ -87,11 +96,26 @@ async function openDetail(id, type='movie'){
   document.getElementById('detailYear').textContent = year;
   document.getElementById('detailRuntime').textContent = runtime;
   document.getElementById('detailRating').textContent = rating;
+  document.getElementById('detailAge').textContent = ageRating;
+  document.getElementById('detailDirector').innerHTML = director ? `Director: ${director}` : '';
+  document.getElementById('detailWriter').innerHTML = writer ? `Writer: ${writer}` : '';
+  document.getElementById('detailBudget').textContent = budget ? `Budget: ${budget}` : '';
+  document.getElementById('detailRevenue').textContent = revenue ? `Revenue: ${revenue}` : '';
+  document.getElementById('detailTrailerBtn').style.display = trailer ? 'flex' : 'none';
+  document.getElementById('detailTrailerBtn').onclick = () => {
+  if(!trailer) return;
+  closeDetail();
+  document.getElementById('playerTitle').textContent = `${title} - Trailer`;
+  document.getElementById('playerIframe').src = `https://www.youtube.com/embed/${trailer.key}?autoplay=1`;
+  document.getElementById('episodeControls').style.display = 'none';
+  document.getElementById('playerModal').classList.add('open');
+  };
   document.getElementById('detailOverview').textContent = overview;
   document.getElementById('detailGenres').innerHTML = genres.map(g=>`<span class="detail-genre-tag">${g.name}</span>`).join('');
   document.getElementById('detailCast').innerHTML = cast.map(c=>`<span class="cast-chip">${c.name}</span>`).join('');
+  document.getElementById('similarRow').innerHTML = '';
+  (m.similar?.results || []).slice(0,10).forEach((s,i) => document.getElementById('similarRow').appendChild(movieCard({...s, media_type: type}, true, i)));
   document.getElementById('detailPlayBtn').onclick = () => {
-    console.log('btn clicked', m.vote_average, year);
     window._metaYear = year;
     window._metaRating = m.vote_average || 0;
     window._currentPoster = poster;
@@ -100,9 +124,11 @@ async function openDetail(id, type='movie'){
   };
   document.getElementById('detailModal').classList.add('open');
   document.body.style.overflow = 'hidden';
+  document.getElementById('detailEpisodeControls').style.display = type === 'tv' ? 'block' : 'none';
+  if(type === 'tv') loadEpisodes(id, 1, title, poster, year);
 }
 
-async function loadEpisodes(id, season=1){
+async function loadEpisodes(id, season=1, title='', poster='', year=''){
   const res = await fetch(`${TMDB_BASE}/tv/${id}/season/${season}?api_key=${TMDB_KEY}`);
   const data = await res.json();
 
@@ -110,29 +136,49 @@ async function loadEpisodes(id, season=1){
   const seasonsRes = await fetch(`${TMDB_BASE}/tv/${id}?api_key=${TMDB_KEY}`);
   const showData = await seasonsRes.json();
   const seasonPoster = data.poster_path ? `https://image.tmdb.org/t/p/w300${data.poster_path}` : '';
-  const seasonTabs = document.getElementById('seasonTabs');
-  seasonTabs.innerHTML = `${seasonPoster ? `<img src="${seasonPoster}" style="padding-top:25px;height:25vh;object-fit:cover;border-radius:6px">` : ''}<select style="background:#1a1a1a;color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:5px 10px;font-size:12px" onchange="loadEpisodes(${id}, this.value)">
-    ${showData.seasons.filter(s=>s.season_number>0).map(s=>`<option value="${s.season_number}" ${s.season_number==season?'selected':''}>Season ${s.season_number}</option>`).join('')}
-  </select>`;
+  const seasonTabs = document.getElementById('detailSeasonTabs');
+  document.getElementById('detailSeasonTabs').innerHTML = '';
+  document.querySelectorAll('.season-poster-inject, .season-select-inject').forEach(e=>e.remove());
+  if(seasonPoster){
+    const img = document.createElement('img');
+    img.src = seasonPoster;
+    img.className = 'season-poster-inject';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:8px;margin-top:8px;display:block';
+    document.getElementById('detailPoster').appendChild(img);
+  }
+  const select = document.createElement('select');
+  select.className = 'season-select-inject';
+  select.style.cssText = 'width:100%;background:#1a1a1a;color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:5px 10px;font-size:12px;margin-top:8px';
+  select.innerHTML = showData.seasons.filter(s=>s.season_number>0).map(s=>`<option value="${s.season_number}" ${s.season_number==season?'selected':''}>Season ${s.season_number}</option>`).join('');
+  select.onchange = () => loadEpisodes(id, select.value, title, poster, year);
+  document.getElementById('detailPoster').appendChild(select);
 
   // render episode list
-  const epList = document.getElementById('episodeList');
+  const epList = document.getElementById('detailEpisodeList');
   epList.innerHTML = '';
   data.episodes?.forEach(ep => {
     const btn = document.createElement('button');
     btn.style.cssText = `background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;color:#fff;font-size:12px;cursor:pointer;text-align:left;`;
     const still = ep.still_path ? `https://image.tmdb.org/t/p/w300${ep.still_path}` : '';
-btn.style.padding = '0';
-btn.innerHTML = `
-  ${still ? `<img src="${still}" style="width:100%;height:80px;object-fit:cover;border-radius:8px 8px 0 0">` : ''}
-  <div style="padding:6px 8px">
-    <div style="color:#e50914;font-size:11px;margin-bottom:2px">EP ${ep.episode_number}</div>
-    <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ep.name}</div>
-  </div>`;
+    btn.style.padding = '0';
+    btn.style.display = 'flex';
+    btn.style.gap = '10px';
+    btn.innerHTML = `
+        ${still ? `<img src="${still}" style="width:120px;height:70px;object-fit:cover;border-radius:8px;flex-shrink:0">` : ''}
+        <div style="padding:8px 8px 8px 0">
+          <div style="color:#e50914;font-size:11px;margin-bottom:2px">EP ${ep.episode_number}</div>
+          <div style="font-weight:500;margin-bottom:4px">${ep.name}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.4">${ep.overview || ''}</div>
+        </div>`;
     btn.onclick = () => {
-    document.getElementById('seasonInput').value = season;
-    document.getElementById('episodeInput').value = ep.episode_number;
-    loadEmbed();
+      closeDetail();
+      window._metaYear = year; window._metaRating = 0; window._currentPoster = poster;
+      openPlayer(title, id, 'tv');
+      setTimeout(() => {
+        document.getElementById('seasonInput').value = season;
+        document.getElementById('episodeInput').value = ep.episode_number;
+        loadEmbed();
+      }, 150);
     };
     epList.appendChild(btn);
   });
