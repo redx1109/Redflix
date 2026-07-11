@@ -175,7 +175,7 @@ async function loadEmbed(){
   }, 6000);
 }
 const dubLangMap = {
-    nexa:['en','hi'], 
+    nexa:['en','hi','fr','es'], 
     zxcstream:['en','hi'],
     dub:['en','hi'],
     nhd:['en','hi'],
