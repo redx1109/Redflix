@@ -2,9 +2,16 @@ const iframe = () => document.getElementById('playerIframe');
 
 async function openPlayer(title, id='', type=currentType){
   const origSelect = document.getElementById('langSelect');
-  if(origSelect){
-    const matchExists = [...origSelect.options].some(o => o.value === window._originalLang);
-    origSelect.value = matchExists ? window._originalLang : 'en';
+  if(origSelect && window._originalLang){
+    const langNames = {en:'English', hi:'Hindi', es:'Spanish', fr:'French', ja:'Japanese', ko:'Korean', te:'Telugu', ta:'Tamil'};
+    let exists = [...origSelect.options].some(o => o.value === window._originalLang);
+    if(!exists){
+      const opt = document.createElement('option');
+      opt.value = window._originalLang;
+      opt.textContent = langNames[window._originalLang] || window._originalLang;
+      origSelect.appendChild(opt);
+    }
+    origSelect.value = window._originalLang;
     [...origSelect.options].forEach(o => {
       o.textContent = o.textContent.replace(' (Original)', '');
       if(o.value === window._originalLang) o.textContent += ' (Original)';
