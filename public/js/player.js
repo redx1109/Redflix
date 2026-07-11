@@ -2,7 +2,26 @@ const iframe = () => document.getElementById('playerIframe');
 
 async function openPlayer(title, id='', type=currentType){
   const origSelect = document.getElementById('langSelect');
-  if(origSelect && window._originalLang) origSelect.value = window._originalLang;
+  if(origSelect){
+    const matchExists = [...origSelect.options].some(o => o.value === window._originalLang);
+    origSelect.value = matchExists ? window._originalLang : 'en';
+    [...origSelect.options].forEach(o => {
+      o.textContent = o.textContent.replace(' (Original)', '');
+      if(o.value === window._originalLang) o.textContent += ' (Original)';
+    });
+  }
+  if(window._resumeLang){
+    origSelect.value = window._resumeLang;
+    window._resumeLang = null;
+  }
+  if(!window._resumeSrc){
+    document.getElementById('srcSelect').selectedIndex = 0;
+  }
+  filterSourcesByLang();
+  if(window._resumeSrc){
+    document.getElementById('srcSelect').value = window._resumeSrc;
+    window._resumeSrc = null;
+  }
   currentType = type;
   document.getElementById('playerTitle').textContent = title;
   const posterEl = document.getElementById('detailPoster').querySelector('img');
@@ -10,7 +29,7 @@ async function openPlayer(title, id='', type=currentType){
   console.log('posterEl.src:', posterEl?.src);
   console.log('posterPath saved:', posterPath);
   const metaYear = window._metaYear || '';
-  const metaRating = window._metaRating || 0;saveProgress(title, id, type, posterPath, type !== 'movie' ? 1 : null, type !== 'movie' ? 1 : null, metaYear, metaRating);
+  const metaRating = window._metaRating || 0;saveProgress(title, id, type, posterPath, type !== 'movie' ? 1 : null, type !== 'movie' ? 1 : null, metaYear, metaRating, document.getElementById('langSelect')?.value, document.getElementById('srcSelect')?.value);
   document.getElementById('tmdbInput').value = id;
   document.getElementById('playerIframe').src = '';
   document.getElementById('playerModal').classList.add('open');
@@ -123,8 +142,8 @@ async function loadEmbed(){
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
-  const noAds = ['dub','ntg','oneembed','nhd','autoembed','cinesrc','apiplayer','filmu']
-  const noSandbox = ['zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noAds = ['dub','ntg','oneembed','nhd','autoembed','cinesrc','apiplayer',]
+  const noSandbox = ['filmu','zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   
   if(noSandbox.includes(src)) {
@@ -134,7 +153,7 @@ async function loadEmbed(){
     iframe().setAttribute('sandbox','allow-scripts allow-same-origin allow-forms allow-presentation');
     if(embedNote) embedNote.textContent = '';
   }
-  saveProgress(document.getElementById('playerTitle').textContent, id, currentType, window._currentPoster || '', currentType !== 'movie' ? s : null, currentType !== 'movie' ? e : null, window._metaYear||'', window._metaRating||0);
+  saveProgress(document.getElementById('playerTitle').textContent, id, currentType, window._currentPoster || '', currentType !== 'movie' ? s : null, currentType !== 'movie' ? e : null, window._metaYear||'', window._metaRating||0, lang, src);
   const targetSrc = urls[src];
   document.getElementById('playerIframe').src = targetSrc;
   clearTimeout(window._embedFailTimer);
@@ -182,12 +201,14 @@ const dubLangMap = {
     apiplayer:['en',],
     cinesrc:['en',],
   };
+  
 function filterSourcesByLang(){
   const lang = document.getElementById('langSelect').value;
   const opts = document.getElementById('srcSelect').options;
+  const isOriginal = lang === window._originalLang;
   for(let o of opts){
     const langs = dubLangMap[o.value];
-    o.style.display = (!langs || langs.includes(lang)) ? '' : 'none';
+    o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
   const current = document.getElementById('srcSelect').value;
   if(document.querySelector(`#srcSelect option[value="${current}"]`).style.display === 'none'){
