@@ -72,6 +72,7 @@ async function openDetail(id, type='movie'){
     : `${TMDB_BASE}/tv/${id}?api_key=${TMDB_KEY}&append_to_response=credits,similar,videos,content_ratings`;
   const res = await fetch(endpoint);
   const m = await res.json();
+  const originalLang = m.original_language || 'en';
   const title = m.title || m.name;
   const year = (m.release_date || m.first_air_date || '').slice(0,4);
   const runtime = m.runtime ? `${m.runtime} min` : m.episode_run_time?.[0] ? `${m.episode_run_time[0]} min/ep` : '';
@@ -119,16 +120,17 @@ async function openDetail(id, type='movie'){
     window._metaYear = year;
     window._metaRating = m.vote_average || 0;
     window._currentPoster = poster;
+    window._originalLang = originalLang;
     closeDetail();
     openPlayer(title, id, type);
   };
   document.getElementById('detailModal').classList.add('open');
   document.body.style.overflow = 'hidden';
   document.getElementById('detailEpisodeControls').style.display = type === 'tv' ? 'block' : 'none';
-  if(type === 'tv') loadEpisodes(id, 1, title, poster, year);
+  if(type === 'tv') loadEpisodes(id, 1, title, poster, year, originalLang);
 }
 
-async function loadEpisodes(id, season=1, title='', poster='', year=''){
+async function loadEpisodes(id, season=1, title='', poster='', year='', originalLang='en'){
   const res = await fetch(`${TMDB_BASE}/tv/${id}/season/${season}?api_key=${TMDB_KEY}`);
   const data = await res.json();
 
@@ -150,7 +152,7 @@ async function loadEpisodes(id, season=1, title='', poster='', year=''){
   select.className = 'season-select-inject';
   select.style.cssText = 'width:100%;background:#1a1a1a;color:#fff;border:0.5px solid rgba(255,255,255,0.15);border-radius:6px;padding:5px 10px;font-size:12px;margin-top:8px';
   select.innerHTML = showData.seasons.filter(s=>s.season_number>0).map(s=>`<option value="${s.season_number}" ${s.season_number==season?'selected':''}>Season ${s.season_number}</option>`).join('');
-  select.onchange = () => loadEpisodes(id, select.value, title, poster, year);
+  select.onchange = () => loadEpisodes(id, select.value, title, poster, year, originalLang);
   document.getElementById('detailPoster').appendChild(select);
 
   // render episode list
@@ -173,6 +175,7 @@ async function loadEpisodes(id, season=1, title='', poster='', year=''){
     btn.onclick = () => {
       closeDetail();
       window._metaYear = year; window._metaRating = 0; window._currentPoster = poster;
+      window._originalLang = originalLang;
       openPlayer(title, id, 'tv');
       setTimeout(() => {
         document.getElementById('seasonInput').value = season;
