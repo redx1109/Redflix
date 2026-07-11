@@ -25,8 +25,8 @@ function showMyList(){
   renderGrid(list.map(m => ({...m, poster_path: m.poster, title: m.title, vote_average: parseFloat(m.rating)||0, release_date: m.year ? `${m.year}-01-01` : '', _resultType: m.type})));
 }
 
-function saveProgress(title, id, type, poster, season=null, episode=null, year='', rating=0){
-  const data = { title, id, type, poster, season, episode, year, rating };
+function saveProgress(title, id, type, poster, season=null, episode=null, year='', rating=0, lang='en', src=''){
+  const data = { title, id, type, poster, season, episode, year, rating, lang, src };
   localStorage.setItem('continueWatching', JSON.stringify(data));
 
   let list = JSON.parse(localStorage.getItem('continueList') || '[]');
@@ -57,6 +57,8 @@ function resumeWatching(){
   const data = JSON.parse(localStorage.getItem('continueWatching') || 'null');
   if(!data) return;
   document.getElementById('continuePopup').style.display = 'none';
+  window._resumeLang = data.lang;
+  window._resumeSrc = data.src;
   openPlayer(data.title, data.id, data.type);
   if(data.season){
     setTimeout(() => {
