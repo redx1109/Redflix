@@ -6,4 +6,4 @@ let activeGenre = '';
 let currentType = 'movie';
 let currentUrl = '';
 let currentPage = 1;
-let includeAdult = false;
+let includeAdult = true;
