@@ -55,14 +55,13 @@ function movieCard(m, small=false, index=0){
 
 async function checkAgeRating(id, type){
   const endpoint = type === 'movie'
-    ? `${TMDB_BASE}/movie/${id}/release_dates?api_key=${TMDB_KEY}`
-    : `${TMDB_BASE}/tv/${id}/content_ratings?api_key=${TMDB_KEY}`;
+    ? `${TMDB_BASE}/movie/${id}/keywords?api_key=${TMDB_KEY}`
+    : `${TMDB_BASE}/tv/${id}/keywords?api_key=${TMDB_KEY}`;
   const res = await fetch(endpoint);
   const data = await res.json();
-  const rating = type === 'movie'
-    ? data.results?.find(r=>r.iso_3166_1==='US')?.release_dates?.find(d=>d.certification)?.certification
-    : data.results?.find(r=>r.iso_3166_1==='US')?.rating;
-  return ['R','NC-17','TV-MA'].includes(rating);
+  const keywords = (data.keywords || data.results || []).map(k => k.name.toLowerCase());
+  const nudityTerms = ['nudity', 'sex scene', 'nude', 'explicit sex', 'full frontal nudity', 'erotic'];
+  return keywords.some(k => nudityTerms.some(term => k.includes(term)));
 }
 
 function renderContinueRow(){
