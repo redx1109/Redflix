@@ -1,6 +1,8 @@
 const iframe = () => document.getElementById('playerIframe');
 
 async function openPlayer(title, id='', type=currentType){
+  const origSelect = document.getElementById('langSelect');
+  if(origSelect && window._originalLang) origSelect.value = window._originalLang;
   currentType = type;
   document.getElementById('playerTitle').textContent = title;
   const posterEl = document.getElementById('detailPoster').querySelector('img');
@@ -33,8 +35,7 @@ function closePlayer(){
 }
 
 async function loadEmbed(){
-  const lang = document.getElementById('langSelect')?.value || '';
-  const langParam = lang ? `?lang=${lang}` : '';
+  const lang = document.getElementById('langSelect')?.value || 'en';
   const id = document.getElementById('tmdbInput').value;
   const src = document.getElementById('srcSelect').value;
   const s = parseInt(document.getElementById('seasonInput')?.value) || 1;
@@ -50,7 +51,7 @@ async function loadEmbed(){
   console.log('Loading embed for', currentType, id, s, e, src, imdbId);
   if(currentType === 'movie'){
     urls = {
-      zxcstream: `https://zxcstream.xyz/player/movie/${id}?dubLang=hi?autoPlay=true`,
+      zxcstream: `https://zxcstream.xyz/player/movie/${id}?dubLang=${lang}?autoPlay=true`,
       autoembed: `https://autoembed.co/movie/tmdb/${id}?autoPlay=true`,
       apiplayer: `https://apiplayer.ru/embed/movie/${id}?autoPlay=true`,
       primesrc: `https://primesrc.me/embed/movie?tmdb=${id}?autoPlay=true`,
@@ -81,13 +82,13 @@ async function loadEmbed(){
       ntg: `https://www.NontonGo.win/embed/movie/${id}`,
       dub: `https://kayel415jek.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}`,
-      nexa: `https://nxsha.space/embed/movie/${id}?lang=hi?one_server=true?server=ZetPly-[Multi-Lang]`
+      nexa: `https://nxsha.space/embed/movie/${id}?lang=${lang}?one_server=true?server=ZetPly-[Multi-Lang]`
     };  
   } else {
     urls = {
-      zxcstream: `https://zxcstream.xyz/player/tv/${id}/${s}/${e}?dubLang=hi?autoPlay=true`,
+      zxcstream: `https://zxcstream.xyz/player/tv/${id}/${s}/${e}?dubLang=${lang}?autoPlay=true`,
       autoembed: `https://autoembed.co/tv/tmdb/${id}-${s}-${e}?autoPlay=true`,
-      apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}&ds_lang=hi`,
+      apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}&ds_lang=${lang}`,
       primesrc: `https://primesrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?player=jw&multiLang=true&autoplay=true`,
       twoembed: `https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}?autoPlay=true`,
@@ -100,6 +101,7 @@ async function loadEmbed(){
       embedmaster: `https://embedmaster.link/tv/${id}/${s}/${e}?autoPlay=true`,
       filmu: `https://embed.filmu.in/tv/${id}/${s}/${e}?autoPlay=true`,
       vidnest: `https://vidnest.fun/tv/${id}/${s}/${e}?autoPlay=true`,
+      mapplee: `https://mapplee.com/watch/movie/${id}/${s}/${e}?autoPlay=true`,
       vidking: `https://www.vidking.net/embed/tv/${id}/${s}/${e}?autoPlay=true`,
       movie: `https://111movies.net/tv/${id}/${s}/${e}?autoPlay=true`,
       vidcore: `https://vidcore.org/embed/tv/${id}/${s}/${e}?autoPlay=true`,
@@ -115,7 +117,7 @@ async function loadEmbed(){
       ntg: `https://www.NontonGo.win/embed/tv/${id}/${s}/${e}`,
       dub: `https://kayel415jek.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}/${s}/${e}`,
-      nexa: `https://nxsha.space/embed/tv/${id}/${s}/${e}?lang=hi?one_server=true?server=ZetPly-[Multi-Lang]`
+      nexa: `https://nxsha.space/embed/tv/${id}/${s}/${e}?lang=${lang}?one_server=true?server=ZetPly-[Multi-Lang]`
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
@@ -124,6 +126,7 @@ async function loadEmbed(){
   const noAds = ['dub','ntg','oneembed','nhd','autoembed','cinesrc','apiplayer','filmu']
   const noSandbox = ['zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
+  
   if(noSandbox.includes(src)) {
     iframe().removeAttribute('sandbox');
     if(embedNote) embedNote.textContent = '⚠️ Ads possible on this source';
@@ -132,9 +135,66 @@ async function loadEmbed(){
     if(embedNote) embedNote.textContent = '';
   }
   saveProgress(document.getElementById('playerTitle').textContent, id, currentType, window._currentPoster || '', currentType !== 'movie' ? s : null, currentType !== 'movie' ? e : null, window._metaYear||'', window._metaRating||0);
-  document.getElementById('playerIframe').src = urls[src];
+  const targetSrc = urls[src];
+  document.getElementById('playerIframe').src = targetSrc;
+  clearTimeout(window._embedFailTimer);
+  window._embedFailTimer = setTimeout(() => {
+    const opts = [...document.getElementById('srcSelect').options].filter(o=>o.style.display!=='none');
+    const idx = opts.findIndex(o=>o.value===src);
+    const next = opts[idx+1];
+    if(next){
+      document.getElementById('srcSelect').value = next.value;
+      loadEmbed();
+    }
+  }, 6000);
 }
-
+const dubLangMap = {
+    nexa:['en','hi'], 
+    zxcstream:['en','hi'],
+    dub:['en','hi'],
+    nhd:['en','hi'],
+    cinemaos:['en','hi'],
+    vidnest:['en','hi'],
+    videasy:['en','hi'],
+    vidzee:['en','hi'],
+    peachify:['en','hi'],
+    anyembed:['en','hi'],
+    oneembed:['en','hi'],
+    autoembed:['en',],
+    twoembedskin:['en',],
+    twoembed:['en',],
+    vidcore:['en',],
+    vidlink:['en',],
+    vidfast:['en',],
+    vidup:['en',],
+    vidplus:['en',],
+    vidking:['en',],
+    xpass:['en',],
+    xstream:['en',],
+    mapplee:['en',],
+    primesrc:['en',],
+    filmu:['en',],
+    fmovies:['en',],
+    ntg:['en',],
+    movie:['en',],
+    share:['en',],
+    embedmaster:['en',],
+    apiplayer:['en',],
+    cinesrc:['en',],
+  };
+function filterSourcesByLang(){
+  const lang = document.getElementById('langSelect').value;
+  const opts = document.getElementById('srcSelect').options;
+  for(let o of opts){
+    const langs = dubLangMap[o.value];
+    o.style.display = (!langs || langs.includes(lang)) ? '' : 'none';
+  }
+  const current = document.getElementById('srcSelect').value;
+  if(document.querySelector(`#srcSelect option[value="${current}"]`).style.display === 'none'){
+    const firstVisible = [...opts].find(o=>o.style.display !== 'none');
+    if(firstVisible) document.getElementById('srcSelect').value = firstVisible.value;
+  }
+}
 // Clean Ad Blocker
 const realOpen = window.open.bind(window);
 window.open = (url, target) => {
@@ -143,6 +203,7 @@ window.open = (url, target) => {
 };
 document.getElementById('playerIframe')?.addEventListener('load', () => {
   try {
+    clearTimeout(window._embedFailTimer);
     const iw = document.getElementById('playerIframe').contentWindow;
     iw.open = () => null;
     iw.alert = () => null;
