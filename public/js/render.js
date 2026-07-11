@@ -1,5 +1,7 @@
 function movieCard(m, small=false, index=0){
   const c = document.createElement('div');
+  const releaseDate = m.release_date || m.first_air_date;
+  const isUpcoming = releaseDate && new Date(releaseDate) > new Date();
   const inList = JSON.parse(localStorage.getItem('myList')||'[]').find(x=>x.id===m.id);
   c.className = small ? 'trending-card' : 'movie-card';
   c.setAttribute('data-id', m.id)
@@ -8,12 +10,14 @@ function movieCard(m, small=false, index=0){
   ? `<img class="poster-img" src="${IMG_BASE}${m.poster_path}" alt="${m.title}" loading="lazy" decoding="async">`
   : `<div class="poster-fallback"><i class="ti ti-movie"></i><span>${m.title}</span></div>`;
   const ratingBadge = `<div class="movie-rating"><i class="ti ti-star-filled" style="font-size:10px"></i>${m.vote_average?.toFixed(1)||'?'}</div>`;
+  const comingSoonBadge = isUpcoming ? `<div style="position:absolute;top:8px;left:8px;background:#e50914;color:#fff;font-size:10px;padding:3px 7px;border-radius:6px;z-index:2">Coming Soon</div>` : '';
   const progress = JSON.parse(localStorage.getItem('continueList')||'[]').find(x=>x.id==m.id);
   const progressBar = progress ? `<div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.1)"><div style="height:100%;width:${progress.percent||30}%;background:#e50914"></div></div>` : '';
   c.innerHTML = `
     <div class="movie-poster">
       ${poster} 
       ${ratingBadge}
+      ${comingSoonBadge}
       ${progressBar}
       <div class="movie-overlay">
   <div style="display:flex;gap:6px;align-items:center;">
@@ -34,6 +38,9 @@ function movieCard(m, small=false, index=0){
   c.querySelector('.movie-poster').onclick = (e) => {
     if(!e.target.closest('.add-btn')) openDetail(m.id, m.media_type || (m._resultType === 'movie' ? 'movie' : m._resultType === 'anime' ? 'anime' : m._resultType ? 'tv' : currentType));
   };
+  c.querySelector('.play-btn')?.addEventListener('click', e => {
+    if(isUpcoming){ e.stopPropagation(); alert('Not released yet!'); }
+  }, true);
   return c;
 }
 
