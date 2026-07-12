@@ -104,11 +104,12 @@ async function loadEmbed(){
       anyembed: `https://anyembed.xyz/embed/tmdb-movie-${id}?theme=red&logo=false`,
       oneembed: `https://1embed.cc/embed/movie/${id}`,
       fmovies: `https://fmovies4u.com/embed/movie/${id}?autoPlay=true?nextButton=true?sub=en?serve1`,
-      xstream: `https://embed.7xstream.tv/embed/movie/${id}`,
       ntg: `https://www.NontonGo.win/embed/movie/${id}`,
       dub: `https://kayel415jek.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}`,
-      nexa: `https://nxsha.space/embed/movie/${id}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`
+      nexa: `https://nxsha.space/embed/movie/${id}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`,
+      nexi: `https://nxsha.screenscape.me/embed?tmdb=${id}&type=movie&lang=${lang}&autoplay=true`,
+      vidsync: `https://vidsync.live/embed/movie/${id}?autoplay=true?defaultserver=cinedub-2`
     };  
   } else {
     urls = {
@@ -139,18 +140,19 @@ async function loadEmbed(){
       anyembed: `https://anyembed.xyz/embed/tmdb-tv-${id}-${s}-${e}?theme=red&logo=false`,
       oneembed: `https://1embed.cc/embed/tv/${id}/${s}/${e}`,
       fmovies: `https://fmovies4u.com/embed/tv/${id}/${s}/${e}?autoPlay=true?nextButton=true?sub=en?serve1`,
-      xstream: `https://embed.7xstream.tv/embed/tv/${id}/${s}/${e}`,
       ntg: `https://www.NontonGo.win/embed/tv/${id}/${s}/${e}`,
       dub: `https://kayel415jek.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}/${s}/${e}`,
-      nexa: `https://nxsha.space/embed/tv/${id}/${s}/${e}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`
+      nexa: `https://nxsha.space/embed/tv/${id}/${s}/${e}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`,
+      nexi : `https://nxsha.screenscape.me/embed?tmdb=${id}&type=tv&s=${s}&e=${e}&lan=${lang}&autoplay=true`,
+      vidsync: `https://vidsync.live/embed/movie/${id}?autoplay=true?defaultserver=cinedub-2`
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
   const noAds = ['dub','ntg','oneembed','nhd','autoembed','cinesrc','apiplayer',]
-  const noSandbox = ['filmu','zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noSandbox = ['vidsync','filmu','zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   
   if(noSandbox.includes(src)) {
@@ -189,6 +191,7 @@ const dubLangMap = {
     autoembed:['en',],
     twoembedskin:['en',],
     twoembed:['en',],
+    vidsync:['en','hi'],
     vidcore:['en',],
     vidlink:['en',],
     vidfast:['en',],
@@ -196,7 +199,6 @@ const dubLangMap = {
     vidplus:['en',],
     vidking:['en',],
     xpass:['en',],
-    xstream:['en',],
     mapplee:['en',],
     primesrc:['en',],
     filmu:['en',],
@@ -217,12 +219,19 @@ function filterSourcesByLang(){
     const langs = dubLangMap[o.value];
     o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
-  const current = document.getElementById('srcSelect').value;
-  if(document.querySelector(`#srcSelect option[value="${current}"]`).style.display === 'none'){
-    const firstVisible = [...opts].find(o=>o.style.display !== 'none');
-    if(firstVisible) document.getElementById('srcSelect').value = firstVisible.value;
+  const preferredByLang = { hi: 'dub' };
+  const preferred = preferredByLang[lang];
+  if(preferred && document.querySelector(`#srcSelect option[value="${preferred}"]`)?.style.display !== 'none'){
+    document.getElementById('srcSelect').value = preferred;
+  } else {
+    const current = document.getElementById('srcSelect').value;
+    if(document.querySelector(`#srcSelect option[value="${current}"]`).style.display === 'none'){
+      const firstVisible = [...opts].find(o=>o.style.display !== 'none');
+      if(firstVisible) document.getElementById('srcSelect').value = firstVisible.value;
+    }
   }
 }
+
 // Clean Ad Blocker
 const realOpen = window.open.bind(window);
 window.open = (url, target) => {
