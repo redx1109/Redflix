@@ -108,7 +108,7 @@ async function loadEmbed(){
       ntg: `https://www.NontonGo.win/embed/movie/${id}`,
       dub: `https://kayel415jek.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}`,
-      nexa: `https://nxsha.space/embed/movie/${id}?lang=${lang}?one_server=true?server=ZetPly-[Multi-Lang]`
+      nexa: `https://nxsha.space/embed/movie/${id}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`
     };  
   } else {
     urls = {
@@ -143,7 +143,7 @@ async function loadEmbed(){
       ntg: `https://www.NontonGo.win/embed/tv/${id}/${s}/${e}`,
       dub: `https://kayel415jek.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}/${s}/${e}`,
-      nexa: `https://nxsha.space/embed/tv/${id}/${s}/${e}?lang=${lang}?one_server=true?server=ZetPly-[Multi-Lang]`
+      nexa: `https://nxsha.space/embed/tv/${id}/${s}/${e}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
