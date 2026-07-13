@@ -100,6 +100,42 @@ function renderContinueRow(){
   });
 }
 
+async function renderYouMightLike(){
+  document.getElementById('youMightLikeRow')?.closest('.section')?.remove();
+  const myList = JSON.parse(localStorage.getItem('myList')||'[]');
+  const continueList = JSON.parse(localStorage.getItem('continueList')||'[]');
+  const combined = [...myList, ...continueList];
+  if(!combined.length) return;
+
+  // Collect genre ids from a sample of watched/liked titles
+  const genreCounts = {};
+  const detailFetches = combined.slice(0,10).map(async m => {
+    const type = m.type === 'movie' ? 'movie' : 'tv';
+    try {
+      const res = await fetch(`${TMDB_BASE}/${type}/${m.id}?api_key=${TMDB_KEY}`);
+      const data = await res.json();
+      (data.genres||[]).forEach(g => genreCounts[g.id] = (genreCounts[g.id]||0)+1);
+    } catch(e){}
+  });
+  await Promise.all(detailFetches);
+
+  const topGenres = Object.entries(genreCounts).sort((a,b)=>b[1]-a[1]).slice(0,3).map(g=>g[0]);
+  if(!topGenres.length) return;
+
+  const excludeIds = new Set(combined.map(m=>String(m.id)));
+  const res = await fetch(`${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&with_genres=${topGenres.join('|')}&sort_by=popularity.desc`);
+  const data = await res.json();
+  const filtered = (data.results||[]).filter(m => !excludeIds.has(String(m.id)));
+  if(!filtered.length) return;
+
+  const section = document.createElement('div');
+  section.className = 'section';
+  section.innerHTML = `<div class="section-header"><span class="section-title">✨ You Might Like</span></div><div class="trending-row" id="youMightLikeRow"></div>`;
+  document.getElementById('trendingRow').closest('.section').before(section);
+  const row = document.getElementById('youMightLikeRow');
+  filtered.slice(0,10).forEach((m,i) => row.appendChild(movieCard({...m, media_type:'movie'}, true, i)));
+}
+
 function renderGenres(){
   const el = document.getElementById('genreTabs');
   el.innerHTML = '';
