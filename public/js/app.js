@@ -1,6 +1,7 @@
 async function init(){
   currentType = 'explore';
   await Promise.all([loadGenres(), fetchTrending(), fetchPopular(),]);
+  renderYouMightLike(); 
   renderContinueRow()
   setTimeout(showContinuePopup, 1000);
 }
@@ -37,6 +38,7 @@ function switchToHome(){
   document.getElementById('gridTitle').textContent = 'Explore';
   hero.style.display = 'block';
   renderContinueRow();
+  renderYouMightLike(); 
   loadGenres();
   fetchTrending();
   fetchPopular();
