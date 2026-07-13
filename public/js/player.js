@@ -111,8 +111,9 @@ async function loadEmbed(){
       nexi: `https://nxsha.screenscape.me/embed?tmdb=${id}&type=movie&lang=${lang}&autoplay=true`,
       vidsync: `https://vidsync.live/embed/movie/${id}?autoplay=true?defaultserver=cinedub-2`,
       flex: `https://flaxmovies.xyz/embed/movie/${id}`,
-      pire: `https://video.moviepire.co/embed/movie/${id}`
-    };  
+      pire: `https://video.moviepire.co/embed/movie/${id}`,
+      cinezo: `https://player.cinezo.live/embed/movie/${id}?server=hindi`
+    };
   } else {
     urls = {
       zxcstream: `https://zxcstream.xyz/player/tv/${id}/${s}/${e}?dubLang=${lang}?autoPlay=true`,
@@ -149,13 +150,14 @@ async function loadEmbed(){
       nexi : `https://nxsha.screenscape.me/embed?tmdb=${id}&type=tv&s=${s}&e=${e}&lan=${lang}&autoplay=true`,
       vidsync: `https://vidsync.live/embed/movie/${id}?autoplay=true?defaultserver=cinedub-2`,
       flex: `https://flaxmovies.xyz/embed/tv/${id}/${s}/${e}`,
-      pire: `https://video.moviepire.co/embed/mtv/${id}/${s}/${e}`
+      pire: `https://video.moviepire.co/embed/mtv/${id}/${s}/${e}`,
+      cinezo: `https://player.cinezo.live/embed/tv/${id}/${s}/${e}?server=hindi`
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
-  const noAds = ['dub','ntg','oneembed','nhd','autoembed','cinesrc','apiplayer',]
+  const noAds = ['','flex','pire','dub','ntg','oneembed','nhd','autoembed','cinesrc','apiplayer',]
   const noSandbox = ['vidsync','filmu','zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   
@@ -193,6 +195,7 @@ const dubLangMap = {
     anyembed:['en','hi'],
     oneembed:['en','hi'],
     pire:['en','hi'],
+    cinezo:['en'],
     flex:['en'],
     autoembed:['en',],
     twoembedskin:['en',],
