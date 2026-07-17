@@ -228,7 +228,7 @@ function filterSourcesByLang(){
     const langs = dubLangMap[o.value];
     o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
-  const preferredByLang = { hi: 'dub' };
+  const preferredByLang = { hi: 'nexa' };
   const preferred = preferredByLang[lang];
   if(preferred && document.querySelector(`#srcSelect option[value="${preferred}"]`)?.style.display !== 'none'){
     document.getElementById('srcSelect').value = preferred;
