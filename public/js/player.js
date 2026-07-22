@@ -157,8 +157,8 @@ async function loadEmbed(){
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
-  const noAds = ['','flex','pire','dub','ntg','oneembed','nhd','autoembed','cinesrc','apiplayer',]
-  const noSandbox = ['vidsync','filmu','zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noAds = ['flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
+  const noSandbox = ['nhd','oneembed','vidsync','filmu','zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   
   if(noSandbox.includes(src)) {
