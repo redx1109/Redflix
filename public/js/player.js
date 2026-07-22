@@ -184,6 +184,7 @@ async function loadEmbed(){
 }
 const dubLangMap = {
     nexa:['en','hi','fr','es'], 
+    nexi:['en','hi','fr','es'], 
     zxcstream:['en','hi'],
     dub:['en','hi'],
     nhd:['en','hi'],
