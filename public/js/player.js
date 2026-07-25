@@ -145,6 +145,7 @@ async function loadEmbed(){
       fmovies: `https://fmovies4u.com/embed/tv/${id}/${s}/${e}?autoPlay=true?nextButton=true?sub=en?serve1`,
       ntg: `https://www.NontonGo.win/embed/tv/${id}/${s}/${e}`,
       dub: `https://kayel415jek.com/play/${imdbId}`,
+      dub2: `https://gemmaokl146.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}/${s}/${e}`,
       nexa: `https://nxsha.space/embed/tv/${id}/${s}/${e}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`,
       nexi : `https://screenscape.me/embed?tmdb=${id}&type=tv&s=${s}&e=${e}&lan=${lang}&autoplay=true`,
@@ -180,7 +181,7 @@ async function loadEmbed(){
       document.getElementById('srcSelect').value = next.value;
       loadEmbed();
     }
-  }, 6000);
+  }, 10000);
 }
 const dubLangMap = {
     nexa:['en','hi','fr','es'], 
