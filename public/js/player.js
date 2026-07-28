@@ -173,15 +173,6 @@ async function loadEmbed(){
   const targetSrc = urls[src];
   document.getElementById('playerIframe').src = targetSrc;
   clearTimeout(window._embedFailTimer);
-  window._embedFailTimer = setTimeout(() => {
-    const opts = [...document.getElementById('srcSelect').options].filter(o=>o.style.display!=='none');
-    const idx = opts.findIndex(o=>o.value===src);
-    const next = opts[idx+1];
-    if(next){
-      document.getElementById('srcSelect').value = next.value;
-      loadEmbed();
-    }
-  }, 10000);
 }
 const dubLangMap = {
     nexa:['en','hi','fr','es'], 
