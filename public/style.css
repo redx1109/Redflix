@@ -308,16 +308,16 @@ html, body { overflow-x: hidden; }
 .player-modal {
   position: fixed; inset: 0; background: #000;
   display: none; align-items: center; justify-content: center;
-  z-index: 1000; padding: 20px;
-  box-shadow: 0 14px 38px rgba(229,9,20,0.55);
+  z-index: 1000; padding: 0;
 }
 .player-modal.open { display: flex; }
 
 .player-box {
-  background: #000; border-radius: 16px;
-  width: 100%; max-width: 720px;
+  background: #000; border-radius: 0;
+  width: 100vw; max-width: 100vw;
+  height: 100vh;
+  display: flex; flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.9);
 }
 .player-header {
   display: flex; justify-content: space-between; align-items: center;
@@ -329,7 +329,7 @@ html, body { overflow-x: hidden; }
   cursor: pointer; font-size: 18px; padding: 4px;
 }
 .player-frame {
-  width: 100%; aspect-ratio: 16/9; background: #000;
+  width: 100%; flex: 1; background: #000;
   display: flex; align-items: center; justify-content: center; position: relative;
 }
 .player-placeholder {
@@ -562,6 +562,12 @@ html, body { overflow-x: hidden; }
   body { padding-bottom: 70px;}
   .detail-poster img{
     margin-top: auto;
+  }
+  .player-box {
+    height: 100dvh;
+  }
+  .player-header {
+    padding-top: env(safe-area-inset-top, 14px);
   }
 }
 
