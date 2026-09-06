@@ -69,10 +69,9 @@ async function loadEmbed(){
   
   if(!id) return;
   let imdbId = id;
-  if(src === 'dub'){
-    const extRes = await fetch(`${TMDB_BASE}/${currentType === 'movie' ? 'movie' : 'tv'}/${id}/external_ids?api_key=${TMDB_KEY}`);
-    imdbId = (await extRes.json()).imdb_id || id;
-  }
+  const extRes = await fetch(`${TMDB_BASE}/${currentType === 'movie' ? 'movie' : 'tv'}/${id}/external_ids?api_key=${TMDB_KEY}`);
+  imdbId = (await extRes.json()).imdb_id || id;
+  
   let urls;
   console.log('Loading embed for', currentType, id, s, e, src, imdbId);
   if(currentType === 'movie'){
@@ -83,6 +82,7 @@ async function loadEmbed(){
       primesrc: `https://primesrc.me/embed/movie?tmdb=${id}?autoPlay=true`,
       vidlink: `https://vidlink.pro/movie/${id}?player=jw&multiLang=true&autoplay=true?autoPlay=true`,
       twoembed: `https://www.2embed.online/embed/${id}?autoPlay=true`,
+      twoembed: `https://www.2embed.stream/embed/${id}?autoPlay=true`,
       twoembedskin: `https://www.lookmovie2.skin/embed/player/${id}?autoPlay=true`,
       videasy: `https://player.videasy.net/movie/${id}?nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&color=8B5CF6x`,
       vidfast: `https://vidfast.vc/movie/${id}?autoPlay=true`,
@@ -106,13 +106,18 @@ async function loadEmbed(){
       fmovies: `https://fmovies4u.com/embed/movie/${id}?autoPlay=true?nextButton=true?sub=en?serve1`,
       ntg: `https://www.NontonGo.win/embed/movie/${id}`,
       dub: `https://kayel415jek.com/play/${imdbId}`,
+      dub2: `https://gemmaokl146.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}`,
       nexa: `https://nxsha.space/embed/movie/${id}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`,
       nexi: `https://screenscape.me/embed?tmdb=${id}&type=movie&lang=${lang}&autoplay=true`,
       vidsync: `https://vidsync.live/embed/movie/${id}?autoplay=true?defaultserver=cinedub-2`,
       flex: `https://flaxmovies.xyz/embed/movie/${id}`,
       pire: `https://video.moviepire.co/embed/movie/${id}`,
-      cinezo: `https://player.cinezo.live/embed/movie/${id}?server=hindi`
+      cinezo: `https://player.cinezo.live/embed/movie/${id}?server=hindi`,
+      cdn: `https://cdn.mov2day.xyz/embed/movie/${id}`,
+      vidflix: `https://vidflix.club/movie/${id}`,
+      vaplayer: `https://vaplayer.ru/embed/movie/${id}`,
+      bandit: `https://embedbandit.com/embed/movie?tmdb=${id}`,
     };
   } else {
     urls = {
@@ -122,6 +127,7 @@ async function loadEmbed(){
       primesrc: `https://primesrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?player=jw&multiLang=true&autoplay=true`,
       twoembed: `https://www.2embed.online/embed/tv/${id}&s=${s}&e=${e}?autoPlay=true`,
+      twoembed: `https://www.2embed.stream/embed/tv/${id}&s=${s}&e=${e}?autoPlay=true`,
       twoembedskin: `https://www.2embed.skin/embedtv/${id}&s=${s}&e=${e}?autoPlay=true`,
       videasy: `https://player.videasy.net/tv/${id}/${s}/${e}?nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&color=8B5CF6`,
       vidfast:   `https://vidfast.vc/tv/${id}/${s}/${e}?autoPlay=true`,
@@ -152,14 +158,18 @@ async function loadEmbed(){
       vidsync: `https://vidsync.live/embed/movie/${id}?autoplay=true?defaultserver=cinedub-2`,
       flex: `https://flaxmovies.xyz/embed/tv/${id}/${s}/${e}`,
       pire: `https://video.moviepire.co/embed/mtv/${id}/${s}/${e}`,
-      cinezo: `https://player.cinezo.live/embed/tv/${id}/${s}/${e}?server=hindi`
+      cinezo: `https://player.cinezo.live/embed/tv/${id}/${s}/${e}?server=hindi`,
+      cdn: `https://cdn.mov2day.xyz/embed/tv/${id}/${s}/${e}`,
+      vidflix: `https://vidflix.club/tv/${id}/${s}/${e}`,
+      vaplayer: `https://vaplayer.ru/embed/tv/${id}/${s}/${e}`,
+      bandit: `https://embedbandit.com/embed/tv?tmdb=${id}&season=${s}&episode=${e}`
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
   const noAds = ['flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
-  const noSandbox = ['nhd','oneembed','vidsync','filmu','zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noSandbox = ['vidflix','vaplayer','cdn','nhd','oneembed','vidsync','filmu','zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
   const embedNote = document.getElementById('adWarning');
   
   if(noSandbox.includes(src)) {
@@ -200,6 +210,8 @@ const dubLangMap = {
     vidup:['en',],
     vidplus:['en',],
     vidking:['en',],
+    vidflix:['en',],
+    vaplayer:['en',], 
     xpass:['en',],
     mapplee:['en',],
     primesrc:['en',],
@@ -211,6 +223,8 @@ const dubLangMap = {
     embedmaster:['en',],
     apiplayer:['en',],
     cinesrc:['en',],
+    cdn:['en'],
+    bandit:['en'],
   };
   
 function filterSourcesByLang(){
@@ -221,7 +235,7 @@ function filterSourcesByLang(){
     const langs = dubLangMap[o.value];
     o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
-  const preferredByLang = { hi: 'nexa' };
+  const preferredByLang = { hi: 'nexi' };
   const preferred = preferredByLang[lang];
   if(preferred && document.querySelector(`#srcSelect option[value="${preferred}"]`)?.style.display !== 'none'){
     document.getElementById('srcSelect').value = preferred;
