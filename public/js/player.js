@@ -168,8 +168,29 @@ async function loadEmbed(){
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
-  const noAds = ['flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
-  const noSandbox = ['vidflix','vaplayer','cdn','nhd','oneembed','vidsync','filmu','zxcstream','share','vidfast','vidnest','videasy','cinemaos','fmovies','vidplus','vidup','xpass','vidking','mapplee','movie','embedmaster','peachify','twoembed','twoembedskin','vidlink','vidapi','vidzee','primesrc'];
+  const noAds = ['nexa','nexi','flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
+  const noSandbox = ['vidflix',
+    'vaplayer',
+    'cdn',
+    'nhd',
+    'vidsync',
+    'filmu',
+    'zxcstream',
+    'share',
+    'vidfast',
+    'vidnest',
+    'videasy',
+    'cinemaos',
+    'fmovies',
+    'vidplus',
+    'vidup',
+    'xpass',
+    'vidking',
+    'mapplee',
+    'movie',
+    'embedmaster',
+    'peachify',
+    'twoembed','twoembedskin','vidlink','vidapi','primesrc'];
   const embedNote = document.getElementById('adWarning');
   
   if(noSandbox.includes(src)) {
@@ -186,7 +207,7 @@ async function loadEmbed(){
 }
 const dubLangMap = {
     nexa:['en','hi','fr','es'], 
-    nexi:['en','hi','fr','es'], 
+    nexi:['en','hi','fr','es'],
     zxcstream:['en','hi'],
     dub:['en','hi'],
     nhd:['en','hi'],
@@ -197,7 +218,7 @@ const dubLangMap = {
     peachify:['en','hi'],
     anyembed:['en','hi'],
     oneembed:['en','hi'],
-    pire:['en','hi'],
+    pire:['en'],
     cinezo:['en'],
     flex:['en'],
     autoembed:['en',],
@@ -235,7 +256,7 @@ function filterSourcesByLang(){
     const langs = dubLangMap[o.value];
     o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
-  const preferredByLang = { hi: 'nexi' };
+  const preferredByLang = { hi: 'nexa', en: 'nexa', es: 'nexa', fr: 'nexa', ja: 'nexa' };
   const preferred = preferredByLang[lang];
   if(preferred && document.querySelector(`#srcSelect option[value="${preferred}"]`)?.style.display !== 'none'){
     document.getElementById('srcSelect').value = preferred;
