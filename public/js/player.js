@@ -172,7 +172,7 @@ async function loadEmbed(){
   }
   const noAds = ['nexa','nexi','flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
   const noSandbox = ['vidflix','bandit','vidcore','vidzee','cinesrc','peachify','anyembed','oneembed','pire','cinezo','flex','autoembed',
-    'vaplayer',
+    'vaplayer','buzz',
     'cdn',
     'nhd',
     'vidsync',
