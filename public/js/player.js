@@ -119,6 +119,7 @@ async function loadEmbed(){
       vaplayer: `https://vaplayer.ru/embed/movie/${id}`,
       bandit: `https://embedbandit.com/embed/movie?tmdb=${id}`,
       buzz: `https://vidsrc.buzz/embed/movie/${id}?autoplay=true`,
+      vidy: `https://www.vidy.st/movie/${id}`, // anime support
     };
   } else {
     urls = {
@@ -165,6 +166,7 @@ async function loadEmbed(){
       vaplayer: `https://vaplayer.ru/embed/tv/${id}/${s}/${e}`,
       bandit: `https://embedbandit.com/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       buzz: `https://vidsrc.buzz/embed/tv/${id}/${s}/${e}?autoplay=true`,
+      vidy: `https://www.vidy.st/tv/${id}?s=${s}&e=${e}`, // anime support
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
