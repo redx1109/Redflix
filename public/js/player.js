@@ -118,6 +118,7 @@ async function loadEmbed(){
       vidflix: `https://vidflix.club/movie/${id}`,
       vaplayer: `https://vaplayer.ru/embed/movie/${id}`,
       bandit: `https://embedbandit.com/embed/movie?tmdb=${id}`,
+      buzz: `https://vidsrc.buzz/embed/movie/${id}?autoplay=true`,
     };
   } else {
     urls = {
@@ -162,7 +163,8 @@ async function loadEmbed(){
       cdn: `https://cdn.mov2day.xyz/embed/tv/${id}/${s}/${e}`,
       vidflix: `https://vidflix.club/tv/${id}/${s}/${e}`,
       vaplayer: `https://vaplayer.ru/embed/tv/${id}/${s}/${e}`,
-      bandit: `https://embedbandit.com/embed/tv?tmdb=${id}&season=${s}&episode=${e}`
+      bandit: `https://embedbandit.com/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
+      buzz: `https://vidsrc.buzz/embed/tv/${id}/${s}/${e}?autoplay=true`,
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
