@@ -260,7 +260,7 @@ function filterSourcesByLang(){
     const langs = dubLangMap[o.value];
     o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
-  const preferredByLang = { hi: 'nexa', en: 'nexa', es: 'nexa', fr: 'nexa', ja: 'nexa' };
+  const preferredByLang = { hi: 'nexi', en: 'nexi', es: 'nexi', fr: 'nexi', ja: 'nexi' };
   const preferred = preferredByLang[lang];
   if(preferred && document.querySelector(`#srcSelect option[value="${preferred}"]`)?.style.display !== 'none'){
     document.getElementById('srcSelect').value = preferred;
