@@ -121,6 +121,9 @@ async function loadEmbed(){
       bandit: `https://embedbandit.com/embed/movie?tmdb=${id}`,
       buzz: `https://vidsrc.buzz/embed/movie/${id}?autoplay=true`,
       vidy: `https://www.vidy.st/movie/${id}`, // anime support
+      rive: `https://www.rivestream.app/watch?type=movie&id=${id}`,
+      em: `https://videm.xyz/embed/movie/${id}/?autoplay=true`,
+      ro: `https://rozgarlelo.modiplay.xyz/embed/tmdb/movie?id=${id}&autoplay=true`,
     };
   } else {
     urls = {
@@ -169,6 +172,9 @@ async function loadEmbed(){
       bandit: `https://embedbandit.com/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       buzz: `https://vidsrc.buzz/embed/tv/${id}/${s}/${e}?autoplay=true`,
       vidy: `https://www.vidy.st/tv/${id}?s=${s}&e=${e}`, // anime support
+      rive: `https://www.rivestream.app/watch?type=tv&id=${id}&s=${s}&e=${e}`,
+      em: `https://videm.xyz/embed/movie/${id}/${s}/${e}?autoplay=true`,
+      ro: `https://rozgarlelo.modiplay.xyz/embed/tmdb/tv?id=${id}&s=${s}&e=${e}&autoplay=true`,
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
