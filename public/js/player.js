@@ -71,11 +71,26 @@ async function loadEmbed(){
   let imdbId = id;
   const extRes = await fetch(`${TMDB_BASE}/${currentType === 'movie' ? 'movie' : 'tv'}/${id}/external_ids?api_key=${TMDB_KEY}`);
   imdbId = (await extRes.json()).imdb_id || id;
-  
+  let anilistId = null, malId = null;
+  if(src === 'megaplay'){
+    try {
+      const hit = await getAnilistId(id, s, currentType === 'movie' ? 'movie' : 'tv');
+      anilistId = hit?.anilist_id || null;
+      malId = hit?.mal_id || null;
+    } catch(err){ console.warn('anilist lookup failed', err); }
+  }
+  const mpLang = lang === window._originalLang ? 'sub' : 'dub';
+  const mpEp = currentType === 'movie' ? 1 : e;
+  const mpUrl = anilistId
+    ? `https://megaplay.buzz/stream/ani/${anilistId}/${mpEp}/${mpLang}`
+    : malId
+      ? `https://megaplay.buzz/stream/mal/${malId}/${mpEp}/${mpLang}`
+      : '';
   let urls;
-  console.log('Loading embed for', currentType, id, s, e, src, imdbId);
+  console.log('Loading embed for', currentType, id, s, e, src, imdbId, 'Anilist id: ',anilistId);
   if(currentType === 'movie'){
     urls = {
+      megaplay: mpUrl,
       zxcstream: `https://zxcstream.xyz/player/movie/${id}?dubLang=${lang}?autoPlay=true`,
       autoembed: `https://autoembed.co/movie/tmdb/${id}?autoPlay=true`,
       apiplayer: `https://apiplayer.ru/embed/movie/${id}?autoPlay=true`,
@@ -94,7 +109,7 @@ async function loadEmbed(){
       vidnest: `https://vidnest.fun/movie/${id}?autoPlay=true?server=delta`,
       mapplee: `https://mapple.uk/watch/movie/${id}?autoPlay=true`,
       vidking: `https://www.vidking.net/embed/movie/${id}?autoPlay=true`,
-      movie: `https://111movies.net/movie/${id}?autoPlay=true`,
+      movie: `https://player.vidlove.cc/embed/movie/${id}?autoPlay=true`,
       vidcore: `https://vidcore.org/embed/movie/${id}?autoPlay=true`,
       xpass: `https://play.xpass.top/e/movie/${id}?autoPlay=true`,
       vidup: `https://vidup.to/movie/${id}?autoPlay=true`,
@@ -120,14 +135,17 @@ async function loadEmbed(){
       vaplayer: `https://vaplayer.ru/embed/movie/${id}`,
       bandit: `https://embedbandit.com/embed/movie?tmdb=${id}`,
       buzz: `https://vidsrc.buzz/embed/movie/${id}?autoplay=true`,
-      vidy: `https://www.vidy.st/movie/${id}`, // anime support
+      vidy: `https://www.vidy.st/movie/${id}`, // anime
       rive: `https://www.rivestream.app/watch?type=movie&id=${id}`,
       em: `https://videm.xyz/embed/movie/${id}/?autoplay=true`,
       ro: `https://rozgarlelo.modiplay.xyz/embed/tmdb/movie?id=${id}&autoplay=true`,
       vidrock: `https://vidrock.net/movie/${id}?autoplay=true`,
+      vidly: `https://vidly.pro/movie/${id}?autoplay=1?audioPicker=1`,   // anime
+      rip: `https://streamrip.fun/movie/${id}?autoplay=1?audioPicker=1`, // anime
     };
   } else {
     urls = {
+      megaplay: mpUrl,
       zxcstream: `https://zxcstream.xyz/player/tv/${id}/${s}/${e}?dubLang=${lang}?autoPlay=true`,
       autoembed: `https://autoembed.co/tv/tmdb/${id}-${s}-${e}?autoPlay=true`,
       apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}&ds_lang=${lang}`,
@@ -146,7 +164,7 @@ async function loadEmbed(){
       vidnest: `https://vidnest.fun/tv/${id}/${s}/${e}?autoPlay=true?server=delta`,
       mapplee: `https://mapple.uk/watch/movie/${id}/${s}/${e}?autoPlay=true`,
       vidking: `https://www.vidking.net/embed/tv/${id}/${s}/${e}?autoPlay=true`,
-      movie: `https://111movies.net/tv/${id}/${s}/${e}?autoPlay=true`,
+      movie: `https://player.vidlove.cc/embed/tv/${id}/${s}/${e}?autoPlay=true`,
       vidcore: `https://vidcore.org/embed/tv/${id}/${s}/${e}?autoPlay=true`,
       xpass: `https://play.xpass.top/e/tv/${id}/${s}/${e}?autoPlay=true`,
       vidup: `https://vidup.to/tv/${id}/${s}/${e}?autoPlay=true`,
@@ -177,6 +195,8 @@ async function loadEmbed(){
       em: `https://videm.xyz/embed/tv/${id}/${s}/${e}?autoplay=true`,
       ro: `https://rozgarlelo.modiplay.xyz/embed/tmdb/tv?id=${id}&s=${s}&e=${e}&autoplay=true`,
       vidrock: `https://vidrock.net/tv/${id}/${s}/${e}?autoplay=true`,
+      vidly: `https://vidly.pro/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,     //anime
+      rip: `https://streamrip.fun/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,   //anime
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
@@ -184,7 +204,7 @@ async function loadEmbed(){
   }
   const noAds = ['nexa','nexi','flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
   const noSandbox = ['vidflix','bandit','vidcore','vidzee','cinesrc','peachify','anyembed','oneembed','pire','cinezo','flex','autoembed',
-    'vaplayer','buzz','vidy','em',
+    'vaplayer','buzz','vidy','em','vidly',
     'cdn',
     'nhd',
     'vidsync',
@@ -219,6 +239,7 @@ async function loadEmbed(){
   document.getElementById('playerIframe').src = targetSrc;
   clearTimeout(window._embedFailTimer);
 }
+
 const dubLangMap = {
     nexa:['en','hi','fr','es'], 
     nexi:['en','hi','fr','es'],
@@ -231,6 +252,7 @@ const dubLangMap = {
     vidnest:['en','hi'],
     videasy:['en','hi'],
     vidzee:['en','hi'],
+    vidly:['en','hi'],
     peachify:['en','hi'],
     anyembed:['en','hi'],
     oneembed:['en','hi'],
@@ -272,8 +294,8 @@ function filterSourcesByLang(){
     const langs = dubLangMap[o.value];
     o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
-  const preferredByLang = { hi: 'nexi', en: 'nexi', es: 'nexi', fr: 'nexi', ja: 'nexi' };
-  const preferred = preferredByLang[lang];
+  const preferredByLang = { hi: 'vidly', en: 'nexi', es: 'nexi', fr: 'nexi', ja: 'nexi' };
+  const preferred = window._isAnime ? 'megaplay' : preferredByLang[lang];
   if(preferred && document.querySelector(`#srcSelect option[value="${preferred}"]`)?.style.display !== 'none'){
     document.getElementById('srcSelect').value = preferred;
   } else {
