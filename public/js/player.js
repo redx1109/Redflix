@@ -110,7 +110,7 @@ async function loadEmbed(){
       mapplee: `https://mapple.uk/watch/movie/${id}?autoPlay=true`,
       vidking: `https://www.vidking.net/embed/movie/${id}?autoPlay=true`,
       movie: `https://player.vidlove.cc/embed/movie/${id}?autoPlay=true`,
-      vidcore: `https://vidcore.org/embed/movie/${id}?autoPlay=true`,
+      vidcore: `https://vidcore.org/embed/movie/${id}?autoPlay=true?lang=${lang}`,
       xpass: `https://play.xpass.top/e/movie/${id}?autoPlay=true`,
       vidup: `https://vidup.to/movie/${id}?autoPlay=true`,
       cinemaos: `https://cinemaos.tech/player/${id}?autoPlay=true`,
@@ -142,6 +142,7 @@ async function loadEmbed(){
       vidrock: `https://vidrock.net/movie/${id}?autoplay=true`,
       vidly: `https://vidly.pro/movie/${id}?autoplay=1?audioPicker=1`,   // anime
       rip: `https://streamrip.fun/movie/${id}?autoplay=1?audioPicker=1`, // anime
+      viduki: `https://www.viduki.net/1/movie/${id}?autoplay=1?audioPicker=1`, //anime
     };
   } else {
     urls = {
@@ -165,7 +166,7 @@ async function loadEmbed(){
       mapplee: `https://mapple.uk/watch/movie/${id}/${s}/${e}?autoPlay=true`,
       vidking: `https://www.vidking.net/embed/tv/${id}/${s}/${e}?autoPlay=true`,
       movie: `https://player.vidlove.cc/embed/tv/${id}/${s}/${e}?autoPlay=true`,
-      vidcore: `https://vidcore.org/embed/tv/${id}/${s}/${e}?autoPlay=true`,
+      vidcore: `https://vidcore.org/embed/tv/${id}/${s}/${e}?autoPlay=true?lang=${lang}`,
       xpass: `https://play.xpass.top/e/tv/${id}/${s}/${e}?autoPlay=true`,
       vidup: `https://vidup.to/tv/${id}/${s}/${e}?autoPlay=true`,
       cinemaos: `https://cinemaos.tech/player/${id}/${s}/${e}?autoPlay=true`,
@@ -197,15 +198,16 @@ async function loadEmbed(){
       vidrock: `https://vidrock.net/tv/${id}/${s}/${e}?autoplay=true`,
       vidly: `https://vidly.pro/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,     //anime
       rip: `https://streamrip.fun/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,   //anime
+      viduki: `https://www.viduki.net/1/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`, //anime
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
   const noAds = ['nexa','nexi','flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
-  const noSandbox = ['vidflix','bandit','vidcore','vidzee','cinesrc','peachify','anyembed','oneembed','pire','cinezo','flex','autoembed',
+  const noSandbox = ['vidflix','bandit','vidzee','cinesrc','peachify','anyembed','oneembed','pire','cinezo','flex','autoembed',
     'vaplayer','buzz','vidy','em','vidly',
-    'cdn',
+    'cdn','vidrock','viduki',
     'nhd',
     'vidsync',
     'filmu',
@@ -263,7 +265,7 @@ const dubLangMap = {
     twoembedskin:['en',],
     twoembed:['en',],
     vidsync:['en','hi'],
-    vidcore:['en',],
+    vidcore:['en','hi','fr','es'],
     vidlink:['en',],
     vidfast:['en',],
     vidup:['en',],
