@@ -294,7 +294,7 @@ function filterSourcesByLang(){
     const langs = dubLangMap[o.value];
     o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
-  const preferredByLang = { hi: 'vidly', en: 'nexi', es: 'nexi', fr: 'nexi', ja: 'nexi' };
+  const preferredByLang = { hi: 'vidly', en: 'vidly'};
   const preferred = window._isAnime ? 'megaplay' : preferredByLang[lang];
   if(preferred && document.querySelector(`#srcSelect option[value="${preferred}"]`)?.style.display !== 'none'){
     document.getElementById('srcSelect').value = preferred;
