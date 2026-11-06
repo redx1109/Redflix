@@ -298,8 +298,8 @@ function filterSourcesByLang(){
     const langs = dubLangMap[o.value];
     o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
-  const preferredByLang = { hi: 'rose', en: 'rose'};
-  const preferred = window._isAnime ? 'megaplay' : preferredByLang[lang];
+  const preferredByLang = { hi: 'ro', en: 'ro'};
+  const preferred = preferredByLang[lang] || 'ro';
   if(preferred && document.querySelector(`#srcSelect option[value="${preferred}"]`)?.style.display !== 'none'){
     document.getElementById('srcSelect').value = preferred;
   } else {
