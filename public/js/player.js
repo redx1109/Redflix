@@ -91,6 +91,7 @@ async function loadEmbed(){
   if(currentType === 'movie'){
     urls = {
       megaplay: mpUrl,
+      megabuzz: `https://megaplay.buzz/stream/ani/${anilistId}/${mpEp}/${mpLang}`,
       zxcstream: `https://zxcstream.xyz/player/movie/${id}?dubLang=${lang}?autoPlay=true`,
       autoembed: `https://autoembed.co/movie/tmdb/${id}?autoPlay=true`,
       apiplayer: `https://apiplayer.ru/embed/movie/${id}?autoPlay=true`,
@@ -147,6 +148,7 @@ async function loadEmbed(){
   } else {
     urls = {
       megaplay: mpUrl,
+      megabuzz: `https://megaplay.buzz/stream/ani/${anilistId}/${mpEp}/${mpLang}`,
       zxcstream: `https://zxcstream.xyz/player/tv/${id}/${s}/${e}?dubLang=${lang}?autoPlay=true`,
       autoembed: `https://autoembed.co/tv/tmdb/${id}-${s}-${e}?autoPlay=true`,
       apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}&ds_lang=${lang}`,
@@ -208,7 +210,7 @@ async function loadEmbed(){
   const noSandbox = ['vidflix','bandit','vidzee','cinesrc','peachify','anyembed','oneembed','pire','cinezo','flex','autoembed',
     'vaplayer','buzz','vidy','em','vidly',
     'cdn','vidrock','viduki',
-    'nhd',
+    'nhd','megaplay',
     'vidsync',
     'filmu',
     'zxcstream',
@@ -296,7 +298,7 @@ function filterSourcesByLang(){
     const langs = dubLangMap[o.value];
     o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
-  const preferredByLang = { hi: 'vidly', en: 'vidly'};
+  const preferredByLang = { hi: 'rose', en: 'rose'};
   const preferred = window._isAnime ? 'megaplay' : preferredByLang[lang];
   if(preferred && document.querySelector(`#srcSelect option[value="${preferred}"]`)?.style.display !== 'none'){
     document.getElementById('srcSelect').value = preferred;
