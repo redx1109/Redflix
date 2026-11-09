@@ -211,7 +211,7 @@ async function loadEmbed(){
   const noAds = ['ro','nexa','nexi','flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
   const noSandbox = ['vidflix','bandit','vidzee','cinesrc','peachify','anyembed','oneembed','pire','cinezo','flex','autoembed',
     'vaplayer','buzz','vidy','em','vidly',
-    'cdn','vidrock','viduki',
+    'cdn','vidrock','viduki','vidrift',
     'nhd','megaplay',
     'vidsync',
     'filmu',
