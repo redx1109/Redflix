@@ -144,6 +144,7 @@ async function loadEmbed(){
       vidly: `https://vidly.pro/movie/${id}?autoplay=1?audioPicker=1`,   // anime
       rip: `https://streamrip.fun/movie/${id}?autoplay=1?audioPicker=1`, // anime
       viduki: `https://www.viduki.net/1/movie/${id}?autoplay=1?audioPicker=1`, //anime
+      vidrift: `https://embed.vidrift.net/embed/movie/${id}?autoplay=1?audioPicker=1`, //anime
     };
   } else {
     urls = {
@@ -201,12 +202,13 @@ async function loadEmbed(){
       vidly: `https://vidly.pro/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,     //anime
       rip: `https://streamrip.fun/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,   //anime
       viduki: `https://www.viduki.net/1/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`, //anime
+      vidrift: `https://embed.vidrift.net/embed/tv/${id}?autoplay=1?audioPicker=1`, //anime
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
     oneembed: 'https://1embed.cc/download/movie/${id},https://1embed.cc/download/tv/${id}/${s}/${e}',
   }
-  const noAds = ['nexa','nexi','flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
+  const noAds = ['ro','nexa','nexi','flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
   const noSandbox = ['vidflix','bandit','vidzee','cinesrc','peachify','anyembed','oneembed','pire','cinezo','flex','autoembed',
     'vaplayer','buzz','vidy','em','vidly',
     'cdn','vidrock','viduki',
@@ -245,6 +247,7 @@ async function loadEmbed(){
 }
 
 const dubLangMap = {
+    ro:['en','hi','fr','es'], 
     nexa:['en','hi','fr','es'], 
     nexi:['en','hi','fr','es'],
     zxcstream:['en','hi'],
