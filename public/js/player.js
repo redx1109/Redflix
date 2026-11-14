@@ -92,7 +92,7 @@ async function loadEmbed(){
     urls = {
       megaplay: mpUrl,
       megabuzz: `https://megaplay.buzz/stream/ani/${anilistId}/${mpEp}/${mpLang}`,
-      zxcstream: `https://zxcstream.xyz/player/movie/${id}?dubLang=${lang}?autoPlay=true`,
+      zxcstream: `https://zxcstream.cc/player/movie/${id}?dubLang=${lang}?autoPlay=true`,
       autoembed: `https://autoembed.co/movie/tmdb/${id}?autoPlay=true`,
       apiplayer: `https://apiplayer.ru/embed/movie/${id}?autoPlay=true`,
       primesrc: `https://primesrc.me/embed/movie?tmdb=${id}?autoPlay=true`,
@@ -145,12 +145,13 @@ async function loadEmbed(){
       rip: `https://streamrip.fun/movie/${id}?autoplay=1?audioPicker=1`, // anime
       viduki: `https://www.viduki.net/1/movie/${id}?autoplay=1?audioPicker=1`, //anime
       vidrift: `https://embed.vidrift.net/embed/movie/${id}?autoplay=1?audioPicker=1`, //anime
+      stuck: `https://vidstuck.cc/embed/movie/${id}?branding=RedFlix&loading=2&back=true`
     };
   } else {
     urls = {
       megaplay: mpUrl,
       megabuzz: `https://megaplay.buzz/stream/ani/${anilistId}/${mpEp}/${mpLang}`,
-      zxcstream: `https://zxcstream.xyz/player/tv/${id}/${s}/${e}?dubLang=${lang}?autoPlay=true`,
+      zxcstream: `https://zxcstream.cc/player/tv/${id}/${s}/${e}?dubLang=${lang}?autoPlay=true`,
       autoembed: `https://autoembed.co/tv/tmdb/${id}-${s}-${e}?autoPlay=true`,
       apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}&ds_lang=${lang}`,
       primesrc: `https://primesrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
@@ -202,7 +203,8 @@ async function loadEmbed(){
       vidly: `https://vidly.pro/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,     //anime
       rip: `https://streamrip.fun/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,   //anime
       viduki: `https://www.viduki.net/1/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`, //anime
-      vidrift: `https://embed.vidrift.net/embed/tv/${id}?autoplay=1?audioPicker=1`, //anime
+      vidrift: `https://embed.vidrift.net/embed/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`, //anime
+      stuck: `https://vidstuck.cc/embed/tv/${id}/${s}/${e}?branding=RedFlix&loading=2&back=true`
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
@@ -212,7 +214,7 @@ async function loadEmbed(){
   const noSandbox = ['vidflix','bandit','vidzee','cinesrc','peachify','anyembed','oneembed','pire','cinezo','flex','autoembed',
     'vaplayer','buzz','vidy','em','vidly',
     'cdn','vidrock','viduki','vidrift',
-    'nhd','megaplay',
+    'nhd','megaplay','stuck',
     'vidsync',
     'filmu',
     'zxcstream',
