@@ -94,6 +94,7 @@ const combined = [...movies, ...tvShows, ...personMovies]
 }
 
 async function loadMore(){
+  if (currentType === 'explore') return loadMoreExplore();
   currentPage++;
   const res = await fetch(currentUrl + `&page=${currentPage}`);
   const data = await res.json();
@@ -124,16 +125,18 @@ async function loadMoreExplore(){
   mixed.forEach((m,i) => el.appendChild(movieCard(m, false, i)));
 }
 
-window.addEventListener('scroll', () => {
-  if(!currentUrl) return; 
-  if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 300){
-    if(currentType === 'explore'){ loadMoreExplore(); return; }
-    currentPage++;
-    fetch(currentUrl + `&page=${currentPage}`)
-      .then(r => r.json())
-      .then(data => {
-        const el = document.getElementById('moviesGrid');
-        data.results.forEach((m, i) => el.appendChild(movieCard(m, false, i)));
-      });
-  }
+let loadingMore = false;
+window.addEventListener('scroll', async () => {
+  if (loadingMore || !currentUrl || document.getElementById('app').classList.contains('search-active')) return;
+  if (window.innerHeight + window.scrollY < document.body.offsetHeight - 300) return;
+  loadingMore = true;
+  try {
+    if (currentType === 'explore') await loadMoreExplore();
+    else {
+      currentPage++;
+      const d = await (await fetch(currentUrl + `&page=${currentPage}`)).json();
+      const el = document.getElementById('moviesGrid');
+      d.results.forEach((m, i) => el.appendChild(movieCard(m, false, i)));
+    }
+  } finally { loadingMore = false; }
 });
