@@ -1,0 +1,13 @@
+/* fx.css: stars background + card tilt glare */
+html { background: #0a0a0f; }
+body, #app { background: transparent; }
+
+#fxStars { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+
+.movie-poster { position: relative; }
+.movie-poster::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  pointer-events: none; opacity: 0; transition: opacity .2s;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255,255,255,.28), transparent 55%);
+}
+.movie-poster.fx-tilt::after { opacity: 1; }
