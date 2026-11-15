@@ -159,13 +159,13 @@ async function loadEmbed(){
       twoembed: `https://www.2embed.online/embed/tv/${id}&s=${s}&e=${e}?autoPlay=true`,
       twoembed: `https://www.2embed.stream/embed/tv/${id}&s=${s}&e=${e}?autoPlay=true`,
       twoembedskin: `https://www.2embed.skin/embedtv/${id}&s=${s}&e=${e}?autoPlay=true`,
-      videasy: `https://player.videasy.net/tv/${id}/${s}/${e}?nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&color=8B5CF6`,
+      videasy: `https://player.videasy.net/tv/${id}/${s}/${e}?nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&color=8B5CF6`, //down
       vidfast:   `https://vidfast.vc/tv/${id}/${s}/${e}?autoPlay=true`,
       vidzee: `https://player.vidzee.wtf/embed/tv/${id}/${s}/${e}?autoPlay=true`,
       cinesrc: `https://cinesrc.st/embed/tv/${id}?s=${s}&e=${e}?autoPlay=true`,
-      peachify: `https://peachify.top/embed/tv/${id}/${s}/${e}?autoPlay=true?dub=English`,
+      peachify: `https://peachify.top/embed/tv/${id}/${s}/${e}?autoPlay=true?dub=English`, //down
       embedmaster: `https://embedmaster.link/tv/${id}/${s}/${e}?autoPlay=true`,
-      filmu: `https://embed.filmu.in/tv/${id}/${s}/${e}?autoPlay=true`,
+      filmu: `https://embed.filmu.in/tv/${id}/${s}/${e}?autoPlay=true`,  //vidly now
       vidnest: `https://vidnest.fun/tv/${id}/${s}/${e}?autoPlay=true?server=delta`,
       mapplee: `https://mapple.uk/watch/tv/${id}/${s}/${e}?autoPlay=true`,
       vidking: `https://www.vidking.net/embed/tv/${id}/${s}/${e}?autoPlay=true`,
@@ -173,8 +173,8 @@ async function loadEmbed(){
       vidcore: `https://vidcore.org/embed/tv/${id}/${s}/${e}?autoPlay=true?lang=${lang}`,
       xpass: `https://play.xpass.top/e/tv/${id}/${s}/${e}?autoPlay=true`,
       vidup: `https://vidup.to/tv/${id}/${s}/${e}?autoPlay=true`,
-      cinemaos: `https://cinemaos.tech/player/${id}/${s}/${e}?autoPlay=true`,
-      nhd: `https://nhdapi.com/embed/tv/${id}/${s}/${e}`,
+      cinemaos: `https://cinemaos.tech/player/${id}/${s}/${e}?autoPlay=true`, // down
+      nhd: `https://nhdapi.com/embed/tv/${id}/${s}/${e}`, // down
       vidplus: `https://player2.vidplus.pro/embed/tv/${id}/${s}/${e}?autoplay=true&autonext=true&nextbutton=true&poster=true&title=true&download=true&watchparty=true&chromecast=true&episodelist=true&servericon=true&setting=true&pip=true&primarycolor=6C63FF&secondarycolor=9F9BFF&iconcolor=FFFFFF&logourl=https%3A%2F%2Fi.ibb.co%2F67wTJd9R%2Fpngimg-com-netflix-PNG11.png&font=Roboto&fontcolor=FFFFFF&fontsize=20&opacity=0.5`,
       anyembed: `https://anyembed.xyz/embed/tmdb-tv-${id}-${s}-${e}?theme=red&logo=false`,
       oneembed: `https://1embed.cc/embed/tv/${id}/${s}/${e}?sr=vnes`,
@@ -185,7 +185,7 @@ async function loadEmbed(){
       dub3: `https://linds425fur.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}/${s}/${e}`,
       nexa: `https://nxsha.space/embed/tv/${id}/${s}/${e}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`,
-      nexi : `https://nxsha.screenscape.me/embed?tmdb=${id}&type=tv&s=${s}&e=${e}&lan=${lang}&autoplay=true`,
+      nexi : `https://nxsha.screenscape.me/embed?tmdb=${id}&type=tv&s=${s}&e=${e}&lan=${lang}&autoplay=true`,  //down
       vidsync: `https://vidsync.live/embed/tv/${id}/${s}/${e}?autoplay=true?defaultserver=cinedub-2`,
       flex: `https://flaxmovies.xyz/embed/tv/${id}/${s}/${e}`,
       pire: `https://video.moviepire.co/embed/mtv/${id}/${s}/${e}`,
@@ -197,8 +197,8 @@ async function loadEmbed(){
       buzz: `https://vidsrc.buzz/embed/tv/${id}/${s}/${e}?autoplay=true`,
       vidy: `https://www.vidy.st/tv/${id}?s=${s}&e=${e}`, // anime support
       rive: `https://www.rivestream.app/embed?type=tv&id=${id}&s=${s}&e=${e}`,
-      em: `https://videm.xyz/embed/tv/${id}/${s}/${e}?autoplay=true`,
-      ro: `https://rozgarlelo.modiplay.xyz/embed/tmdb/tv?id=${id}&s=${s}&e=${e}&autoplay=true`,
+      em: `https://videm.xyz/embed/tv/${id}/${s}/${e}?autoplay=true`,  //down
+      ro: `https://rozgarlelo.modiplay.xyz/embed/tmdb/tv?id=${id}&s=${s}&e=${e}&autoplay=true`, // need new tab
       vidrock: `https://vidrock.net/tv/${id}/${s}/${e}?autoplay=true`,
       vidly: `https://vidly.pro/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,     //anime
       rip: `https://streamrip.fun/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,   //anime
@@ -303,8 +303,8 @@ function filterSourcesByLang(){
     const langs = dubLangMap[o.value];
     o.style.display = (isOriginal || !langs || langs.includes(lang)) ? '' : 'none';
   }
-  const preferredByLang = { hi: 'vidrift', en: 'vidrift'};
-  const preferred = preferredByLang[lang] || 'vidrift';
+  const preferredByLang = { hi: 'ro', en: 'ro'};
+  const preferred = preferredByLang[lang] || 'ro';
   if(preferred && document.querySelector(`#srcSelect option[value="${preferred}"]`)?.style.display !== 'none'){
     document.getElementById('srcSelect').value = preferred;
   } else {
