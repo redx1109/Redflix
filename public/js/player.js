@@ -223,7 +223,7 @@ async function loadEmbed(){
     'cdn','vidrock','viduki','vidrift','vidcore','vidmario',
     'nhd','megaplay','stuck',
     'vidsync',
-    'filmu',
+    'filmu','try','novu'
     'zxcstream',
     'share',
     'vidfast',
