@@ -94,7 +94,7 @@ async function loadEmbed(){
       megabuzz: `https://megaplay.buzz/stream/ani/${anilistId}/${mpEp}/${mpLang}`,
       zxcstream: `https://zxcstream.cc/player/movie/${id}?dubLang=${lang}?autoPlay=true`,
       autoembed: `https://autoembed.co/movie/tmdb/${id}?autoPlay=true`,
-      apiplayer: `https://apiplayer.ru/embed/movie/${id}?autoPlay=true`,
+      apiplayer: `https://atlantic.st/embed/movie/${id}?autoPlay=true?lang=${lang}`, //anime support
       primesrc: `https://primesrc.me/embed/movie?tmdb=${id}?autoPlay=true`,
       vidlink: `https://vidlink.pro/movie/${id}?player=jw&multiLang=true&autoplay=true?autoPlay=true`,
       twoembed: `https://www.2embed.online/embed/${id}?autoPlay=true`,
@@ -138,14 +138,15 @@ async function loadEmbed(){
       buzz: `https://vidsrc.buzz/embed/movie/${id}?autoplay=true`,
       vidy: `https://www.vidy.st/movie/${id}`, // anime
       rive: `https://www.rivestream.app/embed?type=movie&id=${id}`,
-      em: `https://videm.xyz/embed/movie/${id}/?autoplay=true`,
+      em: `https://videm.buzz/embed/movie/${id}/?autoplay=true`,
       ro: `https://rozgarlelo.modiplay.xyz/embed/tmdb/movie?id=${id}&autoplay=true`,
       vidrock: `https://vidrock.net/movie/${id}?autoplay=true`,
       vidly: `https://vidly.pro/movie/${id}?autoplay=1?audioPicker=1`,   // anime
       rip: `https://streamrip.fun/movie/${id}?autoplay=1?audioPicker=1`, // anime
       viduki: `https://www.viduki.net/1/movie/${id}?autoplay=1?audioPicker=1`, //anime
       vidrift: `https://embed.vidrift.net/embed/movie/${id}?autoplay=1?audioPicker=1`, //anime
-      stuck: `https://vidstuck.cc/embed/movie/${id}?branding=RedFlix&loading=2&back=true`
+      stuck: `https://vidstuck.cc/embed/movie/${id}?branding=RedFlix&loading=2&back=true`,
+      bolt: `https://vidbolt.xyz/movie/${id}?autoplay=1?audioPicker=1`, // anime
     };
   } else {
     urls = {
@@ -153,7 +154,7 @@ async function loadEmbed(){
       megabuzz: `https://megaplay.buzz/stream/ani/${anilistId}/${mpEp}/${mpLang}`,
       zxcstream: `https://zxcstream.cc/player/tv/${id}/${s}/${e}?dubLang=${lang}?autoPlay=true`,
       autoembed: `https://autoembed.co/tv/tmdb/${id}-${s}-${e}?autoPlay=true`,
-      apiplayer: `https://apiplayer.ru/embed/tv/${id}/${s}/${e}&ds_lang=${lang}`,
+      apiplayer: `https://atlantic.st/embed/tv/${id}/${s}/${e}&ds_lang=${lang}`, // anime support
       primesrc: `https://primesrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}`,
       vidlink: `https://vidlink.pro/tv/${id}/${s}/${e}?player=jw&multiLang=true&autoplay=true`,
       twoembed: `https://www.2embed.online/embed/tv/${id}&s=${s}&e=${e}?autoPlay=true`,
@@ -197,14 +198,15 @@ async function loadEmbed(){
       buzz: `https://vidsrc.buzz/embed/tv/${id}/${s}/${e}?autoplay=true`,
       vidy: `https://www.vidy.st/tv/${id}?s=${s}&e=${e}`, // anime support
       rive: `https://www.rivestream.app/embed?type=tv&id=${id}&s=${s}&e=${e}`,
-      em: `https://videm.xyz/embed/tv/${id}/${s}/${e}?autoplay=true`,  //down
+      em: `https://videm.buzz/embed/tv/${id}/${s}/${e}?autoplay=true`,  //down
       ro: `https://rozgarlelo.modiplay.xyz/embed/tmdb/tv?id=${id}&s=${s}&e=${e}&autoplay=true`, // need new tab
       vidrock: `https://vidrock.net/tv/${id}/${s}/${e}?autoplay=true`,
       vidly: `https://vidly.pro/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,     //anime
       rip: `https://streamrip.fun/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`,   //anime
       viduki: `https://www.viduki.net/1/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`, //anime
       vidrift: `https://embed.vidrift.net/embed/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`, //anime
-      stuck: `https://vidstuck.cc/embed/tv/${id}/${s}/${e}?branding=RedFlix&loading=2&back=true`
+      stuck: `https://vidstuck.cc/embed/tv/${id}/${s}/${e}?branding=RedFlix&loading=2&back=true`,
+      bolt: `https://vidbolt.xyz/tv/${id}/${s}/${e}?autoplay=1?audioPicker=1`, // anime
     };
   }
   const download = {nhd: 'https://nhdapi.com/dl/movie/${id},https://nhdapi.com/dl/tv/${id}/${s}/${e}',
@@ -212,7 +214,7 @@ async function loadEmbed(){
   }
   const noAds = ['ro','nexa','nexi','flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
   const noSandbox = ['vidflix','bandit','vidzee','cinesrc','peachify','anyembed','oneembed','pire','cinezo','flex','autoembed',
-    'vaplayer','buzz','vidy','em','vidly',
+    'vaplayer','buzz','vidy','em','vidly','bolt',
     'cdn','vidrock','viduki','vidrift',
     'nhd','megaplay','stuck',
     'vidsync',
@@ -249,28 +251,26 @@ async function loadEmbed(){
 }
 
 const dubLangMap = {
-    ro:['en','hi','fr','es'], 
-    nexa:['en','hi','fr','es'], 
-    nexi:['en','hi','fr','es'],
-    zxcstream:['en','hi'],
+    anyembed:['en','hi'],
+    apiplayer:['en','hi'],
+    autoembed:['en',],
+    bandit:['en'],
+    bolt:['en','hi'],
+    cdn:['en'],
+    cinemaos:['en','hi'],
+    cinezo:['en'],
+    cinesrc:['en',],
     dub:['en','hi'],
     dub2:['en','hi'],
     dub3:['en','hi'],
-    nhd:['en','hi'],
-    cinemaos:['en','hi'],
+    embedmaster:['en',],
+    filmu:['en',],
+    flex:['en'],
+    fmovies:['en',],
     vidnest:['en','hi'],
     videasy:['en','hi'],
     vidzee:['en','hi'],
     vidly:['en','hi'],
-    peachify:['en','hi'],
-    anyembed:['en','hi'],
-    oneembed:['en','hi'],
-    pire:['en'],
-    cinezo:['en'],
-    flex:['en'],
-    autoembed:['en',],
-    twoembedskin:['en',],
-    twoembed:['en',],
     vidsync:['en','hi'],
     vidcore:['en','hi','fr','es'],
     vidlink:['en',],
@@ -280,24 +280,28 @@ const dubLangMap = {
     vidking:['en',],
     vidflix:['en',],
     vaplayer:['en',], 
-    xpass:['en',],
     mapplee:['en',],
-    primesrc:['en',],
-    filmu:['en',],
-    fmovies:['en',],
-    ntg:['en',],
     movie:['en',],
+    nexa:['en','hi','fr','es'], 
+    nexi:['en','hi','fr','es'],
+    nhd:['en','hi'],
+    ntg:['en',],
+    oneembed:['en','hi'],
+    peachify:['en','hi'],
+    pire:['en'],
+    primesrc:['en',],
+    ro:['en','hi','fr','es'], 
+    rive:['en','hi'],
     share:['en',],
-    embedmaster:['en',],
-    apiplayer:['en',],
-    cinesrc:['en',],
-    cdn:['en'],
-    bandit:['en'],
+    twoembedskin:['en',],
+    twoembed:['en',],
+    xpass:['en',],
+    zxcstream:['en','hi'],
   };
   
-function filterSourcesByLang(){
-  const lang = document.getElementById('langSelect').value;
-  const opts = document.getElementById('srcSelect').options;
+  function filterSourcesByLang(){
+    const lang = document.getElementById('langSelect').value;
+    const opts = document.getElementById('srcSelect').options;
   const isOriginal = lang === window._originalLang;
   for(let o of opts){
     const langs = dubLangMap[o.value];
