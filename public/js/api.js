@@ -30,9 +30,10 @@ async function fetchPopular(genreId=''){
   if(currentType === 'explore'){
     if(!currentUrl && currentType !== 'explore') return;
     explorePage = (explorePage||0)+1;
+    const g = genreId ? `&with_genres=${genreId}` : '';
     const [mv, tv, an] = await Promise.all([
-      fetch(`${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&sort_by=${sort}&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`).then(r=>r.json()),
-      fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&sort_by=${sort}&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`).then(r=>r.json()),
+      fetch(`${TMDB_BASE}/discover/movie?api_key=${TMDB_KEY}&sort_by=${sort}${g}&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`).then(r=>r.json()),
+      fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&sort_by=${sort}${g}&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`).then(r=>r.json()),
       fetch(`${TMDB_BASE}/discover/tv?api_key=${TMDB_KEY}&with_keywords=210024&sort_by=popularity.desc&page=${Math.floor(Math.random()*5)+1}&include_adult=${includeAdult}`).then(r=>r.json())
     ]);
     const mixed = [
@@ -108,7 +109,7 @@ async function openDetail(id, type='movie'){
   closeDetail();
   document.getElementById('playerTitle').textContent = `${title} - Trailer`;
   document.getElementById('playerIframe').src = `https://www.youtube.com/embed/${trailer.key}?autoplay=1`;
-  document.getElementById('episodeControls').style.display = 'none';
+  document.getElementById('detailEpisodeControls').style.display = 'none';
   document.getElementById('playerModal').classList.add('open');
   };
   document.getElementById('detailOverview').textContent = overview;
