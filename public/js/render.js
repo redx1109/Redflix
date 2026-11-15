@@ -7,8 +7,8 @@ function movieCard(m, small=false, index=0){
   c.setAttribute('data-id', m.id)
   c.style.animationDelay = `${index * 0.05}s`;
   const poster = m.poster_path
-  ? `<img class="poster-img" src="${IMG_BASE}${m.poster_path}" alt="${m.title}" loading="lazy" decoding="async">`
-  : `<div class="poster-fallback"><i class="ti ti-movie"></i><span>${m.title}</span></div>`;
+  ? `<img class="poster-img" src="${IMG_BASE}${m.poster_path}" alt="${m.title || m.name}" loading="lazy" decoding="async">`
+  : `<div class="poster-fallback"><i class="ti ti-movie"></i><span>${m.title || m.name}</span></div>`;
   const ratingBadge = `<div class="movie-rating"><i class="ti ti-star-filled" style="font-size:10px"></i>${m.vote_average?.toFixed(1)||'?'}</div>`;
   const comingSoonBadge = isUpcoming ? `<div style="position:absolute;top:8px;left:8px;background:#e50914;color:#fff;font-size:10px;padding:3px 7px;border-radius:6px;z-index:2">Coming Soon</div>` : '';
   const progress = JSON.parse(localStorage.getItem('continueList')||'[]').find(x=>x.id==m.id);
@@ -53,7 +53,14 @@ function movieCard(m, small=false, index=0){
   return c;
 }
 
-async function checkAgeRating(id, type){
+const _ageCache = new Map();
+function checkAgeRating(id, type){
+  const k = type + id;
+  if (!_ageCache.has(k)) _ageCache.set(k, _checkAge(id, type).catch(() => false));
+  return _ageCache.get(k);
+}
+
+async function _checkAge(id, type){
   const endpoint = type === 'movie'
     ? `${TMDB_BASE}/movie/${id}/keywords?api_key=${TMDB_KEY}`
     : `${TMDB_BASE}/tv/${id}/keywords?api_key=${TMDB_KEY}`;
@@ -169,7 +176,7 @@ function updateHero(m){
   if(!m) return;
   const backdrop = m.backdrop_path ? `https://image.tmdb.org/t/p/w1280${m.backdrop_path}` : '';
   const title = m.title || m.name;
-  const overview = m.overview?.slice(0,150)+'...' || '';
+  const overview = m.overview ? m.overview.slice(0,150) + '...' : '';
   const hero = document.querySelector('.hero');
   if(backdrop) hero.style.backgroundImage = `linear-gradient(to bottom, rgba(10,10,15,0.3) 0%, #0a0a0f 100%), url(${backdrop})`;
   hero.style.backgroundSize = 'cover';
