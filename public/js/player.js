@@ -111,7 +111,7 @@ async function loadEmbed(){
       mapplee: `https://mapple.uk/watch/movie/${id}?autoPlay=true`,
       vidking: `https://www.vidking.net/embed/movie/${id}?autoPlay=true`,
       movie: `https://player.vidlove.cc/embed/movie/${id}?autoPlay=true`,
-      vidcore: `https://vidcore.org/embed/movie/${id}?autoPlay=true?lang=${lang}`,
+      vidcore: `https://vidcore.io/movie/${id}?autoPlay=true?lang=${lang}`,
       xpass: `https://play.xpass.top/e/movie/${id}?autoPlay=true`,
       vidup: `https://vidup.to/movie/${id}?autoPlay=true`,
       cinemaos: `https://cinemaos.tech/player/${id}?autoPlay=true`,
@@ -126,7 +126,7 @@ async function loadEmbed(){
       dub3: `https://linds425fur.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}`,
       nexa: `https://nxsha.space/embed/movie/${id}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`,
-      nexi: `https://nxsha.screenscape.me/embed?tmdb=${id}&type=movie&lang=${lang}&autoplay=true`,
+      nexi: `https://web.screenscape.fun/embed?tmdb=${id}&type=movie&lang=${lang}&autoplay=true`,
       vidsync: `https://vidsync.live/embed/movie/${id}?autoplay=true?defaultserver=cinedub-2`,
       flex: `https://flaxmovies.xyz/embed/movie/${id}`,
       pire: `https://video.moviepire.co/embed/movie/${id}`,
@@ -171,7 +171,7 @@ async function loadEmbed(){
       mapplee: `https://mapple.uk/watch/tv/${id}/${s}/${e}?autoPlay=true`,
       vidking: `https://www.vidking.net/embed/tv/${id}/${s}/${e}?autoPlay=true`,
       movie: `https://player.vidlove.cc/embed/tv/${id}/${s}/${e}?autoPlay=true`,
-      vidcore: `https://vidcore.org/embed/tv/${id}/${s}/${e}?autoPlay=true?lang=${lang}`,
+      vidcore: `https://vidcore.io/tv/${id}/${s}/${e}?autoPlay=true?lang=${lang}`,
       xpass: `https://play.xpass.top/e/tv/${id}/${s}/${e}?autoPlay=true`,
       vidup: `https://vidup.to/tv/${id}/${s}/${e}?autoPlay=true`,
       cinemaos: `https://cinemaos.tech/player/${id}/${s}/${e}?autoPlay=true`, // down
@@ -186,7 +186,7 @@ async function loadEmbed(){
       dub3: `https://linds425fur.com/play/${imdbId}`,
       share: `https://share.cdnm.ink/embed/tmdb/${id}/${s}/${e}`,
       nexa: `https://nxsha.space/embed/tv/${id}/${s}/${e}?lang=${lang}?server=ZetPly-[Multi-Lang]?disable_app_ad=true`,
-      nexi : `https://nxsha.screenscape.me/embed?tmdb=${id}&type=tv&s=${s}&e=${e}&lan=${lang}&autoplay=true`,  //down
+      nexi : `https://web.screenscape.fun/embed?tmdb=${id}&type=tv&s=${s}&e=${e}&lan=${lang}&autoplay=true`,  //down
       vidsync: `https://vidsync.live/embed/tv/${id}/${s}/${e}?autoplay=true?defaultserver=cinedub-2`,
       flex: `https://flaxmovies.xyz/embed/tv/${id}/${s}/${e}`,
       pire: `https://video.moviepire.co/embed/mtv/${id}/${s}/${e}`,
@@ -215,7 +215,7 @@ async function loadEmbed(){
   const noAds = ['ro','nexa','nexi','flex','pire','dub','ntg','autoembed','cinesrc','apiplayer',]
   const noSandbox = ['vidflix','bandit','vidzee','cinesrc','peachify','anyembed','oneembed','pire','cinezo','flex','autoembed',
     'vaplayer','buzz','vidy','em','vidly','bolt',
-    'cdn','vidrock','viduki','vidrift',
+    'cdn','vidrock','viduki','vidrift','vidcore',
     'nhd','megaplay','stuck',
     'vidsync',
     'filmu',
