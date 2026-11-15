@@ -66,21 +66,17 @@ async function loadEmbed(){
   const src = document.getElementById('srcSelect').value;
   const s = parseInt(document.getElementById('seasonInput')?.value) || 1;
   const e = parseInt(document.getElementById('episodeInput')?.value) || 1;
-  
+  const anime = await resolveAnimeId(id, s);
+
   if(!id) return;
   let imdbId = id;
   if (src.startsWith('dub')) {
     const extRes = await fetch(`${TMDB_BASE}/${currentType === 'movie' ? 'movie' : 'tv'}/${id}/external_ids?api_key=${TMDB_KEY}`);
     imdbId = (await extRes.json()).imdb_id || id;
   }
-  let anilistId = null, malId = null;
-  if(src === 'megaplay'){
-    try {
-      const hit = await getAnilistId(id, s, currentType === 'movie' ? 'movie' : 'tv');
-      anilistId = hit?.anilist_id || null;
-      malId = hit?.mal_id || null;
-    } catch(err){ console.warn('anilist lookup failed', err); }
-  }
+  const anilistId = anime.kind === 'anilist' ? anime.id : null;
+  const malId = anime.malId;
+  
   const mpLang = lang === window._originalLang ? 'sub' : 'dub';
   const mpEp = currentType === 'movie' ? 1 : e;
   const mpUrl = anilistId
