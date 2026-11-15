@@ -69,8 +69,10 @@ async function loadEmbed(){
   
   if(!id) return;
   let imdbId = id;
-  const extRes = await fetch(`${TMDB_BASE}/${currentType === 'movie' ? 'movie' : 'tv'}/${id}/external_ids?api_key=${TMDB_KEY}`);
-  imdbId = (await extRes.json()).imdb_id || id;
+  if (src.startsWith('dub')) {
+    const extRes = await fetch(`${TMDB_BASE}/${currentType === 'movie' ? 'movie' : 'tv'}/${id}/external_ids?api_key=${TMDB_KEY}`);
+    imdbId = (await extRes.json()).imdb_id || id;
+  }
   let anilistId = null, malId = null;
   if(src === 'megaplay'){
     try {
