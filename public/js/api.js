@@ -127,8 +127,8 @@ async function openDetail(id, type='movie'){
   };
   document.getElementById('detailModal').classList.add('open');
   document.body.style.overflow = 'hidden';
-  document.getElementById('detailEpisodeControls').style.display = type === 'tv' ? 'block' : 'none';
-  if(type === 'tv') loadEpisodes(id, 1, title, poster, year, originalLang);
+  document.getElementById('detailEpisodeControls').style.display = type !== 'movie' ? 'block' : 'none';
+  if(type !== 'movie') loadEpisodes(id, 1, title, poster, year, originalLang);
 }
 
 async function loadEpisodes(id, season=1, title='', poster='', year='', originalLang='en'){
