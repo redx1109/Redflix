@@ -41,7 +41,7 @@ async function fetchPopular(genreId=''){
       ...tv.results.map(m=>({...m, media_type:'tv'})),
       ...an.results.map(m=>({...m, media_type:'tv', _resultType:'anime'}))
     ].sort(()=>Math.random()-0.5);
-    currentUrl = 'exxplore';
+    currentUrl = 'explore';
     renderGrid(mixed);
     return;
   }
